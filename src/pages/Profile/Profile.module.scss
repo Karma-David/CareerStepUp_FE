@@ -1,0 +1,70 @@
+.image-warrper {
+    display: grid;
+    justify-content: center;
+
+    margin-top: 120px;
+}
+.avatar-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; /* Để làm tròn ảnh đại diện */
+    object-fit: cover; /* Đảm bảo ảnh vừa khít trong phần tử */
+    border: 2px solid #333; /* Đường viền màu trắng, có thể thay đổi màu sắc nếu cần */
+}
+.chosse-image {
+    padding: 20px;
+}
+
+.info-wrapper {
+    display: flex;
+    justify-content: space-around;
+}
+.information {
+    width: 500px;
+    height: 500px;
+    border-radius: 5%;
+    border: 1px solid #333;
+
+    h3 {
+        margin-left: 20px;
+    }
+    span {
+        display: grid;
+        width: 90%;
+        margin-left: 20px;
+        margin-bottom: 15px;
+        padding: 5px 5px;
+        border-radius: 10px;
+        border: 1px solid #333;
+    }
+}
+
+.class-join {
+    width: 500px;
+    height: 500px;
+    border-radius: 5%;
+    border: 1px solid #333;
+
+    h3 {
+        margin-left: 20px;
+    }
+}
+.class-inner {
+    display: flex;
+    width: 90%;
+    justify-content: space-between;
+    margin: 30px;
+    padding: 15px 15px;
+    border-radius: 7px;
+    border: 1px solid #b4b2b2;
+}
+.img-thumbnail {
+    width: 40%;
+    border-radius: 7%;
+}
+.info-class {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    margin-top: 4px;
+    margin-left: 20px;
+}

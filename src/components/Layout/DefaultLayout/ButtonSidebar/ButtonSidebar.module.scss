@@ -1,0 +1,20 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+   
+    align-items: center; /* Căn giữa các mục theo chiều ngang */
+    justify-content: center; /* Căn giữa các mục theo chiều dọc nếu có chiều cao xác định */
+    height: 90px; /* Chiều cao toàn bộ màn hình, tùy chọn */
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+
+    &:hover {
+        background-color: rgba(219, 221, 230, 0.862);
+        border-radius: 15px;
+    }
+    &:focus {
+        background-color: rgba(219, 221, 230, 0.862);
+        border-radius: 15px;
+    }
+}
