@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './Profile.module.scss';
-import renderEmail from './GetAPI.js';
+import GetAPI from './GetAPI';
 const cx = classNames.bind(style);
 
 function Profile() {
     const [avatar, setAvatar] = useState(null);
-
     // Nạp URL từ LocalStorage khi thành phần được gắn vào DOM
     useEffect(() => {
         const savedAvatar = localStorage.getItem('avatar');
@@ -46,8 +45,9 @@ function Profile() {
                 <input className={cx('chosse-image')} type="file" onChange={handlePreviewAvatar} />
             </div>
             <div className={cx('info-wrapper')}>
-                <div className="information">
+                <div className={cx('information')}>
                     <h3>Thong tin ca nhan</h3>
+                    <GetAPI />
                 </div>
                 <div className={cx('class-join')}>
                     <h3>Khoa hoc tham gia</h3>
