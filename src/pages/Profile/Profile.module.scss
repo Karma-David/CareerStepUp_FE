@@ -44,7 +44,7 @@
 
 .class-join {
     width: 500px;
-    height: 500px;
+    min-height: 500px;
     border-radius: 5%;
     border: 1px solid #333;
 
@@ -55,7 +55,7 @@
 .class-inner {
     display: flex;
     width: 90%;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin: 30px;
     padding: 15px 15px;
     border-radius: 7px;

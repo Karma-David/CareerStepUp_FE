@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './Profile.module.scss';
 import GetAPI from './GetAPI';
+import GetCourseUser from './GetCourseUser';
 const cx = classNames.bind(style);
 
 function Profile() {
@@ -51,20 +52,7 @@ function Profile() {
                 </div>
                 <div className={cx('class-join')}>
                     <h3>Khoa hoc tham gia</h3>
-                    <div className={cx('class-inner')}>
-                        <img
-                            className={cx('img-thumbnail')}
-                            src="https://files.fullstack.edu.vn/f8-prod/courses/6.png"
-                            alt="Course"
-                        />
-                        <div className={cx('info-class')}>
-                            <h4>Node & ExpressJS</h4>
-                            <p>
-                                Học Back-end với Node & ExpressJS framework, hiểu các khái niệm khi làm Back-end và xây
-                                dựng RESTful API cho trang web.
-                            </p>
-                        </div>
-                    </div>
+                        <GetCourseUser/>
                 </div>
             </div>
         </div>
