@@ -16,7 +16,7 @@ function Header() {
     useEffect(() => {
         setTimeout(() => {
             setSearchResult([]);
-        }, 0);
+        }, 1000);
     }, []);
 
     return (
@@ -28,7 +28,7 @@ function Header() {
                 <div>
                     <Tippy
                         interactive
-                        visible={SearchResult > 0}
+                        visible={SearchResult.length > 0}
                         render={(attrs) => (
                             <div className={cx('search-result')} tabIndex="-1" {...attrs}>
                                 <PopperWrapper>
