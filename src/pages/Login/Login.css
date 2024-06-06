@@ -1,0 +1,92 @@
+html {
+    height: 100%;
+}
+.form-login {
+    width: 100%;
+    display: grid;
+    place-items: center;
+}
+.form-box-login {
+    width: 40%;
+    margin-top: 70px;
+    line-height: 60px;
+    border: 1px solid rgba(22, 24, 35, 0.2);
+    border-radius: 10px;
+
+    h1 {
+        display: flex;
+        justify-content: center;
+        border: 1px solid rgba(22, 24, 35, 0.2);
+        border-radius: 10px;
+        background: linear-gradient(to right bottom, #ff8f26, #ff5117);
+        color: azure;
+    }
+}
+.input-box {
+    max-width: 80%;
+    margin-left: 60px;
+    margin-top: 40px;
+}
+.input-username {
+    margin-bottom: 10px;
+    border: 1px solid rgba(22, 24, 35, 0.2);
+    border-radius: 10px;
+    input {
+        height: 50px;
+        width: 440px;
+        padding-left: 15px;
+        padding-right: 25px;
+    }
+    &:hover {
+        border: 1px solid rgba(23, 33, 94, 0.796);
+    }
+}
+.input-password {
+    border: 1px solid rgba(22, 24, 35, 0.2);
+    border-radius: 10px;
+    input {
+        height: 50px;
+        width: 440px;
+        padding-left: 15px;
+        padding-right: 25px;
+    }
+    &:hover {
+        border: 1px solid rgba(23, 33, 94, 0.796);
+    }
+}
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 60px;
+}
+.Forgot-Pass {
+    margin-right: 50px;
+}
+.link-button-Forgot-password {
+    margin-right: 60px;
+    margin-top: 15px;
+    height: 20px;
+    border: 1px solid rgba(22, 24, 35, 0.2);
+    border-radius: 10px;
+    background: linear-gradient(to right bottom, #ff8f26, #ff5117);
+    color: azure;
+}
+.submit-form-login {
+    height: 40px;
+    width: 300px;
+    margin-left: 135px;
+    border: 1px solid rgba(22, 24, 35, 0.2);
+    border-radius: 10px;
+    background: linear-gradient(to right bottom, #ff8f26, #ff5117);
+    color: azure;
+    cursor: pointer;
+}
+.link-button-Register {
+    height: 30px;
+    width: 80px;
+    margin-left: 15px;
+    border: 1px solid rgba(22, 24, 35, 0.2);
+    border-radius: 10px;
+    background-color: rgba(59, 73, 161, 0.699);
+    color: azure;
+}

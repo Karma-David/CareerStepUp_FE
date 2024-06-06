@@ -3,7 +3,11 @@ import Following from '@/pages/Following';
 import Profile from '@/pages/Profile';
 import Upload from '@/pages/Upload';
 import Search from '@/pages/Search';
+import Login from '@/pages/Login/Login';
+import Register from '@/pages/Register/Register';
+import ForgotPass from '@/pages/ForgotPass/ForgotPass';
 import {HeaderOnly} from '@/components/Layout'
+
 
 export const publishRouter = [
     { path: '/', component: Home },
@@ -11,6 +15,9 @@ export const publishRouter = [
     { path: '/profile', component: Profile },
     { path: '/upload', component: Upload, layout : HeaderOnly},
     { path: '/search', component: Search, layout : null},
+    { path: '/Login', component: Login , layout : null},
+    { path: '/Register', component: Register , layout : null},
+    { path: '/ForgotPass', component: ForgotPass , layout : null},
 ];
 
 export const privateRouter = [];
