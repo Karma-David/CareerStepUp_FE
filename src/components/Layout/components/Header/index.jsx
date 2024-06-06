@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import classNames from 'classnames/bind';
 import style from './Header.module.scss';
 import images from '@/assets/images';
@@ -8,6 +9,7 @@ import { faCircleXmark, faSpinner, faMagnifyingGlass } from '@fortawesome/free-s
 import Tippy from '@tippyjs/react/headless';
 import { wrapper as PopperWrapper } from '@/components/Popper';
 import KhoaHoc from '@/components/KhoaHoc';
+
 const cx = classNames.bind(style);
 
 function Header() {
@@ -55,12 +57,10 @@ function Header() {
                     </Tippy>
                 </div>
                 <div className={cx('action')}>
-                    <Button to={'/Sign in'} onClick={() => alert('Clicked')}>
+                    <Button to={'/Register'}>
                         Sign in
                     </Button>
-                    <Button to={'/Log in'} onClick={() => alert('Clicked')}>
-                        Log in
-                    </Button>
+                    <Button to={'/Login'}>Log in</Button>
                 </div>
             </div>
         </header>
