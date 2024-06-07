@@ -6,6 +6,7 @@ import Search from '@/pages/Search';
 import Login from '@/pages/Login/Login';
 import Register from '@/pages/Register/Register';
 import ForgotPass from '@/pages/ForgotPass/ForgotPass';
+
 import {HeaderOnly} from '@/components/Layout'
 
 
