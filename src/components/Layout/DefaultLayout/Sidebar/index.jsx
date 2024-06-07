@@ -17,9 +17,6 @@ function Sidebar() {
                 <FontAwesomeIcon icon={faRoad} />
             </ButtonSidebar>
 
-            <ButtonSidebar to={'/profile'}>
-                <FontAwesomeIcon icon={faNewspaper} />
-            </ButtonSidebar>
         </aside>
     );
 }

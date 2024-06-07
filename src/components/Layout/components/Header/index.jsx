@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import classNames from 'classnames/bind';
 import style from './Header.module.scss';
+
 import images from '@/assets/images';
 import Button from '@/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,28 +10,40 @@ import { faCircleXmark, faSpinner, faMagnifyingGlass } from '@fortawesome/free-s
 import Tippy from '@tippyjs/react/headless';
 import { wrapper as PopperWrapper } from '@/components/Popper';
 import KhoaHoc from '@/components/KhoaHoc';
+import { FaUserCircle } from 'react-icons/fa';
 
 const cx = classNames.bind(style);
 
 function Header() {
-    const [SearchResult, setSearchResult] = useState([]);
+    const [searchResult, setSearchResult] = useState([]);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
         setTimeout(() => {
             setSearchResult([]);
         }, 1000);
+
+        const token = localStorage.getItem('token');
+        if (token) {
+            setIsAuthenticated(true);
+        }
     }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        setIsAuthenticated(false);
+    };
 
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
                 <div className={cx('logo')}>
-                    <img src={images.logo} alt="TikTok" />
+                    <img src={images.logo} alt="Logo" />
                 </div>
                 <div>
                     <Tippy
                         interactive
-                        visible={SearchResult.length > 0}
+                        visible={searchResult.length > 0}
                         render={(attrs) => (
                             <div className={cx('search-result')} tabIndex="-1" {...attrs}>
                                 <PopperWrapper>
@@ -57,10 +70,30 @@ function Header() {
                     </Tippy>
                 </div>
                 <div className={cx('action')}>
-                    <Button to={'/Register'}>
-                        Sign in
-                    </Button>
-                    <Button to={'/Login'}>Log in</Button>
+                    {isAuthenticated ? (
+                        <Tippy
+                            interactive
+                            render={(attrs) => (
+                                <div className={cx('profile-menu')} tabIndex="-1" {...attrs}>
+                                    <PopperWrapper>
+                                        <div className={cx('button-avatar')}>
+                                            <Button to="/profile">Profile</Button>
+                                            <Button onClick={handleLogout}>Log out</Button>
+                                        </div>
+                                    </PopperWrapper>
+                                </div>
+                            )}
+                        >
+                            <div className={cx('avatar')}>
+                                <FaUserCircle size={40} />
+                            </div>
+                        </Tippy>
+                    ) : (
+                        <>
+                            <Button to={'/Register'}>Sign in</Button>
+                            <Button to={'/Login'}>Log in</Button>
+                        </>
+                    )}
                 </div>
             </div>
         </header>
