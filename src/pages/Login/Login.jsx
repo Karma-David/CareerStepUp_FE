@@ -41,39 +41,42 @@ const Login = ({ setAction, setShowForgotPassword }) => {
         }
     };
 
-    const handleCallBackResponse = useCallback(async (response) => {
-        console.log('Google response:', response);
+    const handleCallBackResponse = useCallback(
+        async (response) => {
+            console.log('Google response:', response);
 
-        const credential = response.credential;
-        if (!credential) {
-            console.error('Credential là null hoặc undefined');
-            return;
-        }
-
-        console.log('Credential:', credential);
-
-        try {
-            const res = await fetch(GoogleLoginApi, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ credential }), // Bao bọc credential trong một đối tượng
-            });
-
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
+            const credential = response.credential;
+            if (!credential) {
+                console.error('Credential là null hoặc undefined');
+                return;
             }
 
-            const data = await res.json();
-            console.log('Response data:', data);
-            localStorage.setItem('token', data?.token);
-            navigate('/'); // Chuyển hướng đến HomePage
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Đăng nhập Google thất bại. Vui lòng thử lại.');
-        }
-    }, [navigate]);
+            console.log('Credential:', credential);
+
+            try {
+                const res = await fetch(GoogleLoginApi, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ credential }), // Bao bọc credential trong một đối tượng
+                });
+
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+
+                const data = await res.json();
+                console.log('Response data:', data);
+                localStorage.setItem('token', data?.token);
+                navigate('/'); // Chuyển hướng đến HomePage
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Đăng nhập Google thất bại. Vui lòng thử lại.');
+            }
+        },
+        [navigate],
+    );
 
     useEffect(() => {
         const loadGoogleScript = () => {
