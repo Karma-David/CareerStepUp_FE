@@ -23,6 +23,10 @@ const Register = ({ setAction }) => {
                         <input type="password" placeholder="Password" required />
                         <FaLock className="icon" />
                     </div>
+                    <div className="input-passwork-register">
+                        <input type="password" placeholder="Confirm-Password" required />
+                        <FaLock className="icon" />
+                    </div>
                 </div>
                 <div className="remember-forgot">
                     <label>
@@ -30,7 +34,7 @@ const Register = ({ setAction }) => {
                     </label>
                 </div>
                 <div>
-                    <button className="submit-register" type="submit">
+                    <button className="submit-register" type="submit" onClick={() => alert('Check Email')}>
                         Register
                     </button>
                 </div>
