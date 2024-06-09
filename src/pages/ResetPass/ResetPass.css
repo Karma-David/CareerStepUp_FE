@@ -1,0 +1,50 @@
+html {
+    height: 100%;
+}
+.Form-reset-password {
+    width: 100%;
+    display: grid;
+    place-items: center;
+}
+.form-box-reset-password {
+    width: 40%;
+    margin-top: 70px;
+    line-height: 60px;
+    border: 1px solid rgba(22, 24, 35, 0.2);
+    border-radius: 10px;
+
+    h1 {
+        display: flex;
+        justify-content: center;
+        border: 1px solid rgba(22, 24, 35, 0.2);
+        border-radius: 10px;
+        background: linear-gradient(to right bottom, #ff8f26, #ff5117);
+        color: azure;
+    }
+}
+.input-box-password-reset {
+    height: 50px;
+    width: 70%;
+    margin-left: 65px;
+    margin-top: 20px;
+    border: 1px solid rgba(22, 24, 35, 0.2);
+    border-radius: 10px;
+    input {
+        width: 390px;
+        height: 40px;
+        padding-top: 15px;
+    }
+    &:hover {
+        border: 1px solid rgba(23, 33, 94, 0.796);
+    }
+}
+.submit-reset {
+    height: 40px;
+    width: 300px;
+    margin-left: 135px;
+    border: 1px solid rgba(22, 24, 35, 0.2);
+    border-radius: 10px;
+    background: linear-gradient(to right bottom, #ff8f26, #ff5117);
+    color: azure;
+    cursor: pointer;
+}
