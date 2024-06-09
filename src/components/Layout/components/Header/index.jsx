@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import style from './Header.module.scss';
 
@@ -17,7 +17,7 @@ const cx = classNames.bind(style);
 function Header() {
     const [searchResult, setSearchResult] = useState([]);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+    const navigate = useNavigate();
     useEffect(() => {
         setTimeout(() => {
             setSearchResult([]);
@@ -32,6 +32,7 @@ function Header() {
     const handleLogout = () => {
         localStorage.removeItem('token');
         setIsAuthenticated(false);
+        navigate('/'); // Chuyển hướng đến trang home page
     };
 
     return (
@@ -69,31 +70,34 @@ function Header() {
                         </div>
                     </Tippy>
                 </div>
-                <div className={cx('action')}>
-                    {isAuthenticated ? (
-                        <Tippy
-                            interactive
-                            render={(attrs) => (
-                                <div className={cx('profile-menu')} tabIndex="-1" {...attrs}>
-                                    <PopperWrapper>
-                                        <div className={cx('button-avatar')}>
-                                            <Button to="/profile">Profile</Button>
-                                            <Button onClick={handleLogout}>Log out</Button>
-                                        </div>
-                                    </PopperWrapper>
+                <div className="">
+                    <div className={cx('action')}>
+                        {isAuthenticated ? (
+                            <Tippy
+                                interactive
+                                render={(attrs) => (
+                                    <div className={cx('profile-menu')} tabIndex="-1" {...attrs}>
+                                        <PopperWrapper>
+                                            <div className={cx('button-avatar')}>
+                                                <Button to="/profile"> Profile </Button>
+                                                <Button to="/RegisterLecturer">Register Lecturer</Button>
+                                                <Button onClick={handleLogout}>Log out</Button>
+                                            </div>
+                                        </PopperWrapper>
+                                    </div>
+                                )}
+                            >
+                                <div className={cx('avatar')}>
+                                    <FaUserCircle size={40} />
                                 </div>
-                            )}
-                        >
-                            <div className={cx('avatar')}>
-                                <FaUserCircle size={40} />
-                            </div>
-                        </Tippy>
-                    ) : (
-                        <>
-                            <Button to={'/Register'}>Sign in</Button>
-                            <Button to={'/Login'}>Log in</Button>
-                        </>
-                    )}
+                            </Tippy>
+                        ) : (
+                            <>
+                                <Button to={'/Register'}>Sign in</Button>
+                                <Button to={'/Login'}>Log in</Button>
+                            </>
+                        )}
+                    </div>
                 </div>
             </div>
         </header>

@@ -37,7 +37,7 @@ const Login = ({ setAction, setShowForgotPassword }) => {
             navigate('/'); // Chuyển hướng đến HomePage
         } catch (error) {
             console.error('Error:', error);
-            alert('Đăng nhập thất bại. Vui lòng thử lại.');
+            alert('Đăng nhập thất bại. Kiểm tra lại Email và PassWord.');
         }
     };
 

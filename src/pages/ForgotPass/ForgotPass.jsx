@@ -1,25 +1,19 @@
 import React from 'react';
 import './ForgotPass.css';
-// import Login from '@/pages/Login/Login.jsx';
-// import Register from '@/pages/Register/Register.jsx';
 import Button from '@/components/Button';
 import { FaEnvelope } from 'react-icons/fa';
 
 const ForgotPass = () => {
-    // const [action, setAction] = useState('');
-    // const [showForgotPassword, setShowForgotPassword] = useState(false);
+   
 
-    // const loginLink = (e) => {
-    //     e.preventDefault();
-    //     setAction('');
-    //     setShowForgotPassword(false);
-    // };
+    // const handleResetPassword = ((e) => {
 
+    // })
     return (
         <div className="ForgotPass-reset">
             <div className="form-box-forgot-password">
                 <form action="">
-                    <h1>Reset Password</h1>
+                    <h1>Send Email Reset</h1>
                     <div className="input-box-email-forgot">
                         <input type="email" placeholder="Email" required />
                         <FaEnvelope className="icon" />
@@ -32,7 +26,7 @@ const ForgotPass = () => {
                     <div className="register-link">
                         <p>
                             Remembered your account?{' '}
-                            <Button className="link-button-login" to={'/Login'}>
+                            <Button className="link-button-login" to={'/ResetPass'}>
                                 Login
                             </Button>
                         </p>
