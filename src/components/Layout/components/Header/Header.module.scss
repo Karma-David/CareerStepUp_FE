@@ -1,7 +1,15 @@
+/* Styles for the fixed header */
 .wrapper {
     height: 60px;
     box-shadow: 0px 1px 1px rgb(0 0 0 /12%);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 30;
+    background-color: white; /* Ensuring background color to cover content beneath */
 }
+
+/* Styles for inner content of the header */
 .inner {
     height: 100%;
     width: 100%;
@@ -11,32 +19,34 @@
     padding: 16px 24px;
 }
 
+/* Styles for the search bar */
 .search,
 .search-result {
     width: 490px;
 }
+
 .search {
     height: 46px;
     display: flex;
     padding-left: 16px;
     border-radius: 92px;
     background-color: rgba(22, 24, 35, 0.06);
+}
 
-    input:not(:placeholder-shown) ~ .search-btn {
-        color: #000;
-    }
+.search input:not(:placeholder-shown) ~ .search-btn {
+    color: #000;
+}
 
-    input {
-        flex: 1;
-        height: 100%;
-        color: #000;
-        font-size: 16px;
-        background-color: transparent;
-    }
+.search input {
+    flex: 1;
+    height: 100%;
+    color: #000;
+    font-size: 16px;
+    background-color: transparent;
+}
 
-    &:focus-within {
-        border: 2px solid rgba(22, 24, 35, 0.2);
-    }
+.search:focus-within {
+    border: 2px solid rgba(22, 24, 35, 0.2);
 }
 
 .search-title {
@@ -45,6 +55,7 @@
     font-weight: 500;
     border: rgba(22, 24, 35, 0.5);
 }
+
 .clear,
 .loading {
     position: absolute;
@@ -53,6 +64,7 @@
     color: rgba(22, 24, 35, 0.34);
 }
 
+/* Styles for the search button */
 .search-btn {
     width: 52px;
     height: 100%;
@@ -60,19 +72,26 @@
     border-bottom-right-radius: 92px;
     font-size: 1.8rem;
     color: rgb(108, 114, 148);
-
-    &:hover {
-        cursor: pointer;
-        background-color: #ceced0;
-    }
-    &:active {
-        background-color: rgba(22, 24, 35, 0.06);
-    }
 }
+
+.search-btn:hover {
+    cursor: pointer;
+    background-color: #ceced0;
+}
+
+.search-btn:active {
+    background-color: rgba(22, 24, 35, 0.06);
+}
+
+/* Styles for the profile menu */
 .button-avatar {
     display: grid;
     align-items: center;
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px #888888da;
 }
+
 .profile-menu {
     display: flex;
     flex-direction: column;
@@ -81,9 +100,17 @@
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
 .profile-menu button {
     margin-bottom: 5px;
 }
+
+/* Styles for the avatar button */
 .avatar-button-header {
     cursor: pointer;
+}
+
+/* Add margin to the body to account for the fixed header */
+body {
+    margin-top: 60px; /* Same height as .wrapper */
 }
