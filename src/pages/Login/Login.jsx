@@ -59,7 +59,7 @@ const Login = ({ setAction, setShowForgotPassword }) => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ credential }), // Bao bọc credential trong một đối tượng
+                    body: JSON.stringify(credential), // Bao bọc credential trong một đối tượng
                 });
 
                 if (!res.ok) {
