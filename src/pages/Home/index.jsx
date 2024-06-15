@@ -2,32 +2,38 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
-import './homepage.css';
-import Footer from './footer';
+import './components/homepage.css';
+import Footer from './components/footer';
+import Carousel from './components/carousel';
+
 const courses = [
     {
         id: 1,
         title: 'HTML CSS Pro',
         description: 'Mô tả về khóa học 1',
         image: 'https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png',
+        link: '/#',
     },
     {
         id: 2,
         title: 'Ngôn ngữ tiền xử lý Sass',
         description: 'Mô tả về khóa học 2',
         image: 'https://files.fullstack.edu.vn/f8-prod/courses/27/64e184ee5d7a2.png',
+        link: '/#',
     },
     {
         id: 3,
         title: 'JavaScript Pro',
         description: 'Mô tả về khóa học 3',
         image: 'https://files.fullstack.edu.vn/f8-prod/courses/19/62f13cb607b4b.png',
+        link: '/#',
     },
     {
         id: 4,
         title: 'NextJS Pro',
         description: 'Mô tả về khóa học 3',
         image: 'https://files.fullstack.edu.vn/f8-prod/courses/20/648020fc16597.png',
+        link: '/#',
     },
 ];
 
@@ -97,102 +103,27 @@ const coursesfree = [
 function Home() {
     return (
         <div>
-            <div className="container-slide">
-                <div className="row">
-                    <div className="col-lg-12 mb-5">
-                        <div id="carouselExampleCaptions" className="carousel slide">
-                            <div className="carousel-indicators">
-                                <button
-                                    type="button"
-                                    data-bs-target="#carouselExampleCaptions"
-                                    data-bs-slide-to="0"
-                                    className="active"
-                                    aria-current="true"
-                                    aria-label="Slide 1"
-                                ></button>
-                                <button
-                                    type="button"
-                                    data-bs-target="#carouselExampleCaptions"
-                                    data-bs-slide-to="1"
-                                    aria-label="Slide 2"
-                                ></button>
-                                <button
-                                    type="button"
-                                    data-bs-target="#carouselExampleCaptions"
-                                    data-bs-slide-to="2"
-                                    aria-label="Slide 3"
-                                ></button>
-                            </div>
-                            <div className="carousel-inner">
-                                <div className="carousel-item active">
-                                    <img
-                                        src="./image1.jpg"
-                                        className="d-block mx-auto"
-                                        alt="Khoa hoc 1"
-                                        style={{ width: '20%' }}
-                                    />
-                                    <div className="carousel-caption d-none d-md-block">
-                                        <h5>First slide label</h5>
-                                        <p>Some representative placeholder content for the first slide.</p>
-                                    </div>
-                                </div>
-                                <div className="carousel-item">
-                                    <img
-                                        src="./image2.jpg"
-                                        className="d-block mx-auto"
-                                        alt="Khoa hoc 2"
-                                        style={{ width: '20%' }}
-                                    />
-                                    <div className="carousel-caption d-none d-md-block">
-                                        <h5>Second slide label</h5>
-                                        <p>Some representative placeholder content for the second slide.</p>
-                                    </div>
-                                </div>
-                                <div className="carousel-item">
-                                    <img
-                                        src="./image3.jpg"
-                                        className="d-block mx-auto"
-                                        alt="Khoa hoc 3"
-                                        style={{ width: '20%' }}
-                                    />
-                                    <div className="carousel-caption d-none d-md-block">
-                                        <h5>Third slide label</h5>
-                                        <p>Some representative placeholder content for the third slide.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <button
-                                className="carousel-control-prev"
-                                type="button"
-                                data-bs-target="#carouselExampleCaptions"
-                                data-bs-slide="prev"
-                            >
-                                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span className="visually-hidden">Previous</span>
-                            </button>
-                            <button
-                                className="carousel-control-next"
-                                type="button"
-                                data-bs-target="#carouselExampleCaptions"
-                                data-bs-slide="next"
-                            >
-                                <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span className="visually-hidden">Next</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            <div className="container">
+                <Carousel />
             </div>
             <div className="container mt-5">
                 <h1 className="text-left mb-4">Khóa Học Pro</h1>
                 <div className="row row-cols-1 row-cols-md-4 g-4">
-                    {courses.map((courses) => (
-                        <div className="col" key={courses.id}>
+                    {courses.map((course) => (
+                        <div className="col" key={course.id}>
                             <div className="card h-80 custom-card">
-                                <img src={courses.image} className="card-img-top custom-card-img" alt={courses.title} />
+                                <a href={course.link}>
+                                    <img
+                                        src={course.image}
+                                        className="card-img-top custom-card-img"
+                                        alt={course.title}
+                                    />
+                                </a>
                             </div>
                             <div className="card-body">
-                                <p className="card-title">{courses.title}</p>
+                                <a href={course.link}>
+                                    <p className="card-title mt-3 mb-5">{course.title}</p>
+                                </a>
                             </div>
                         </div>
                     ))}
@@ -204,14 +135,18 @@ function Home() {
                     {coursesfree.map((coursesfree) => (
                         <div className="col" key={coursesfree.id}>
                             <div className="card h-80 custom-card">
-                                <img
-                                    src={coursesfree.image}
-                                    className="card-img-top custom-card-img"
-                                    alt={coursesfree.title}
-                                />
+                                <a href={coursesfree.link}>
+                                    <img
+                                        src={coursesfree.image}
+                                        className="card-img-top custom-card-img"
+                                        alt={coursesfree.title}
+                                    />
+                                </a>
                             </div>
                             <div className="card-body">
-                                <p className="card-title">{coursesfree.title}</p>
+                                <a href={coursesfree.link}>
+                                    <p className="card-title mt-3 mb-5">{coursesfree.title}</p>
+                                </a>
                             </div>
                         </div>
                     ))}
