@@ -11,11 +11,13 @@ function Sidebar() {
         <aside className={cx('wrapper')}>
             <div className={cx('button-sidebar')}>
                 <ButtonSidebar to={'/'}>
-                    <FontAwesomeIcon icon={faHouse} />
+                <FontAwesomeIcon style={{color:'black'}} icon={faHouse} className={cx('icon', 'black-icon')} />               
+                <span style={{color:'black'}} className={cx('text')}>Trang chủ</span>
                 </ButtonSidebar>
 
                 <ButtonSidebar to={'/RoadMap'}>
-                    <FontAwesomeIcon icon={faRoad} />
+                <FontAwesomeIcon style={{color:'black'}} icon={faRoad} className={cx('icon', 'black-icon')} />
+                <span style={{color:'black'}} className={cx('text')}>Lộ Trình</span>
                 </ButtonSidebar>
             </div>
         </aside>
