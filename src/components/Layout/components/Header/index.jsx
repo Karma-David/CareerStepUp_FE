@@ -33,7 +33,7 @@ function Header() {
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
                 <div className={cx('logo')}>
-                    <img src={images.logo} alt="Logo" />
+                    <img src={images.logo} alt="Logo"  />
                 </div>
                 <div>
                     <Search />

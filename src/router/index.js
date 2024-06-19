@@ -13,26 +13,24 @@ import IntroductToIT from '@/pages/CoursesPageDetail/IntroductToIT';
 import PageVideoLearn from '@/pages/PageVideoLearn/PageVideoLearn';
 import HtmlCss from '@/pages/CoursesPageDetail/HtmlCss';
 import ReponsGridSystem from '@/pages/CoursesPageDetail/ReponsGridSystem';
-import {HeaderOnly} from '@/components/Layout'
-
+import { HeaderOnly } from '@/components/Layout';
 
 export const publishRouter = [
     { path: '/', component: Home },
     { path: '/roadmap', component: RoadMap },
     { path: '/profile', component: Profile },
-    { path: '/upload', component: Upload, layout : HeaderOnly},
-    { path: '/search', component: Search, layout : null},
-    { path: '/Login', component: Login , layout : null},
-    { path: '/Register', component: Register , layout : null},
-    { path: '/ForgotPass', component: ForgotPass , layout : null},
-    { path: '/ResetPass', component: ResetPass , layout : null},
-    { path: '/AdminPage', component: AdminPage , layout : null},
+    { path: '/upload', component: Upload, layout: HeaderOnly },
+    { path: '/search', component: Search, layout: null },
+    { path: '/Login', component: Login, layout: null },
+    { path: '/Register', component: Register, layout: null },
+    { path: '/ForgotPass', component: ForgotPass, layout: null },
+    { path: '/ResetPass', component: ResetPass, layout: null },
+    { path: '/AdminPage', component: AdminPage, layout: null },
     { path: '/RegisterLecturer', component: RegisterLecturer },
-    { path: '/IntroductToIT', component: IntroductToIT},
-    { path: '/HtmlCss', component: HtmlCss},
-    { path: '/ReponsGridSystem', component: ReponsGridSystem},
-    { path: '/PageVideoLearn', component: PageVideoLearn , layout : null},
-
+    { path: '/IntroductToIT', component: IntroductToIT },
+    { path: '/HtmlCss', component: HtmlCss },
+    { path: '/ReponsGridSystem', component: ReponsGridSystem },
+    { path: '/PageVideoLearn', component: PageVideoLearn, layout: HeaderOnly },
 ];
 
 export const privateRouter = [];

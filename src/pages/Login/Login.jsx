@@ -34,6 +34,8 @@ const Login = ({ setAction, setShowForgotPassword }) => {
             const data = await res.json();
             console.log(data?.token);
             localStorage.setItem('token', data?.token);
+            localStorage.setItem('email', formData?.email);
+           
             navigate('/'); // Chuyển hướng đến HomePage
         } catch (error) {
             console.error('Error:', error);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const GetEmailAPI = 'https://localhost:7127/GetEmailFromToken';
+const GetEmailAPI = 'https://localhost:7127/GetInformationFromToken';
 const GetProfileFromEmailAPI = 'https://localhost:7127/api/Profile/GetProfile';
 
 const GetAPI = () => {
