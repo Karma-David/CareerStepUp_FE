@@ -34,6 +34,8 @@ const Login = ({ setAction, setShowForgotPassword }) => {
             const data = await res.json();
             console.log(data?.token);
             localStorage.setItem('token', data?.token);
+            localStorage.setItem('email', formData?.email);
+           
             navigate('/'); // Chuyển hướng đến HomePage
         } catch (error) {
             console.error('Error:', error);
@@ -59,7 +61,7 @@ const Login = ({ setAction, setShowForgotPassword }) => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify( credential ), // Bao bọc credential trong một đối tượng
+                    body: JSON.stringify(credential), // Bao bọc credential trong một đối tượng
                 });
 
                 if (!res.ok) {

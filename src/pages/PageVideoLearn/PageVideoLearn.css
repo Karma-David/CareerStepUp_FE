@@ -1,0 +1,19 @@
+.form-learn {
+    display: flex;
+}
+.body-video {
+    width: 80%;
+}
+.list-topic {
+    width: 20%;
+}
+.Video-course {
+    min-height: 500px;
+}
+.description-course {
+    min-height: 200px;
+}
+.video {
+    width: 100%;
+    height: 100%;
+}

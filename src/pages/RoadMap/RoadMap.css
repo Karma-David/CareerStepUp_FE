@@ -1,0 +1,79 @@
+.Roadmap-page {
+    margin-bottom: 60px;
+    padding: 20px 44px 0;
+}
+.roadmap-page-decription {
+    margin-bottom: 80px;
+    p {
+        line-height: 40px;
+    }
+}
+.container-roadmap {
+    border: 2px solid #e8e8e8;
+    border-radius: 16px;
+    padding: 24px;
+    margin-left: 100px;
+    margin-bottom: 70px;
+    width: 500px;
+}
+.box-roadmap {
+    padding: 24px;
+    display: flex;
+    justify-content: center;
+}
+.Header-roadmap-box {
+    p {
+        width: 300px;
+        padding-top: 10px;
+    }
+}
+.form-container-roadmap {
+    display: flex;
+    flex-wrap: wrap;
+}
+.image-learning-roadmap {
+    width: 98px;
+    height: 98px;
+    margin-top: 7px;
+    margin-left: 8px;
+}
+.image-learning-path {
+    width: 146px;
+    height: 126px;
+    align-items: center;
+    display: flex;
+    padding-left: 24px;
+}
+.link-roadmap {
+    width: 122px;
+    height: 122px;
+    border-radius: 50%;
+    border: 5px solid rgba(236, 67, 6, 0.884);
+    text-decoration: none;
+    outline: none;
+}
+.list-courses-roadmap {
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+    margin-top: 10px;
+}
+.image-learning-course-path {
+    align-items: center;
+    display: flex;
+    height: 40px;
+}
+.link-roadmap-course {
+    border-radius: 50%;
+    border: 1px solid rgba(236, 67, 6, 0.884);
+    height: 50px;
+    width: 50px;
+}
+.image-course-learning-roadmap {
+    margin-top: 10px;
+    margin-left: 10px;
+    height: 30px;
+}
+.Button-See-more {
+    margin-top: 30px;
+}
