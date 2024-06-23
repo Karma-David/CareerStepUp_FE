@@ -59,7 +59,7 @@ const Login = ({ setAction, setShowForgotPassword }) => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ credential }), // Bao bọc credential trong một đối tượng
+                    body: JSON.stringify( credential ), // Bao bọc credential trong một đối tượng
                 });
 
                 if (!res.ok) {
@@ -87,7 +87,7 @@ const Login = ({ setAction, setShowForgotPassword }) => {
             script.onload = () => {
                 if (window.google) {
                     window.google.accounts.id.initialize({
-                        client_id: '724605755791-uus60sttbtkb0korqu7hpk6d37kv0p8o.apps.googleusercontent.com',
+                        client_id: '129660663213-7j1n3pi2kccbtbbe44r6h27g1f6j2kmg.apps.googleusercontent.com',
                         callback: handleCallBackResponse,
                     });
                     window.google.accounts.id.renderButton(document.getElementById('google-login-button'), {
