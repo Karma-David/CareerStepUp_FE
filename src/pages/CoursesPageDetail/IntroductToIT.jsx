@@ -5,7 +5,21 @@ import { IoMdFilm } from 'react-icons/io';
 import { FaBatteryFull } from 'react-icons/fa';
 
 function IntroductToIT() {
+    const CourseUserAPI = 'http://localhost:3000/courses';
+    const [Courses, setCourses] = useState([]);
+
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    useEffect(() => {
+        GetCourses().then(setCourses);
+    }, []);
+
+    const GetCourses = async () => {
+        const response = await fetch(CourseUserAPI);
+        const data = await response.json();
+        return data;
+    };
+
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -14,10 +28,19 @@ function IntroductToIT() {
         }
     }, []);
 
+     // id khoa hoc
+    //  const  Introduc_id = 1;
+
+    // // so sanh course qua id
+    // const course = Courses.find((course) => course.id === Introduc_id);
+
     const handleStartLearn = () => {
+
         return alert('You need to be logged in');
     };
+   
 
+    
     const courseOverview = [
         { icon: <IoSpeedometer />, text: 'Trình độ cơ bản' },
         { icon: <IoMdFilm />, text: 'Tổng số 12 bài học' },

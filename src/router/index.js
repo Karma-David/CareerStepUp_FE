@@ -13,6 +13,7 @@ import IntroductToIT from '@/pages/CoursesPageDetail/IntroductToIT';
 import PageVideoLearn from '@/pages/PageVideoLearn/PageVideoLearn';
 import HtmlCss from '@/pages/CoursesPageDetail/HtmlCss';
 import ReponsGridSystem from '@/pages/CoursesPageDetail/ReponsGridSystem';
+import PayPage from '@/pages/PaymentPage/PayPage';
 import { HeaderOnly } from '@/components/Layout';
 
 export const publishRouter = [
@@ -31,6 +32,10 @@ export const publishRouter = [
     { path: '/HtmlCss', component: HtmlCss },
     { path: '/ReponsGridSystem', component: ReponsGridSystem },
     { path: '/PageVideoLearn', component: PageVideoLearn, layout: HeaderOnly },
+    { path: '/PayPage', component: PayPage },
+
+
+
 ];
 
 export const privateRouter = [];

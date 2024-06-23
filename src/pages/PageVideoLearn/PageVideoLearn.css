@@ -6,6 +6,7 @@
 }
 .list-topic {
     width: 20%;
+    margin-left: 10px;
 }
 .Video-course {
     min-height: 500px;
@@ -14,6 +15,12 @@
     min-height: 200px;
 }
 .video {
-    width: 100%;
-    height: 100%;
+    width: 1036px;
+    height: 500px;
+}
+.list-lesson {
+    li {
+        list-style: none;
+        line-height: 30px;
+    }
 }
