@@ -3,6 +3,7 @@ import './CoursesPageDetail.css';
 import { TiTick } from 'react-icons/ti';
 
 function CourseDetail({
+    
     title,
     description,
     targets,
