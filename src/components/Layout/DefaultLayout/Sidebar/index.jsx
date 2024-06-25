@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import style from './Sidebar.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faRoad, faUser, faGraduationCap, faGauge, faChartLine, faBook } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faRoad, faUser, faGraduationCap, faGauge, faChartLine, faBook, faFolder, faCertificate, faPaperPlane, faHandPaper, faTable } from '@fortawesome/free-solid-svg-icons';
 
 import ButtonSidebar from '@/components/Layout/DefaultLayout/ButtonSidebar';
 
@@ -35,15 +35,15 @@ function Sidebar() {
                 <span style={{color:'black'}} className={cx('text')}>Dashboard</span>
                 </ButtonSidebar>
 
-                {/* <ButtonSidebar to={'/Fees'}>
-                <FontAwesomeIcon style={{color:'black'}} icon={faChartLine} className={cx('icon', 'black-icon')} />
-                <span style={{color:'black'}} className={cx('text')}>Fees</span>
-                </ButtonSidebar> */}
+                <ButtonSidebar to={'/NotConfirmedLecturer'}>
+                <FontAwesomeIcon style={{color:'black'}} icon={faTable} className={cx('icon', 'black-icon')} />
+                <span style={{color:'black'}} className={cx('text')}>L-Form</span>
+                </ButtonSidebar>
 
-                <ButtonSidebar to={'/Course'}>
+                {/* <ButtonSidebar to={'/Course'}>
                 <FontAwesomeIcon style={{color:'black'}} icon={faBook} className={cx('icon', 'black-icon')} />
                 <span style={{color:'black'}} className={cx('text')}>Course</span>
-                </ButtonSidebar>
+                </ButtonSidebar> */}
 
 
 

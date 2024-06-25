@@ -17,9 +17,10 @@ import PayPage from '@/pages/PaymentPage/PayPage';
 import { HeaderOnly } from '@/components/Layout';
 import Lecturers from '@/pages/AdminPage/Components/Lecturers/Lecturers';
 import Students from '@/pages/AdminPage/Components/Students/Students';
-import Fees from '@/pages/AdminPage/Components/Fees/Fees';
+import Fees from '@/pages/AdminPage/Components/NotConfirmedLecturer/NotConfirmedLecturer';
 import Course from '@/pages/AdminPage/Components/Course/Course';
 import PaymentPageSuccess from '@/pages/PaymentPage/PaymentPageSuccess';
+import NotConfirmedLecturer from '@/pages/AdminPage/Components/NotConfirmedLecturer/NotConfirmedLecturer';
 
 
 export const publishRouter = [
@@ -40,6 +41,10 @@ export const publishRouter = [
     { path: '/PageVideoLearn', component: PageVideoLearn, layout: HeaderOnly },
     { path: '/PayPage', component: PayPage},
     { path: '/PaymentPageSuccess', component: PaymentPageSuccess},
+    { path: '/Lecturers', component: Lecturers},
+    { path: '/NotConfirmedLecturer', component: NotConfirmedLecturer},
+    //{ path: '/PaymentPageSuccess', component: PaymentPageSuccess},
+    //{ path: '/PaymentPageSuccess', component: PaymentPageSuccess},
 ];
 
 export const privateRouter = [
