@@ -1,90 +1,96 @@
-import React from "react";
-
+// CoursesTable.js
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './styles.css';
+import { FaCheck, FaTimes } from 'react-icons/fa';
 
-const courses = [
-    {
-        title: "Why Should You Consider Taking an Education Course?",
-        date: "April 23",
-        duration: "12 Months",
-        professor: "Nashid Martines",
-        students: 120,
-        image: "images/ccc1.png" // Replace with actual image path
-    },
-    {
-        title: "When Is the Best Time to Take an Education Course?",
-        date: "April 23",
-        duration: "12 Months",
-        professor: "Jack Ronan",
-        students: 120,
-        image: "images/ccc2.png" // Replace with actual image path
-    },
-    {
-        title: "Education Courses: A Guide to Unlocking Your Potential",
-        date: "April 23",
-        duration: "12 Months",
-        professor: "Jimmy Morris",
-        students: 120,
-        image: "images/ccc3.png" // Replace with actual image path
-    },
-    {
-        title: "Course Title 4",
-        date: "April 23",
-        duration: "12 Months",
-        professor: "Professor Name 4",
-        students: 120,
-        image: "images/ccc4.png" // Replace with actual image path
-    },
-    {
-        title: "Course Title 5",
-        date: "April 23",
-        duration: "12 Months",
-        professor: "Professor Name 5",
-        students: 120,
-        image: "images/ccc5.png" // Replace with actual image path
-    },
-    {
-        title: "Course Title 6",
-        date: "April 23",
-        duration: "12 Months",
-        professor: "Professor Name 6",
-        students: 120,
-        image: "images/ccc6.png" // Replace with actual image path
+const Course = () => {
+    const [courses, setCourses] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchCourses = async () => {
+            try {
+                const response = await axios.get('https://localhost:7127/api/Courses/GetAllConfirmedCourse');
+                if (response.data && Array.isArray(response.data.value)) {
+                    setCourses(response.data.value);
+                } else {
+                    setCourses([]);
+                    setError('No courses found');
+                }   
+            } catch (error) {
+                console.error('Error fetching courses:', error);
+                setError('Error fetching courses');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCourses();
+    }, []);
+
+    const handleApprove = async (courseId) => {
+        try {
+            await axios.put(`https://localhost:7127/api/Courses/ApproveCourse?id=${courseId}`);
+            setCourses(courses.filter(course => course.course_Id !== courseId));
+        } catch (error) {
+            console.error('Error approving course:', error);
+        }
+    };
+
+    const handleDelete = async (courseId) => {
+        try {
+            await axios.delete(`https://localhost:7127/api/Courses/DeleteCourse?id=${courseId}`);
+            setCourses(courses.filter(course => course.course_Id !== courseId));
+        } catch (error) {
+            console.error('Error rejecting course:', error);
+        }
+    };
+
+    if (loading) {
+        return <div className="loading">Loading...</div>;
     }
-];
 
-function CourseCard({ course }) {
+    if (error) {
+        return <div className="error">{error}</div>;
+    }
+
     return (
-        <div className="course-card">
-            <img src={course.image} alt={course.title} />
-            <div className="course-card-body">
-                <h3 className="course-card-title">{course.title}</h3>
-                <p className="course-card-info">Date: {course.date}</p>
-                <p className="course-card-info">Duration: {course.duration}</p>
-                <p className="course-card-info">Professor: {course.professor}</p>
-                <p className="course-card-info">Students: {course.students}</p>
-            </div>
-            {/* <div className="course-card-footer">
-                <button className="btn">Read More</button>
-            </div> */}
+        <div className="table-container">
+            <h2>Courses List</h2>
+            {courses.length > 0 ? (
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Course_Img</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {courses.map((course) => (
+                            <tr key={course.course_Id}>
+                                <td>{course.title}</td>
+                                <td>{course.description}</td>
+                                <td>
+                                    <img src={course.course_Img} alt="img" />
+                                </td>
+                                <td>
+                                    <button onClick={() => handleDelete(course.course_Id)} className="reject-btn">
+                                        <FaTimes style={{ color: 'red', fontSize: '24px' }} />
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            ) : (
+                <div className="no-courses">No courses found</div>
+            )}
         </div>
     );
-}
-
-function Course() {
-    return (
-        <div>
-           
-            <div className="courses-page">
-                <h1>All Courses</h1>
-                <div className="grid-view">
-                    {courses.map((course, index) => (
-                        <CourseCard key={index} course={course} />
-                    ))}
-                </div>
-            </div>
-        </div>
-    );
-}
+};
 
 export default Course;

@@ -25,9 +25,9 @@ function Sidebar() {
                 <span style={{color:'black'}} className={cx('text')}>Lecturers</span>
                 </ButtonSidebar>
 
-                <ButtonSidebar to={'/Students'}>
-                <FontAwesomeIcon style={{color:'black'}} icon={faGraduationCap} className={cx('icon', 'black-icon')} />
-                <span style={{color:'black'}} className={cx('text')}>Students</span>
+                <ButtonSidebar to={'/Course'}>
+                <FontAwesomeIcon style={{color:'black'}} icon={faBook} className={cx('icon', 'black-icon')} />
+                <span style={{color:'black'}} className={cx('text')}>C-Form</span>
                 </ButtonSidebar>
 
                 <ButtonSidebar to={'/AdminPage'}>

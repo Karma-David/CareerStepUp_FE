@@ -43,7 +43,7 @@ export const publishRouter = [
     { path: '/PaymentPageSuccess', component: PaymentPageSuccess},
     { path: '/Lecturers', component: Lecturers},
     { path: '/NotConfirmedLecturer', component: NotConfirmedLecturer},
-    //{ path: '/PaymentPageSuccess', component: PaymentPageSuccess},
+    { path: '/Course', component: Course},
     //{ path: '/PaymentPageSuccess', component: PaymentPageSuccess},
 ];
 
