@@ -19,34 +19,48 @@ import Lecturers from '@/pages/AdminPage/Components/Lecturers/Lecturers';
 import Students from '@/pages/AdminPage/Components/Students/Students';
 import Fees from '@/pages/AdminPage/Components/NotConfirmedLecturer/NotConfirmedLecturer';
 import Course from '@/pages/AdminPage/Components/Course/Course';
+
+import UpTopic from '@/pages/Upload/UpTopic';
+import UpLesson from '@/pages/Upload/UpLesson';
+import UpNewCourse from '@/pages/Upload/NewCourse';
+
 import PaymentPageSuccess from '@/pages/PaymentPage/PaymentPageSuccess';
 import NotConfirmedLecturer from '@/pages/AdminPage/Components/NotConfirmedLecturer/NotConfirmedLecturer';
+
 
 
 export const publishRouter = [
     { path: '/', component: Home },
     { path: '/roadmap', component: RoadMap },
     { path: '/profile', component: Profile },
-    { path: '/upload', component: Upload, layout: HeaderOnly },
+    { path: '/upload', component: Upload },
     { path: '/search', component: Search, layout: null },
     { path: '/Login', component: Login, layout: null },
     { path: '/Register', component: Register, layout: null },
     { path: '/ForgotPass', component: ForgotPass, layout: null },
     { path: '/ResetPass', component: ResetPass, layout: null },
-    { path: '/AdminPage', component: AdminPage},
+    { path: '/AdminPage', component: AdminPage },
     { path: '/RegisterLecturer', component: RegisterLecturer },
     { path: '/IntroductToIT', component: IntroductToIT },
     { path: '/HtmlCss', component: HtmlCss },
     { path: '/ReponsGridSystem', component: ReponsGridSystem },
+    { path: '/PayPage', component: PayPage },
+    { path: '/Lecturers', component: Lecturers },
+    { path: '/Students', component: Students },
+    { path: '/Fees', component: Fees },
+    { path: '/Course', component: Course },
+    { path: '/UpTopic/:id', component: UpTopic },
+    { path: '/UpLesson/', component: UpLesson },
+    { path: '/UpNewCourse', component: UpNewCourse },
     { path: '/PageVideoLearn', component: PageVideoLearn, layout: HeaderOnly },
+
     { path: '/PayPage', component: PayPage},
     { path: '/PaymentPageSuccess', component: PaymentPageSuccess},
     { path: '/Lecturers', component: Lecturers},
     { path: '/NotConfirmedLecturer', component: NotConfirmedLecturer},
     { path: '/Course', component: Course},
     //{ path: '/PaymentPageSuccess', component: PaymentPageSuccess},
+
 ];
 
-export const privateRouter = [
-    
-];
+export const privateRouter = [];

@@ -1,5 +1,14 @@
+import CourseList from './CourseList';
+
+import './Upload.css';
 function Upload() {
-    return <h1>Upload Page</h1>;
+    
+    return (
+        <div style={{width:'1400px'}}>
+            <h1>Your courses</h1>
+            <CourseList />          
+        </div>
+    );
 }
 
 export default Upload;
