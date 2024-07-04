@@ -7,7 +7,7 @@ import './Login.css';
 const LoginAPI = 'https://localhost:7127/SignIn';
 const GoogleLoginApi = 'https://localhost:7127/SignInByGoogle';
 
-const Login = ({ setAction, setShowForgotPassword }) => {
+const Login = () => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',

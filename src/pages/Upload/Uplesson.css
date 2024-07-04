@@ -1,0 +1,46 @@
+.list-lesson-topic {
+    margin-left: 150px;
+}
+.lesson-item {
+    width: 1000px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.edit-lesson-up {
+    input {
+        margin: 10px;
+        width: 200px;
+        height: 50px;
+        border-radius: 5px;
+        border: 1px solid #333;
+        padding: 10px;
+    }
+}
+.write-edit-lesson {
+    display: flex;
+    justify-content: center;
+    input {
+        margin: 10px;
+        width: 200px;
+        height: 50px;
+        border-radius: 5px;
+        border: 1px solid #333;
+        padding: 10px;
+    }
+}
+.name-lesson {
+    width: 100px;
+    margin-left: 10px;
+}
+.button-handle-lesson {
+    width: 500px;
+    display: flex;
+    justify-content: space-around;
+}

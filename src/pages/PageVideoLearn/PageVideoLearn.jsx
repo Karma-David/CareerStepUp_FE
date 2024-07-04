@@ -10,9 +10,9 @@ function PageVideoLearn() {
 
     const toggleVisibility = (id, isTopic) => {
         if (isTopic) {
-            setVisibleTopics(prev => ({ ...prev, [id]: !prev[id] }));
+            setVisibleTopics((prev) => ({ ...prev, [id]: !prev[id] }));
         } else {
-            setVisibleLessons(prev => ({ ...prev, [id]: !prev[id] }));
+            setVisibleLessons((prev) => ({ ...prev, [id]: !prev[id] }));
         }
     };
 
@@ -37,7 +37,10 @@ function PageVideoLearn() {
                 <div className="Video-course">
                     <img
                         className="video"
-                        src={selectedVideo || "https://th.bing.com/th/id/OIF.NHASF4BiTqlwrC9qmeTUjg?w=303&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7"}
+                        src={
+                            selectedVideo ||
+                            'https://th.bing.com/th/id/OIF.NHASF4BiTqlwrC9qmeTUjg?w=303&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7'
+                        }
                         alt="Video thumbnail"
                     />
                 </div>
@@ -51,14 +54,14 @@ function PageVideoLearn() {
                     {Courses.map((course) => (
                         <div key={course.id}>
                             <h2>{course.course}</h2>
-                            {course.topic.map((topic) => (
+                            {Array.isArray(course.topic) && course.topic.map((topic) => (
                                 <div key={topic.id}>
                                     <h3 onClick={() => toggleVisibility(topic.id, true)}>{topic.name}</h3>
                                     {visibleTopics[topic.id] && (
                                         <ul>
                                             {topic.lesson.map((lesson) => (
                                                 <li key={lesson.id} onClick={() => handleLessonClick(lesson)}>
-                                                    {lesson.name}                                                   
+                                                    {lesson.name}
                                                 </li>
                                             ))}
                                         </ul>

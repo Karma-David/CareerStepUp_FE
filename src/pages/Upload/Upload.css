@@ -1,0 +1,45 @@
+.new-course-up {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.write-new-course {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+    input {
+        margin: 10px;
+        width: 200px;
+        height: 50px;
+        border-radius: 5px;
+        border: 1px solid #333;
+        padding: 10px;
+    }
+}
+.edit-course {
+    display: flex;
+    margin-top: 20px;
+    margin-left: 20px;
+    input {
+        margin: 10px;
+        width: 200px;
+        height: 50px;
+        border-radius: 5px;
+        border: 1px solid #333;
+        padding: 10px;
+    }
+}
+.course-item {
+    width: 1000px;
+    display: flex;
+    justify-content: space-between;
+}
+.name-course {
+    width: 100px;
+    margin-left: 10px;
+}
+.button-handle-course {
+    width: 500px;
+    display: flex;
+    justify-content: space-around;
+}
