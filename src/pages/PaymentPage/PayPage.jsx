@@ -2,29 +2,34 @@
 import React, { useState } from 'react';
 import './PayPage.css';
 
+const PaymentApi = 'https://localhost:7127/api/Payments/create-payment';
+const GetUserIDApi = 'https://localhost:7127/GetUserIDfromToken';
+
 const PaymentPage = () => {
-  const [amount, setAmount] = useState('');
-  const [name, setName] = useState('');
-
   const handlePayment = async () => {
-    if (!amount || !name) {
-      alert("Please enter all required information.");
-      return;
-    }
-
     try {
-      const response = await fetch('/api/create_payment_url', {
+      const responseForUserID = await fetch(GetUserIDApi, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ amount, name }),
+        body: JSON.stringify(localStorage.getItem('email')),
       });
 
-      const data = await response.json();
-      if (data && data.paymentUrl) {
-        window.location.href = data.paymentUrl;
-      }
+      const userId = await responseForUserID.json();
+      console.log(userId.value);
+      
+      const responseForLink = await fetch(PaymentApi, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userId.value),
+      });
+
+      const link = await responseForLink.json();
+      window.location.href = link.paymentUrl;
+      //console.log(link.paymentUrl);
     } catch (error) {
       console.error("Error creating payment URL:", error);
     }
@@ -33,24 +38,8 @@ const PaymentPage = () => {
   return (
     <div className="payment-page">
       <div className="payment-container">
-        <h1 className="payment-title">VNPay Payment</h1>
+        <h1 className="payment-title">Buy Premium</h1>
         <div className="payment-form">
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter your name"
-          />
-          <label htmlFor="amount">Amount (VND):</label>
-          <input
-            type="number"
-            id="amount"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            placeholder="Enter amount"
-          />
           <button onClick={handlePayment}>Pay with VNPay</button>
         </div>
       </div>
