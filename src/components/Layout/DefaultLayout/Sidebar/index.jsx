@@ -90,6 +90,13 @@ function Sidebar() {
                         L-Form
                     </span>
                 </ButtonSidebar>
+
+
+                {/* <ButtonSidebar to={'/Course'}>
+                <FontAwesomeIcon style={{color:'black'}} icon={faBook} className={cx('icon', 'black-icon')} />
+                <span style={{color:'black'}} className={cx('text')}>Course</span>
+                </ButtonSidebar> */}
+
             </div>
         </aside>
     );

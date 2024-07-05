@@ -76,7 +76,7 @@ const NotConfirmedLecturer = () => {
                         {lecturers.map((lecturer) => (
                             <tr key={lecturer.lecturer_Id}>
                                 <td>
-                                    <img src={lecturer.avatar_Url} alt="Avatar" />
+                                    <img style={{width:'50px',height:'50px',borderRadius:'50%'}} src={lecturer.avatar_Url} alt="Avatar" />
                                 </td>
                                 <td>{lecturer.firstName}</td>
                                 <td>{lecturer.lastName}</td>
