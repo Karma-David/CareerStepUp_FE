@@ -10,11 +10,11 @@ function Footer() {
             <div className="container">
                 <div className="row">
                     <div className="col-md-4">
-                        <h2>Về chúng tôi</h2>
+                        <h2 style={{ color: 'white' }}>Về chúng tôi</h2>
                         <p>Đây là một trang web cung cấp các khóa học lập trình chất lượng cao.</p>
                     </div>
                     <div className="col-md-4">
-                        <h2>Liên hệ</h2>
+                        <h2 style={{ color: 'white' }}>Liên hệ</h2>
                         <ul className="list-unstyled">
                             <li>
                                 <FontAwesomeIcon icon={faApple} /> buivetkien@gmail.com
@@ -28,7 +28,7 @@ function Footer() {
                         </ul>
                     </div>
                     <div className="col-md-4">
-                        <h2>Theo dõi chúng tôi</h2>
+                        <h2 style={{ color: 'white' }}>Theo dõi chúng tôi</h2>
                         <a
                             href="https://www.facebook.com"
                             target="_blank"

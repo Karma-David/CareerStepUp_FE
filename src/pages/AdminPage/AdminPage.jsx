@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Sidebar from './Pagess/Sidebar';
+
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Home from './Pagess/Home';
-import { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 
 // import Students from './Components/Students/Students';
 // import Fees from './Components/Fees/Fees';

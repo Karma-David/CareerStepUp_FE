@@ -1,9 +1,9 @@
 .image-warrper {
     display: grid;
     justify-content: center;
-
     margin-top: 120px;
 }
+
 .avatar-image {
     width: 150px;
     height: 150px;
@@ -11,34 +11,65 @@
     object-fit: cover; /* Đảm bảo ảnh vừa khít trong phần tử */
     border: 2px solid #333; /* Đường viền màu trắng, có thể thay đổi màu sắc nếu cần */
 }
-.chosse-image {
-    padding: 20px;
+
+.chosse-image,
+.save-image {
+    padding: 10px 20px;
+    margin: 10px 0;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    transition-duration: 0.4s;
+}
+
+.chosse-image:hover,
+.save-image:hover {
+    background-color: white;
+    color: black;
+    border: 2px solid #4caf50;
+}
+
+.save-image.disabled {
+    background-color: gray;
+    cursor: not-allowed;
+    border: none;
 }
 
 .info-wrapper {
     display: flex;
     justify-content: space-around;
 }
+
 .information {
     width: 500px;
-    height: 500px;
+    height: auto;
     border-radius: 5%;
     border: 1px solid #333;
+    padding: 20px;
 
     h3 {
         margin-left: 20px;
     }
-    p {
-        margin-left: 20px;
-    }
-    span {
+    form {
         display: grid;
-        width: 90%;
-        margin-left: 20px;
-        margin-bottom: 15px;
-        padding: 5px 5px;
-        border-radius: 10px;
-        border: 1px solid #333;
+        gap: 10px;
+        label {
+            display: flex;
+            flex-direction: column;
+            font-weight: bold;
+        }
+        input {
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
     }
 }
 
@@ -47,11 +78,13 @@
     min-height: 500px;
     border-radius: 5%;
     border: 1px solid #333;
+    padding: 20px;
 
     h3 {
         margin-left: 20px;
     }
 }
+
 .class-inner {
     display: flex;
     width: 90%;
@@ -61,10 +94,12 @@
     border-radius: 7px;
     border: 1px solid #b4b2b2;
 }
+
 .img-thumbnail {
     width: 40%;
     border-radius: 7%;
 }
+
 .info-class {
     font-size: 1.5rem;
     line-height: 2rem;
