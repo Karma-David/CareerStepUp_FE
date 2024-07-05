@@ -26,6 +26,7 @@ import UpNewCourse from '@/pages/Upload/NewCourse';
 
 import PaymentPageSuccess from '@/pages/PaymentPage/PaymentPageSuccess';
 import NotConfirmedLecturer from '@/pages/AdminPage/Components/NotConfirmedLecturer/NotConfirmedLecturer';
+import LecturerProfile from '@/pages/AdminPage/Components/Lecturers/LecturerProfile';
 
 export const publishRouter = [
     { path: '/', component: Home },
@@ -52,14 +53,12 @@ export const publishRouter = [
     { path: '/UpNewCourse', component: UpNewCourse },
 
     { path: '/PageVideoLearn', component: PageVideoLearn, layout: HeaderOnly },
-
-    { path: '/PayPage', component: PayPage },
-    { path: '/PaymentPageSuccess', component: PaymentPageSuccess },
-    { path: '/Lecturers', component: Lecturers },
-    { path: '/NotConfirmedLecturer', component: NotConfirmedLecturer },
-    { path: '/Course', component: Course },
-    //{ path: '/PaymentPageSuccess', component: PaymentPageSuccess},
-
+    { path: '/PayPage', component: PayPage},
+    { path: '/PaymentPageSuccess', component: PaymentPageSuccess},
+    { path: '/Lecturers', component: Lecturers},
+    { path: '/NotConfirmedLecturer', component: NotConfirmedLecturer},
+    { path: '/Course', component: Course},
+    { path: '/LecturerProfile/:lecturerId', component: LecturerProfile},
     { path: '/Test/:id', component: Test },
 ];
 

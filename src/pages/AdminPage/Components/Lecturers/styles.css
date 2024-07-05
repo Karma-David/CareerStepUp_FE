@@ -52,3 +52,10 @@ td a {
 td a:hover {
     text-decoration: underline;
 }
+.square-image {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    /* Đảm bảo hình ảnh lấp đầy và không bị kéo dài */
+    aspect-ratio: 1; /* Tạo tỷ lệ hình ảnh vuông */
+}
