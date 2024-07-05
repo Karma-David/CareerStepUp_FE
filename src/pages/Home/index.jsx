@@ -14,13 +14,14 @@ function Home() {
     }, []);
 
     const fetchCourses = async () => {
+        const pageIndex = 1;
         try {
             const response = await fetch('https://localhost:7127/api/Courses/SearchCourses', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({}), // You can pass your search criteria here
+                body: JSON.stringify({ pageIndex }), // You can pass your search criteria here
             });
             const data = await response.json();
             if (data.value && Array.isArray(data.value)) {

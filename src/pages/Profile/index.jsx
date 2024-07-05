@@ -7,7 +7,6 @@ import GetCourseUser from './GetCourseUser';
 const cx = classNames.bind(style);
 
 const GetProfileFromEmailAPI = 'https://localhost:7127/api/Profile/GetProfile';
-const changePhotoUserAPI = 'https://localhost:7127/api/Photos/uploadForUser';
 
 function Profile() {
     const [profile, setProfile] = useState({});
@@ -55,13 +54,14 @@ function Profile() {
     const uploadNewPhoto = async () => {
         try {
             const email = localStorage.getItem('email');
+            const changePhotoUserAPI = `https://localhost:7127/api/Photos/uploadForUser?email=${email}`;
             if (!email || !newPhoto) {
                 alert('Please select a photo and ensure email is available.');
                 return;
             }
 
             const formData = new FormData();
-            formData.append('email', email);
+
             formData.append('file', newPhoto);
 
             const res = await fetch(changePhotoUserAPI, {
@@ -93,7 +93,12 @@ function Profile() {
             <div className={cx('image-wrapper')}>
                 <img className={cx('avatar-image')} src={profile.avatar_Url} alt="User Avatar" />
                 <input className={cx('choose-image')} type="file" onChange={handlePhotoChange} />
-                <button type="button" onClick={uploadNewPhoto}>
+                <button
+                    
+                    className={cx('save-image')}
+                    type="button"
+                    onClick={uploadNewPhoto}
+                >
                     Save
                 </button>
             </div>

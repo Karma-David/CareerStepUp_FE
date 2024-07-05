@@ -53,7 +53,7 @@ function Sidebar() {
 
                     </ButtonSidebar>
 
-                </ButtonSidebar>
+            
 
 
                 <ButtonSidebar to={'/Course'}>
