@@ -25,10 +25,10 @@ function Sidebar() {
                 <span style={{color:'black'}} className={cx('text')}>Lecturers</span>
                 </ButtonSidebar>
 
-                <ButtonSidebar to={'/Course'}>
+                {/* <ButtonSidebar to={'/Course'}>
                 <FontAwesomeIcon style={{color:'black'}} icon={faBook} className={cx('icon', 'black-icon')} />
                 <span style={{color:'black'}} className={cx('text')}>C-Form</span>
-                </ButtonSidebar>
+                </ButtonSidebar> */}
 
                 <ButtonSidebar to={'/AdminPage'}>
                 <FontAwesomeIcon style={{color:'black'}} icon={faGauge} className={cx('icon', 'black-icon')} />

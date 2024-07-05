@@ -21,7 +21,7 @@ import Fees from '@/pages/AdminPage/Components/NotConfirmedLecturer/NotConfirmed
 import Course from '@/pages/AdminPage/Components/Course/Course';
 import PaymentPageSuccess from '@/pages/PaymentPage/PaymentPageSuccess';
 import NotConfirmedLecturer from '@/pages/AdminPage/Components/NotConfirmedLecturer/NotConfirmedLecturer';
-
+import LecturerProfile from '@/pages/AdminPage/Components/Lecturers/LecturerProfile';
 
 export const publishRouter = [
     { path: '/', component: Home },
@@ -44,7 +44,7 @@ export const publishRouter = [
     { path: '/Lecturers', component: Lecturers},
     { path: '/NotConfirmedLecturer', component: NotConfirmedLecturer},
     { path: '/Course', component: Course},
-    //{ path: '/PaymentPageSuccess', component: PaymentPageSuccess},
+    { path: '/LecturerProfile/:lecturerId', component: LecturerProfile},
 ];
 
 export const privateRouter = [

@@ -73,7 +73,7 @@ const Course = () => {
                         {courses.map((course) => (
                             <tr key={course.course_Id}>
                                 <td>{course.title}</td>
-                                <td>{course.description}</td>
+                                <td>{course.lecture_id}</td>
                                 <td>
                                     <img src={course.course_Img} alt="img" />
                                 </td>

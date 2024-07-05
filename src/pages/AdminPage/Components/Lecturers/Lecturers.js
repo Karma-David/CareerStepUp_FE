@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'; 
 import axios from 'axios';
 import './styles.css';
 
@@ -63,7 +64,11 @@ const LecturerTable = () => {
                                 <td>
                                     <a href={lecturer.certificate} style={{ color: 'orange' }} target="_blank" rel="noopener noreferrer">Certificate</a>
                                 </td>
-                                <td>{lecturer.description}</td>
+                                <td>
+                                    <Link to={`/LecturerProfile/${lecturer.lecturer_Id}`} className="profile-button" style={{color:'black'}}>
+                                        View Profile
+                                    </Link>
+                                </td>
                             </tr>
                         ))}
                     </tbody>

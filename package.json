@@ -18,7 +18,7 @@
         "@tippyjs/react": "^4.2.6",
         "assert": "^2.1.0",
         "axios": "^1.7.2",
-        "bootstrap": "^5.3.3",
+        "bootstrap": "^5.0.0",
         "bootstrap-icons": "^1.11.3",
         "browserify-zlib": "^0.2.0",
         "classnames": "^2.5.1",
