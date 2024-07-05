@@ -34,6 +34,7 @@ function Database() {
                 <div className="image-learning-course-path">
                     <a className="link-roadmap-course" href="/#">
                         <img
+                             style={{width:'24px', height:'24px'}}
                             className="image-course-learning-roadmap"
                             src="./images.png"
                             alt="Hoc front end qua de voi dai ka"
@@ -43,6 +44,7 @@ function Database() {
                 <div className="image-learning-course-path">
                     <a className="link-roadmap-course" href="/#">
                         <img
+                         style={{width:'24px', height:'24px'}}
                             className="image-course-learning-roadmap"
                             src="https://files.fullstack.edu.vn/f8-prod/learning-paths/2/63b4642136f3e.png"
                             alt="Hoc front end qua de voi dai ka"
@@ -52,6 +54,7 @@ function Database() {
                 <div className="image-learning-course-path">
                     <a className="link-roadmap-course" href="/#">
                         <img
+                         style={{width:'24px', height:'24px'}}
                             className="image-course-learning-roadmap"
                             src="https://files.fullstack.edu.vn/f8-prod/learning-paths/2/63b4642136f3e.png"
                             alt="Hoc front end qua de voi dai ka"
@@ -61,6 +64,7 @@ function Database() {
                 <div className="image-learning-course-path">
                     <a className="link-roadmap-course" href="/#">
                         <img
+                         style={{width:'24px', height:'24px'}}
                             className="image-course-learning-roadmap"
                             src="https://files.fullstack.edu.vn/f8-prod/learning-paths/2/63b4642136f3e.png"
                             alt="Hoc front end qua de voi dai ka"
@@ -70,6 +74,7 @@ function Database() {
                 <div className="image-learning-course-path">
                     <a className="link-roadmap-course" href="/#">
                         <img
+                         style={{width:'24px', height:'24px'}}
                             className="image-course-learning-roadmap"
                             src="https://files.fullstack.edu.vn/f8-prod/learning-paths/2/63b4642136f3e.png"
                             alt="Hoc front end qua de voi dai ka"
@@ -79,6 +84,7 @@ function Database() {
                 <div className="image-learning-course-path">
                     <a className="link-roadmap-course" href="/#">
                         <img
+                         style={{width:'24px', height:'24px'}}
                             className="image-course-learning-roadmap"
                             src="https://files.fullstack.edu.vn/f8-prod/learning-paths/2/63b4642136f3e.png"
                             alt="Hoc front end qua de voi dai ka"

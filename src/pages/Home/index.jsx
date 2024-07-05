@@ -36,15 +36,27 @@ function Home() {
     };
 
     const renderCourses = (courses) => {
+        const handleCardClick = (id) => {
+            window.location.href = `/Test/${id}`;
+        };
         return courses.map((course, index) => (
             <div className="col" key={index}>
-                <div className="card h-100 custom-card">
-                    <img src={course.course_Img} className="card-img-top custom-card-img" alt={course.title} />
+                <div
+                    className="card h-100 custom-card"
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => handleCardClick(course.course_id)}
+                >
+                    <img
+                        style={{ width: '260px', height: '140px', objectFit: 'contain' }}
+                        src={course.course_Img}
+                        className="card-img-top custom-card-img"
+                        alt={course.title}
+                    />
                     <div className="card-body">
-                        <h5 className="card-title">{course.title}</h5>
-                        {course.description && <p className="card-text">{course.description}</p>}
+                        <h2 className="card-title">{course.title}</h2>
                         <p className="card-text">Lecturer: {course.lecturerEmail}</p>
                         <p className="card-text">Price: ${course.price}</p>
+                        <p className="card-text">ID: {course.course_id}</p>
                     </div>
                 </div>
             </div>
@@ -71,16 +83,12 @@ function Home() {
 
     return (
         <div>
-            <div className="container-slide">
-                {/* Carousel code */}
-            </div>
+            <div className="container-slide">{/* Carousel code */}</div>
             <div className="container mt-5">
                 <h1 className="text-left mb-4">All Courses</h1>
-                <div className="row row-cols-1 row-cols-md-4 g-4">
-                    {renderCourses(courses)}
-                </div>
+                <div className="row row-cols-1 row-cols-md-4 g-4">{renderCourses(courses)}</div>
             </div>
-            <div className="container">
+            <div style={{ marginTop: '50px' }} className="container">
                 <Footer />
             </div>
         </div>

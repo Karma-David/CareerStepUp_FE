@@ -1,58 +1,110 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './Profile.module.scss';
 import GetAPI from './GetAPI';
 import GetCourseUser from './GetCourseUser';
+
 const cx = classNames.bind(style);
 
+const GetProfileFromEmailAPI = 'https://localhost:7127/api/Profile/GetProfile';
+const changePhotoUserAPI = 'https://localhost:7127/api/Photos/uploadForUser';
+
 function Profile() {
-    const [avatar, setAvatar] = useState(null);
-    // Nạp URL từ LocalStorage khi thành phần được gắn vào DOM
+    const [profile, setProfile] = useState({});
+    const [newPhoto, setNewPhoto] = useState(null);
+
     useEffect(() => {
-        const savedAvatar = localStorage.getItem('avatar');
-        if (savedAvatar) {
-            setAvatar({ preview: savedAvatar });
-        }
+        const getProfileFromEmail = async () => {
+            try {
+                const email = localStorage.getItem('email');
+                if (!email) {
+                    throw new Error('Email not found in local storage');
+                }
+
+                const res = await fetch(GetProfileFromEmailAPI, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email }),
+                });
+
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+
+                const profileData = await res.json();
+                if (!profileData || !profileData.value) {
+                    throw new Error('Invalid response received');
+                }
+
+                setProfile(profileData.value);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to fetch profile. Please try again.');
+            }
+        };
+
+        getProfileFromEmail();
     }, []);
 
-    // Dọn dẹp URL trước đó khi thành phần bị hủy hoặc avatar thay đổi
-    useEffect(() => {
-        if (avatar && avatar.preview && avatar.preview.startsWith('blob:')) {
-            const previewUrl = avatar.preview;
+    const handlePhotoChange = (e) => {
+        setNewPhoto(e.target.files[0]);
+    };
 
-            return () => {
-                URL.revokeObjectURL(previewUrl);
-            };
-        }
-    }, [avatar]);
+    const uploadNewPhoto = async () => {
+        try {
+            const email = localStorage.getItem('email');
+            if (!email || !newPhoto) {
+                alert('Please select a photo and ensure email is available.');
+                return;
+            }
 
-    const handlePreviewAvatar = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const previewUrl = URL.createObjectURL(file);
-            file.preview = previewUrl;
+            const formData = new FormData();
+            formData.append('email', email);
+            formData.append('file', newPhoto);
 
-            // Lưu URL vào LocalStorage
-            localStorage.setItem('avatar', previewUrl);
+            const res = await fetch(changePhotoUserAPI, {
+                method: 'POST',
+                body: formData,
+            });
 
-            setAvatar(file);
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+
+            const photoData = await res.json();
+            if (!photoData || !photoData.value) {
+                throw new Error('Invalid response received');
+            }
+
+            setProfile((prevProfile) => ({
+                ...prevProfile,
+                avatar_Url: photoData.value,
+            }));
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to upload photo. Please try again.');
         }
     };
 
     return (
         <div className={cx('wrapper')}>
-            <div className={cx('image-warrper')}>
-                {avatar && <img className={cx('avatar-image')} src={avatar.preview} alt="avatar" />}
-                <input className={cx('chosse-image')} type="file" onChange={handlePreviewAvatar} />
+            <div className={cx('image-wrapper')}>
+                <img className={cx('avatar-image')} src={profile.avatar_Url} alt="User Avatar" />
+                <input className={cx('choose-image')} type="file" onChange={handlePhotoChange} />
+                <button type="button" onClick={uploadNewPhoto}>
+                    Save
+                </button>
             </div>
             <div className={cx('info-wrapper')}>
                 <div className={cx('information')}>
-                    <h3>Thong tin ca nhan</h3>
+                    <h3>Thông tin cá nhân</h3>
                     <GetAPI />
                 </div>
                 <div className={cx('class-join')}>
-                    <h3>Khoa hoc tham gia</h3>
-                        <GetCourseUser/>
+                    <h3>Khóa học tham gia</h3>
+                    <GetCourseUser />
                 </div>
             </div>
         </div>
