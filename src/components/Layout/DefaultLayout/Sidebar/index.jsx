@@ -10,6 +10,7 @@ import {
     faGauge,
     faChartLine,
     faBook,
+    faTable,
 } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -51,7 +52,7 @@ function Sidebar() {
                     <span style={{ color: 'black' }} className={cx('text')}>
                         Students
                     </span>
-
+                    </ButtonSidebar>
                 <ButtonSidebar to={'/Course'}>
                 <FontAwesomeIcon style={{color:'black'}} icon={faBook} className={cx('icon', 'black-icon')} />
                 <span style={{color:'black'}} className={cx('text')}>C-Form</span>
