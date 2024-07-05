@@ -69,7 +69,8 @@ function FrontEnd() {
                 </div>
                 <div className="image-learning-course-path">
                     <a className="link-roadmap-course" href="/#">
-                        <img
+                        <img 
+                            style={{width:'24px', height:'24px'}}
                             className="image-course-learning-roadmap"
                             src="https://files.fullstack.edu.vn/f8-prod/courses/14/624faac2ee23d.png"
                             alt="Hoc front end qua de voi dai ka"
