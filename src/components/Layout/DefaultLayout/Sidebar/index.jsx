@@ -50,7 +50,11 @@ function Sidebar() {
                     <span style={{ color: 'black' }} className={cx('text')}>
                         Students
                     </span>
+
+                    </ButtonSidebar>
+
                 </ButtonSidebar>
+
 
                 <ButtonSidebar to={'/Course'}>
                     <FontAwesomeIcon style={{ color: 'black' }} icon={faBook} className={cx('icon', 'black-icon')} />
