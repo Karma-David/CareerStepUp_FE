@@ -1,7 +1,6 @@
 import classNames from 'classnames/bind';
 import style from './Sidebar.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import {
     faHouse,
     faRoad,
@@ -16,6 +15,7 @@ import {
 import ButtonSidebar from '@/components/Layout/DefaultLayout/ButtonSidebar';
 
 const cx = classNames.bind(style);
+
 function Sidebar() {
     return (
         <aside style={{ border: ' 1px solid #8cbd8530' }} className={cx('wrapper')}>
@@ -51,6 +51,7 @@ function Sidebar() {
                         Students
                     </span>
                 </ButtonSidebar>
+
                 <ButtonSidebar to={'/Course'}>
                     <FontAwesomeIcon style={{ color: 'black' }} icon={faBook} className={cx('icon', 'black-icon')} />
                     <span style={{ color: 'black' }} className={cx('text')}>
@@ -90,10 +91,12 @@ function Sidebar() {
                     </span>
                 </ButtonSidebar>
 
+
                 {/* <ButtonSidebar to={'/Course'}>
                 <FontAwesomeIcon style={{color:'black'}} icon={faBook} className={cx('icon', 'black-icon')} />
                 <span style={{color:'black'}} className={cx('text')}>Course</span>
                 </ButtonSidebar> */}
+
             </div>
         </aside>
     );

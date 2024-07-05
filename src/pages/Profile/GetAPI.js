@@ -1,93 +1,122 @@
 import React, { useEffect, useState } from 'react';
 
-const GetEmailAPI = 'https://localhost:7127/GetInformationFromToken';
 const GetProfileFromEmailAPI = 'https://localhost:7127/api/Profile/GetProfile';
-
-const GetAPI = () => {
-    const [email, setEmail] = useState(null);
-    const [profile, setProfile] = useState(null);
+const UpdateProfileAPI = 'https://localhost:7127/api/Profile/ChangeProfile';
+function GetAPI() {
+    const [profile, setProfile] = useState({});
 
     useEffect(() => {
-        const getEmailFromToken = async () => {
+        const getProfileFromToken = async () => {
             try {
-                const token = localStorage.getItem('token');
-                if (!token) {
-                    console.error('Token not found in local storage');
-                    alert('Token not found. Please log in again.');
-                    return;
+                const email = localStorage.getItem('email');
+                if (!email) {
+                    throw new Error('Token not found in local storage');
                 }
 
-                const res = await fetch(GetEmailAPI, {
+                const res = await fetch(GetProfileFromEmailAPI, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(token),
+                    body: JSON.stringify({ email }),
                 });
 
                 if (!res.ok) {
                     throw new Error(`HTTP error! status: ${res.status}`);
                 }
 
-                const email = await res.text(); // Get response body as text
-                console.log(email);
-                if (!email) {
-                    throw new Error('Empty response received');
+                const profileData = await res.json();
+                if (!profileData || !profileData.value) {
+                    throw new Error('Invalid response received');
                 }
 
-                setEmail(email); // Assuming the response contains the email
-                getProfileFromEmail(email); // Fetch profile data using the email
+                setProfile(profileData.value);
             } catch (error) {
                 console.error('Error:', error);
-                alert('Đăng nhập thất bại. Vui lòng thử lại.');
+                alert('Failed to log in. Please try again.');
             }
         };
 
-        getEmailFromToken();
-    }, []); // Include getEmailFromToken in the dependency array
+        getProfileFromToken();
+    }, []);
 
-    const getProfileFromEmail = async (email) => {
+    const handleUpdateProfile = async () => {
         try {
-            const data = { email }; // Create a DataGettingForm object with the email
-            const res = await fetch(GetProfileFromEmailAPI, {
+            const res = await fetch(UpdateProfileAPI, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data), // Send the DataGettingForm object in the request body
+                body: JSON.stringify(profile),
             });
 
             if (!res.ok) {
                 throw new Error(`HTTP error! status: ${res.status}`);
             }
 
-            const profileData = await res.json();
-            console.log(profileData); // Assuming response contains profile data
-            setProfile(profileData);
+            const updatedProfile = await res.json();
+            setProfile(updatedProfile.value);
+            alert('Profile updated successfully');
         } catch (error) {
-            console.error('Error fetching profile:', error);
-            if (error.response && error.response.status === 400) {
-                alert('Invalid request. Please check your input.');
-            } else {
-                alert('Error fetching profile data. Please try again.');
-            }
+            console.error('Error updating profile:', error);
+            alert('Error updating profile. Please try again.');
         }
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setProfile((prevProfile) => ({
+            ...prevProfile,
+            [name]: value,
+        }));
     };
 
     return (
         <div id="information">
-            <p>Email: {email}</p>
-            {/* Render profile data here */}
-            {/* Example: */}
-            {profile && (
-                <div>
-                    <p>Give Name: {profile.value.userName}</p>
-                    <p>Last Name: {profile.value.lastName}</p>
-                    {/* Add more profile fields as needed */}
-                </div>
-            )}
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    handleUpdateProfile();
+                }}
+            >
+                {profile && (
+                    <>
+                        <label>
+                            User Name:
+                            <input
+                                type="text"
+                                name="userName"
+                                value={profile.userName || ''}
+                                onChange={handleInputChange}
+                            />
+                        </label>
+                        <br />
+                        <label>
+                            Given Name:
+                            <input
+                                type="text"
+                                name="givenName"
+                                value={profile.givenName || ''}
+                                onChange={handleInputChange}
+                            />
+                        </label>
+                        <br />
+                        <label>
+                            Last Name:
+                            <input
+                                type="text"
+                                name="lastName"
+                                value={profile.lastName || ''}
+                                onChange={handleInputChange}
+                            />
+                        </label>
+                        <br />
+                        <button type="submit">Update</button>
+                    </>
+                )}
+            </form>
         </div>
     );
-};
+}
 
 export default GetAPI;
