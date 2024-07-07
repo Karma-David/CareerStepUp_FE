@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
@@ -8,20 +9,29 @@ import Footer from './footer';
 function Home() {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
+    const location = useLocation();
 
     useEffect(() => {
-        fetchCourses();
-    }, []);
+        const searchParams = new URLSearchParams(location.search);
+        const searchValue = searchParams.get('search');
+        console.log(searchValue);
 
-    const fetchCourses = async () => {
-        const pageIndex = 1;
+        if (searchValue) {
+            fetchCourses(searchValue);
+        } else {
+            fetchCourses(); // Fetch all courses if no search parameter is provided
+        }
+    }, [location.search]);
+
+    const fetchCourses = async (searchValue) => {
+        const pageIndex = 1; // Example: You can adjust pageIndex or add more search criteria here
         try {
             const response = await fetch('https://localhost:7127/api/Courses/SearchCourses', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ pageIndex }), // You can pass your search criteria here
+                body: JSON.stringify({ search: searchValue, pageIndex }), // Pass search criteria
             });
             const data = await response.json();
             if (data.value && Array.isArray(data.value)) {
@@ -56,7 +66,8 @@ function Home() {
                     <div className="card-body">
                         <h2 className="card-title">{course.title}</h2>
                         <p className="card-text">Lecturer: {course.lecturerEmail}</p>
-                        <p className="card-text">Price: ${course.price}</p>
+                        {course.isPremium && <p className="card-text">VIP</p>}
+                        <p className="card-text">Subcriber: {course.subcriber}</p>
                         <p className="card-text">ID: {course.course_id}</p>
                     </div>
                 </div>

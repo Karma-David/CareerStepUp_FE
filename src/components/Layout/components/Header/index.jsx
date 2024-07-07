@@ -14,6 +14,12 @@ function Header() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [avatarUrl, setAvatarUrl] = useState(null); // State for storing avatar URL
     const navigate = useNavigate();
+    const rolesString = localStorage.getItem('role') || '';
+    const rolesArray = rolesString.split(',').map(role => role.trim());
+    const isAdmin = rolesArray.includes('admin');
+    const isLecturer = rolesArray.includes('lecturer');
+    console.log(isAdmin);
+    console.log(isLecturer);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -69,7 +75,7 @@ function Header() {
                                 <div className={cx('profile-menu')} tabIndex="-1" {...attrs}>
                                     <div className={cx('button-avatar')}>
                                         <Button to="/profile">View My Profile</Button>
-                                        <Button to="/RegisterLecturer">Register Lecturer</Button>
+                                        {isAdmin&&isLecturer&&<Button to="/RegisterLecturer">Register Lecturer</Button>}
                                         <Button onClick={handleLogout}>Log out</Button>
                                     </div>
                                 </div>
