@@ -11,7 +11,6 @@ const LecturerProfile = () => {
     const [error, setError] = useState(null);
     const [isConfirmed, setIsConfirmed] = useState(false); // State for isConfirmed checkbox
     const [showApproveButton, setShowApproveButton] = useState(false);
-    const [selectedCourseId, setSelectedCourseId] = useState(null); // State to hold selected course id for approval
 
     useEffect(() => {
         const fetchLecturerAndCourses = async () => {
@@ -24,6 +23,7 @@ const LecturerProfile = () => {
                 const courseResponse = await axios.get(
                     `https://localhost:7127/api/Courses/CourseOfALecturer?id=${lecturerId}&isConfirmed=${isConfirmed}`,
                 );
+                console.log(courseResponse.data.value);
                 setCourses(courseResponse.data.value);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -37,8 +37,9 @@ const LecturerProfile = () => {
     }, [lecturerId, isConfirmed]); // Fetch lecturer when lecturerId or isConfirmed changes
 
     const handleRadioChange = (e) => {
-        setIsConfirmed(e.target.id === 'flexRadioDefault1');
-        setShowApproveButton(e.target.id === 'flexRadioDefault2');
+        const isConfirmed = e.target.id === 'flexRadioDefault1';
+        setIsConfirmed(isConfirmed);
+        setShowApproveButton(!isConfirmed);
     };
 
     const handleApproveCourse = async (courseId) => {
@@ -50,25 +51,28 @@ const LecturerProfile = () => {
             const courseResponse = await axios.get(
                 `https://localhost:7127/api/Courses/CourseOfALecturer?id=${lecturerId}&isConfirmed=${isConfirmed}`,
             );
+            
             setCourses(courseResponse.data.value);
         } catch (error) {
             console.error('Error approving course:', error);
             // Handle error when approving course
         }
     };
+
     const handleLockCourse = async (courseId) => {
         try {
-            // Call API to approve course
+            // Call API to lock course
             await axios.put(`https://localhost:7127/api/Courses/HideCourseAsync?id=${courseId}`);
 
-            // After successful approval, update the course list
+            // After successful lock, update the course list
             const courseResponse = await axios.get(
                 `https://localhost:7127/api/Courses/CourseOfALecturer?id=${lecturerId}&isConfirmed=${isConfirmed}`,
             );
+            
             setCourses(courseResponse.data.value);
         } catch (error) {
-            console.error('Error approving course:', error);
-            // Handle error when approving course
+            console.error('Error locking course:', error);
+            // Handle error when locking course
         }
     };
 
@@ -176,32 +180,35 @@ const LecturerProfile = () => {
                     </div>
                 </div>
             </form>
-            <div className="form-check">
-                <input
-                    className="form-check-input"
-                    type="radio"
-                    name="flexRadioDefault"
-                    id="flexRadioDefault1"
-                    checked={isConfirmed}
-                    onChange={handleRadioChange}
-                />
-                <label className="form-check-label" htmlFor="flexRadioDefault1">
-                    Confirmed Course
-                </label>
+            <div className="form-check-group">
+                <div className="form-check">
+                    <input
+                        className="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                        onChange={handleRadioChange}
+                        checked={isConfirmed}
+                    />
+                    <label className="form-check-label" htmlFor="flexRadioDefault1">
+                        Confirmed Course
+                    </label>
+                </div>
+                <div className="form-check">
+                    <input
+                        className="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault2"
+                        onChange={handleRadioChange}
+                        checked={!isConfirmed}
+                    />
+                    <label className="form-check-label" htmlFor="flexRadioDefault2">
+                        Not Confirmed Course
+                    </label>
+                </div>
             </div>
-            <div className="form-check">
-                <input
-                    className="form-check-input"
-                    type="radio"
-                    name="flexRadioDefault"
-                    id="flexRadioDefault2"
-                    checked={!isConfirmed}
-                    onChange={handleRadioChange}
-                />
-                <label className="form-check-label" htmlFor="flexRadioDefault2">
-                    Not Confirmed Course
-                </label>
-            </div>
+
             <h4>Courses:</h4>
             <div className="list-group">
                 {courses.length > 0 ? (
@@ -214,7 +221,8 @@ const LecturerProfile = () => {
                                 <div className="col-md-6">
                                     <h5 className="mb-1">{course.title}</h5>
                                     <p className="mb-1">{course.description}</p>
-                                    <p className="mb-1">Price: ${course.price}</p>
+                                    {course.isPremium && <p className="mb-1">VIP</p>}
+                                    <p className="mb-1">Subcriber: {course.subcriber}</p>
                                     {course.isConfirmed ? (
                                         <p className="text-success mb-0">Confirmed</p>
                                     ) : (
