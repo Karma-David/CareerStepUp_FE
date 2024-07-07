@@ -20,6 +20,7 @@
     border-radius: 10px;
     width: 385px;
     height: 216px;
+    object-fit: contain;
 }
 .status-courses {
     margin-bottom: 30px;
@@ -27,6 +28,8 @@
     p {
         font-size: 35px;
         color: orangered;
+        margin-top: 20px;
+        margin-left: 10px;
     }
 }
 .button-start-learn {
@@ -63,4 +66,6 @@
     li {
         list-style: none;
     }
+}
+.list-Learn {
 }

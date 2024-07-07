@@ -19,11 +19,11 @@ import Lecturers from '@/pages/AdminPage/Components/Lecturers/Lecturers';
 import Students from '@/pages/AdminPage/Components/Students/Students';
 import Fees from '@/pages/AdminPage/Components/NotConfirmedLecturer/NotConfirmedLecturer';
 import Course from '@/pages/AdminPage/Components/Course/Course';
-import Test from '@/pages/test/test';
+// import Test from '@/pages/test/test';
 import UpTopic from '@/pages/Upload/UpTopic';
 import UpLesson from '@/pages/Upload/UpLesson';
 import UpNewCourse from '@/pages/Upload/NewCourse';
-
+import CoursesDetail from '@/pages/CoursesPageDetail/CoursesDetail';
 import PaymentPageSuccess from '@/pages/PaymentPage/PaymentPageSuccess';
 import NotConfirmedLecturer from '@/pages/AdminPage/Components/NotConfirmedLecturer/NotConfirmedLecturer';
 import LecturerProfile from '@/pages/AdminPage/Components/Lecturers/LecturerProfile';
@@ -61,6 +61,7 @@ export const publishRouter = [
     { path: '/LecturerProfile/:lecturerId', component: LecturerProfile },
     { path: '/LearnerProfile/:learnerId', component: LearnerProfile },
     { path: '/Test/:id', component: Test },
+
 ];
 
 export const privateRouter = [];
