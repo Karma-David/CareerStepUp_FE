@@ -8,7 +8,7 @@ import Register from '@/pages/Register/Register';
 import ForgotPass from '@/pages/ForgotPass/ForgotPass';
 import RegisterLecturer from '@/pages/RegisterLecturer/RegisterLecturer';
 import ResetPass from '@/pages/ResetPass/Resetpass';
-import AdminPage from '@/pages/AdminPage/AdminPage';
+//import AdminPage from '@/pages/AdminPage/AdminPage';
 import IntroductToIT from '@/pages/CoursesPageDetail/IntroductToIT';
 import PageVideoLearn from '@/pages/PageVideoLearn/PageVideoLearn';
 import HtmlCss from '@/pages/CoursesPageDetail/HtmlCss';
@@ -27,6 +27,7 @@ import UpNewCourse from '@/pages/Upload/NewCourse';
 import PaymentPageSuccess from '@/pages/PaymentPage/PaymentPageSuccess';
 import NotConfirmedLecturer from '@/pages/AdminPage/Components/NotConfirmedLecturer/NotConfirmedLecturer';
 import LecturerProfile from '@/pages/AdminPage/Components/Lecturers/LecturerProfile';
+import LearnerProfile from '@/pages/AdminPage/Components/Students/LearnerProfile';
 
 export const publishRouter = [
     { path: '/', component: Home },
@@ -38,7 +39,7 @@ export const publishRouter = [
     { path: '/Register', component: Register, layout: null },
     { path: '/ForgotPass', component: ForgotPass, layout: null },
     { path: '/ResetPass', component: ResetPass, layout: null },
-    { path: '/AdminPage', component: AdminPage },
+    //{ path: '/AdminPage', component: AdminPage },
     { path: '/RegisterLecturer', component: RegisterLecturer },
     { path: '/IntroductToIT', component: IntroductToIT },
     { path: '/HtmlCss', component: HtmlCss },
@@ -58,6 +59,7 @@ export const publishRouter = [
     { path: '/NotConfirmedLecturer', component: NotConfirmedLecturer },
     { path: '/Course', component: Course },
     { path: '/LecturerProfile/:lecturerId', component: LecturerProfile },
+    { path: '/LearnerProfile/:learnerId', component: LearnerProfile },
     { path: '/Test/:id', component: Test },
 ];
 

@@ -25,8 +25,8 @@ const KhoaHoc = ({ search }) => {
                 };
 
                 const response = await axios.post('https://localhost:7127/api/Courses/SearchCourses', params);
-                setCourses(response.data.value);
-                console.log(response.data.value);
+                setCourses(response.data.value.items);
+                console.log(response.data.value.items);
             } catch (error) {
                 console.error('Error fetching courses:', error);
             }
