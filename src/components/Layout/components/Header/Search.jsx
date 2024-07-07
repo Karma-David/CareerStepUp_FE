@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+
 import classNames from 'classnames/bind';
 import style from './Header.module.scss'; // Update the import path if necessary
 import { faCircleXmark, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';

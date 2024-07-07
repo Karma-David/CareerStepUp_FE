@@ -57,6 +57,7 @@ function Header() {
     const rolesArray = rolesString.split(',').map(role => role.trim());
     const isAdmin = rolesArray.includes('admin');
     const isLecturer = rolesArray.includes('lecturer');
+    const isUser = rolesArray.includes('user');
     console.log(isAdmin);
     console.log(isLecturer);
 
@@ -115,7 +116,7 @@ function Header() {
                                 <div className={cx('profile-menu')} tabIndex="-1" {...attrs}>
                                     <div className={cx('button-avatar')}>
                                         <Button to="/profile">View My Profile</Button>
-                                        {isAdmin&&isLecturer&&<Button to="/RegisterLecturer">Register Lecturer</Button>}
+                                        {!isLecturer&&!isAdmin&&<Button to="/RegisterLecturer">Register Lecturer</Button>}
                                         <Button onClick={handleLogout}>Log out</Button>
                                     </div>
                                 </div>

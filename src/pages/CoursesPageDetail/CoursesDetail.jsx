@@ -149,7 +149,7 @@ function CoursesDetail() {
 
     return (
         <div className="container-detail">
-            <div className="content-detail">
+            <div style={{ width: '60%' }} className="content-detail">
                 <div className="header-detail">
                     <h1>{course.title}</h1>
                     <p>{course.description}</p>
@@ -199,7 +199,7 @@ function CoursesDetail() {
                                     {expandedTopics[topic.id] && (
                                         <div style={{ marginTop: '10px', marginLeft: '30px' }}>
                                             {topic.lessons.map((lesson) => (
-                                                <div  key={lesson.id}>
+                                                <div key={lesson.id}>
                                                     <FaPlayCircle style={{ marginRight: '10px', color: 'orange' }} />
 
                                                     <div>

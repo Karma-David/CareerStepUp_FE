@@ -1,5 +1,5 @@
 .container-detail {
-    width: 65%;
+    width: 100%;
     padding: 30px 45px;
     margin-top: 30px;
     display: -webkit-box;
@@ -67,5 +67,4 @@
         list-style: none;
     }
 }
-.list-Learn {
-}
+
