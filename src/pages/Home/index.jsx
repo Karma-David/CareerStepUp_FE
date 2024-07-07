@@ -48,7 +48,7 @@ function Home() {
 
     const renderCourses = (courses) => {
         const handleCardClick = (id) => {
-            window.location.href = `/Test/${id}`;
+            window.location.href = `/CoursesDetail/${id}`;
         };
         return courses.map((course, index) => (
             <div className="col" key={index}>
@@ -66,9 +66,14 @@ function Home() {
                     <div className="card-body">
                         <h2 className="card-title">{course.title}</h2>
                         <p className="card-text">Lecturer: {course.lecturerEmail}</p>
+
+                        <p className="card-text">Price: ${course.price}</p>
+                        {/* <p className="card-text">ID: {course.course_id}</p> */}
+
                         {course.isPremium && <p className="card-text">VIP</p>}
                         <p className="card-text">Subcriber: {course.subcriber}</p>
                         <p className="card-text">ID: {course.course_id}</p>
+
                     </div>
                 </div>
             </div>
