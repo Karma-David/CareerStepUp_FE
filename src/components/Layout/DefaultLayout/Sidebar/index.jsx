@@ -48,16 +48,16 @@ const Sidebar = () => {
                         className={cx('icon', 'black-icon')}
                     />
                     <span style={{ color: 'black' }} className={cx('text')}>
-                        Students
+                        Learner
                     </span>
                 </ButtonSidebar>
 
-                <ButtonSidebar to={'/AdminPage'}>
-                    <FontAwesomeIcon style={{ color: 'black' }} icon={faGauge} className={cx('icon', 'black-icon')} />
-                    <span style={{ color: 'black' }} className={cx('text')}>
-                        Dashboard
-                    </span>
-                </ButtonSidebar>
+=======
+                {/* <ButtonSidebar to={'/Course'}>
+                <FontAwesomeIcon style={{color:'black'}} icon={faBook} className={cx('icon', 'black-icon')} />
+                <span style={{color:'black'}} className={cx('text')}>C-Form</span>
+                </ButtonSidebar> */}
+
             </div>
         </aside>
     );
