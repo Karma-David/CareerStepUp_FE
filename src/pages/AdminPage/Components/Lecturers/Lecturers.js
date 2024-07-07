@@ -1,24 +1,30 @@
-
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; 
 import axios from 'axios';
-
+import { Link } from 'react-router-dom';
 import './styles.css';
 
 const LecturerTable = () => {
     const [lecturers, setLecturers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [confirmed, setConfirmed] = useState(true);
 
     useEffect(() => {
         const fetchLecturers = async () => {
+            setLoading(true);
+
             try {
-                const response = await axios.get('https://localhost:7127/api/Lecturer/GetAllConfirmLecturer');
+                let response;
+                if (confirmed) {
+                    response = await axios.get('https://localhost:7127/api/Lecturer/GetAllConfirmLecturer');
+                } else {
+                    response = await axios.get('https://localhost:7127/api/Lecturer/GetAllNotConfirmLecturer');
+                }
+
                 if (response.data && Array.isArray(response.data.value)) {
                     setLecturers(response.data.value);
                 } else {
                     setLecturers([]);
-                    setError('No lecturers found');
                 }
             } catch (error) {
                 console.error('Error fetching lecturers:', error);
@@ -29,7 +35,11 @@ const LecturerTable = () => {
         };
 
         fetchLecturers();
-    }, []);
+    }, [confirmed]);
+
+    const handleRadioChange = (event) => {
+        setConfirmed(event.target.id === 'flexRadioDefault1');
+    };
 
     if (loading) {
         return <div className="loading">Loading...</div>;
@@ -40,46 +50,60 @@ const LecturerTable = () => {
     }
 
     return (
-        <div className="table-container">
-            <h2>Lecturers List</h2>
-            {lecturers.length > 0 ? (
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Avatar</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Certificate</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {lecturers.map((lecturer) => (
-                            <tr key={lecturer.lecturer_Id}>
-                                <td>
-                                    <img src={lecturer.avatar_Url} alt="Avatar" style={{ width: '50px', height: '50px', borderRadius: '50%' }} />
-                                </td>
-                                <td>{lecturer.firstName}</td>
-                                <td>{lecturer.lastName}</td>
-                                <td>{lecturer.email}</td>
-                                <td>
-                                    <a href={lecturer.certificate} style={{ color: 'orange' }} target="_blank" rel="noopener noreferrer">Certificate</a>
-                                </td>
-                                <td>
-                                    <Link to={`/LecturerProfile/${lecturer.lecturer_Id}`} className="profile-button" style={{color:'black'}}>
-                                        View Profile
-                                    </Link>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            ) : (
-                <div className="no-lecturers">No lecturers found</div>
-            )}
+        <div className="container">
+            <div className="form-check-group">
+                <div className="form-check">
+                    <input
+                        className="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                        checked={confirmed}
+                        onChange={handleRadioChange}
+                    />
+                    <label className="form-check-label" htmlFor="flexRadioDefault1">
+                        Confirmed Lecturer
+                    </label>
+                </div>
+                <div className="form-check">
+                    <input
+                        className="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault2"
+                        checked={!confirmed}
+                        onChange={handleRadioChange}
+                    />
+                    <label className="form-check-label" htmlFor="flexRadioDefault2">
+                        Not Confirmed Lecturer
+                    </label>
+                </div>
+            </div>
+
+            <div className="lecturers-page">
+                <h1>All Lecturers</h1>
+                <div className="grid-view">
+                    {lecturers.map((lecturer) => (
+                        <LecturerCard key={lecturer.lecturer_Id} lecturer={lecturer} />
+                    ))}
+                    {lecturers.length === 0 && <div className="no-lecturers">No lecturers found</div>}
+                </div>
+            </div>
         </div>
     );
 };
+
+function LecturerCard({ lecturer }) {
+    return (
+        <div className="card">
+            <img src={lecturer.avatar_Url} alt={`${lecturer.firstName} ${lecturer.lastName}`} className="profile-pic" />
+            <h2>{`${lecturer.firstName} ${lecturer.lastName}`}</h2>
+            <p>Email: {lecturer.email}</p>
+            <Link to={`/LecturerProfile/${lecturer.lecturer_Id}`} className="profile-button" style={{ color: 'black' }}>
+                View Profile
+            </Link>
+        </div>
+    );
+}
 
 export default LecturerTable;

@@ -32,9 +32,25 @@ const Login = () => {
             }
 
             const data = await res.json();
-            console.log(data?.token);
             localStorage.setItem('token', data?.token);
             localStorage.setItem('email', formData?.email);
+
+            const infoRes = await fetch('https://localhost:7127/GetInformationFromToken', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify( data?.token ), // Pass token in body
+            });
+    
+            if (!infoRes.ok) {
+                throw new Error(`HTTP error! status: ${infoRes.status}`);
+            }
+    
+            const infoData = await infoRes.json();
+            console.log(infoData?.value?.roles);
+            localStorage.setItem('role', infoData?.value?.roles);
+    
            
             navigate('/'); // Chuyển hướng đến HomePage
         } catch (error) {
@@ -71,6 +87,23 @@ const Login = () => {
                 const data = await res.json();
                 console.log('Response data:', data);
                 localStorage.setItem('token', data?.token);
+
+                const infoRes = await fetch('https://localhost:7127/GetInformationFromToken', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data?.token ), // Pass token in body
+                });
+    
+                if (!infoRes.ok) {
+                    throw new Error(`HTTP error! status: ${infoRes.status}`);
+                }
+    
+                const infoData = await infoRes.json();
+                console.log(infoData?.value?.roles);
+                localStorage.setItem('role', infoData?.value?.roles);
+    
                 navigate('/'); // Chuyển hướng đến HomePage
             } catch (error) {
                 console.error('Error:', error);

@@ -52,6 +52,7 @@ export const publishRouter = [
     { path: '/UpLesson/', component: UpLesson },
     { path: '/UpNewCourse', component: UpNewCourse },
 
+
     { path: '/PageVideoLearn/:id', component: PageVideoLearn, layout: HeaderOnly },
     { path: '/PayPage', component: PayPage},
     { path: '/PaymentPageSuccess', component: PaymentPageSuccess},
@@ -61,6 +62,7 @@ export const publishRouter = [
     { path: '/LecturerProfile/:lecturerId', component: LecturerProfile},
     // { path: '/Test/:id', component: Test },
     { path: '/CoursesDetail/:id', component: CoursesDetail },
+
 ];
 
 export const privateRouter = [];

@@ -1,100 +1,112 @@
-import KhoaHoc from '@/components/KhoaHoc';
+import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
+import classNames from 'classnames/bind';
+import style from './Header.module.scss'; // Update the import path if necessary
 import { faCircleXmark, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { wrapper as PopperWrapper } from '@/components/Popper';
-import style from './Header.module.scss';
-import classNames from 'classnames/bind';
 import Tippy from '@tippyjs/react';
-import { useEffect, useRef, useState } from 'react';
+import KhoaHoc from '@/components/KhoaHoc'; // Import KhoaHoc component
 
 const cx = classNames.bind(style);
 
 function Search() {
     const [searchValue, setSearchValue] = useState('');
-    const [searchResult, setSearchResult] = useState([]);
-    const [showResultHide, setShowResultHide] = useState(true);
-
-    const inputRef = useRef();
+    const [showResult, setShowResult] = useState(false); // State to determine when to show KhoaHoc results
+    const searchInputRef = useRef(null); // Ref to manage search input focus
 
     useEffect(() => {
-        // Set searchResult to an empty array initially
-        setSearchResult([1, 2, 3]);
+        // Function to get search query parameter from URL
+        const getSearchFromUrl = () => {
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchQuery = urlParams.get('search');
+            if (searchQuery) {
+                setSearchValue(searchQuery);
+                 // Show KhoaHoc results when searchValue is set from URL
+            }
+        };
+
+        getSearchFromUrl();
+
+        // Subscribe to focus events on the search input
+        const handleFocus = () => {
+            setShowResult(true); // Show KhoaHoc results when search input is focused/clicked
+        };
+
+        const handleBlur = () => {
+            setShowResult(false); // Hide KhoaHoc results when search input loses focus
+        };
+
+        const inputRef = searchInputRef.current; // Store the current value to avoid issues with cleanup
+
+        if (inputRef) {
+            inputRef.addEventListener('focus', handleFocus);
+            inputRef.addEventListener('blur', handleBlur);
+        }
+
+        return () => {
+            // Clean up event listeners when component unmounts
+            if (inputRef) {
+                inputRef.removeEventListener('focus', handleFocus);
+                inputRef.removeEventListener('blur', handleBlur);
+            }
+        };
     }, []);
+    
+
+    useEffect(() => {
+        const isSearchInputFocused = () => {
+            return document.activeElement === searchInputRef.current;
+        };
+        // Check if searchValue is not empty to show KhoaHoc results
+        setShowResult(isSearchInputFocused());
+    }, [searchValue]);
 
     const handleClear = () => {
         setSearchValue('');
-        setSearchResult([]);
-        setShowResultHide(false);
-        console.log('clearSearch');
-        console.log('reset result', searchResult);
-        inputRef.current.focus();
     };
 
-    const handleResultHide = () => {
-        setShowResultHide(false);
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setShowResult(false); // Ensure KhoaHoc results are not shown until user clicks on search input again
+        // Navigate to Home page with search value
+        window.location.href = `/?search=${encodeURIComponent(searchValue)}`; // Ensure searchValue is properly encoded
     };
 
-    const styles = {
-        show: {
-            display: 'block',
-        },
-        hide: {
-            display: 'none',
-        },
+    const handleSearchChange = (e) => {
+        const value = e.target.value;
+        setSearchValue(value);
     };
-
-    useEffect(() => {
-        console.log('showResultHide changed:', showResultHide);
-    }, [showResultHide]);
-
-    useEffect(() => {
-        console.log('searchResult updated:', searchResult);
-    }, [searchResult]);
 
     return (
         <Tippy
             interactive
-            visible={showResultHide && (searchResult.length > 0 || searchValue)}
+            visible={showResult && !!searchValue}
             render={(attrs) => (
-                <div
-                    style={showResultHide ? styles.show : styles.hide}
-                    className={cx('search-result')}
-                    tabIndex="-1"
-                    {...attrs}
-                >
-                    <PopperWrapper>
-                        <h4 className={cx('search-title')}>Khoa Hoc</h4>
-                        {searchResult.length > 0 ? (
-                            searchResult.map((_, index) => <KhoaHoc key={index} />)
-                        ) : (
-                            <div>{setShowResultHide(false)}</div>
-                        )}
-                    </PopperWrapper>
+                <div className={cx('search-result')} tabIndex="-1" {...attrs}>
+                    {showResult && (
+                        <KhoaHoc search={searchValue} />
+                    )}
                 </div>
             )}
-            onClickOutside={handleResultHide}
         >
-            <div className={cx('search')}>
+            <form className={cx('search')} onSubmit={handleSubmit}>
                 <input
-                    ref={inputRef}
                     value={searchValue}
                     placeholder="Search account or video"
                     spellCheck={false}
-                    onChange={(e) => {
-                        setSearchValue(e.target.value);
-                        setShowResultHide(true);
-                    }}
-                    onFocus={() => setShowResultHide(true)}
+                    onChange={handleSearchChange}
+                    ref={searchInputRef} // Assign ref to manage focus
                 />
                 {!!searchValue && (
-                    <button className={cx('clear')} onClick={handleClear}>
+                    <button type="button" className={cx('clear')} onClick={handleClear}>
                         <FontAwesomeIcon icon={faCircleXmark} />
                     </button>
                 )}
-                <button className={cx('search-btn')}>
+                <button type="submit" className={cx('search-btn')}>
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </button>
-            </div>
+            </form>
         </Tippy>
     );
 }
