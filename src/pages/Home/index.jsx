@@ -9,6 +9,8 @@ import Footer from './footer';
 function Home() {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [pageIndex, setPageIndex] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
     const location = useLocation();
 
     useEffect(() => {
@@ -17,14 +19,13 @@ function Home() {
         console.log(searchValue);
 
         if (searchValue) {
-            fetchCourses(searchValue);
+            fetchCourses(searchValue, pageIndex);
         } else {
-            fetchCourses(); // Fetch all courses if no search parameter is provided
+            fetchCourses(undefined, pageIndex); // Fetch all courses if no search parameter is provided
         }
-    }, [location.search]);
+    }, [location.search, pageIndex]);
 
-    const fetchCourses = async (searchValue) => {
-        const pageIndex = 1; // Example: You can adjust pageIndex or add more search criteria here
+    const fetchCourses = async (searchValue, pageIndex) => {
         try {
             const response = await fetch('https://localhost:7127/api/Courses/SearchCourses', {
                 method: 'POST',
@@ -34,8 +35,9 @@ function Home() {
                 body: JSON.stringify({ search: searchValue, pageIndex }), // Pass search criteria
             });
             const data = await response.json();
-            if (data.value && Array.isArray(data.value)) {
-                setCourses(data.value); // Assuming data.value is an array of CourseModel objects
+            if (data.value && Array.isArray(data.value.items)) {
+                setCourses(data.value.items); // Assuming data.value.items is an array of CourseModel objects
+                setTotalPages(data.value.totalPages); // Assuming data.value.totalPages is the total number of pages
             } else {
                 console.error('Invalid data format:', data);
             }
@@ -43,6 +45,12 @@ function Home() {
             console.error('Error fetching courses:', error);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handlePageChange = (newPageIndex) => {
+        if (newPageIndex >= 1 && newPageIndex <= totalPages) {
+            setPageIndex(newPageIndex);
         }
     };
 
@@ -71,7 +79,7 @@ function Home() {
                         {/* <p className="card-text">ID: {course.course_id}</p> */}
 
                         {course.isPremium && <p className="card-text">VIP</p>}
-                        <p className="card-text">Subcriber: {course.subcriber}</p>
+                        <p className="card-text">Subscriber: {course.subscriber}</p>
                         <p className="card-text">ID: {course.course_id}</p>
 
                     </div>
@@ -104,6 +112,15 @@ function Home() {
             <div className="container mt-5">
                 <h1 className="text-left mb-4">All Courses</h1>
                 <div className="row row-cols-1 row-cols-md-4 g-4">{renderCourses(courses)}</div>
+            </div>
+            <div className="pagination">
+                <button onClick={() => handlePageChange(pageIndex - 1)} disabled={pageIndex === 1}>
+                    Previous
+                </button>
+                <span>Page {pageIndex}</span>
+                <button onClick={() => handlePageChange(pageIndex + 1)} disabled={pageIndex === totalPages}>
+                    Next
+                </button>
             </div>
             <div style={{ marginTop: '50px' }} className="container">
                 <Footer />
