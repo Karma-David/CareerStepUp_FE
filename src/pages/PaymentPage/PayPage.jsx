@@ -1,5 +1,5 @@
 // PaymentPage.js
-import React, { useState } from 'react';
+import React from 'react';
 import './PayPage.css';
 
 const PaymentApi = 'https://localhost:7127/api/Payments/create-payment';

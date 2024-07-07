@@ -18,7 +18,7 @@ const Course = () => {
                 } else {
                     setCourses([]);
                     setError('No courses found');
-                }   
+                }
             } catch (error) {
                 console.error('Error fetching courses:', error);
                 setError('Error fetching courses');
@@ -33,7 +33,7 @@ const Course = () => {
     const handleApprove = async (courseId) => {
         try {
             await axios.put(`https://localhost:7127/api/Courses/ApproveCourse?id=${courseId}`);
-            setCourses(courses.filter(course => course.course_Id !== courseId));
+            setCourses(courses.filter((course) => course.course_Id !== courseId));
         } catch (error) {
             console.error('Error approving course:', error);
         }
@@ -42,7 +42,7 @@ const Course = () => {
     const handleDelete = async (courseId) => {
         try {
             await axios.delete(`https://localhost:7127/api/Courses/DeleteCourse?id=${courseId}`);
-            setCourses(courses.filter(course => course.course_Id !== courseId));
+            setCourses(courses.filter((course) => course.course_Id !== courseId));
         } catch (error) {
             console.error('Error rejecting course:', error);
         }
@@ -61,12 +61,12 @@ const Course = () => {
             <h2>Courses List</h2>
             {courses.length > 0 ? (
                 <table>
-                    <thead>
+                    <thead style={{ width: '960px' }}>
                         <tr>
                             <th>Title</th>
                             <th>Description</th>
                             <th>Course_Img</th>
-                            <th>Actions</th>
+                            <th>Actions </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -77,9 +77,14 @@ const Course = () => {
                                 <td>
                                     <img src={course.course_Img} alt="img" />
                                 </td>
-                                <td>
+                                <td style={{ width: '71px' }}>
                                     <button onClick={() => handleDelete(course.course_Id)} className="reject-btn">
                                         <FaTimes style={{ color: 'red', fontSize: '24px' }} />
+                                    </button>
+                                </td>
+                                <td style={{ width: '71px' }}>
+                                    <button onClick={() => handleApprove(course.course_Id)} className="reject-btn">
+                                        <FaCheck style={{ color: 'red', fontSize: '24px' }} />
                                     </button>
                                 </td>
                             </tr>

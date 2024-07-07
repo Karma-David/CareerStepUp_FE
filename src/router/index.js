@@ -19,11 +19,11 @@ import Lecturers from '@/pages/AdminPage/Components/Lecturers/Lecturers';
 import Students from '@/pages/AdminPage/Components/Students/Students';
 import Fees from '@/pages/AdminPage/Components/NotConfirmedLecturer/NotConfirmedLecturer';
 import Course from '@/pages/AdminPage/Components/Course/Course';
-import Test from '@/pages/test/test';
+// import Test from '@/pages/test/test';
 import UpTopic from '@/pages/Upload/UpTopic';
 import UpLesson from '@/pages/Upload/UpLesson';
 import UpNewCourse from '@/pages/Upload/NewCourse';
-
+import CoursesDetail from '@/pages/CoursesPageDetail/CoursesDetail';
 import PaymentPageSuccess from '@/pages/PaymentPage/PaymentPageSuccess';
 import NotConfirmedLecturer from '@/pages/AdminPage/Components/NotConfirmedLecturer/NotConfirmedLecturer';
 import LecturerProfile from '@/pages/AdminPage/Components/Lecturers/LecturerProfile';
@@ -52,14 +52,15 @@ export const publishRouter = [
     { path: '/UpLesson/', component: UpLesson },
     { path: '/UpNewCourse', component: UpNewCourse },
 
-    { path: '/PageVideoLearn', component: PageVideoLearn, layout: HeaderOnly },
+    { path: '/PageVideoLearn/:id', component: PageVideoLearn, layout: HeaderOnly },
     { path: '/PayPage', component: PayPage},
     { path: '/PaymentPageSuccess', component: PaymentPageSuccess},
     { path: '/Lecturers', component: Lecturers},
     { path: '/NotConfirmedLecturer', component: NotConfirmedLecturer},
     { path: '/Course', component: Course},
     { path: '/LecturerProfile/:lecturerId', component: LecturerProfile},
-    { path: '/Test/:id', component: Test },
+    // { path: '/Test/:id', component: Test },
+    { path: '/CoursesDetail/:id', component: CoursesDetail },
 ];
 
 export const privateRouter = [];
