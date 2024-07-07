@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './styles.css';
-import { FaCheck, FaTimes } from 'react-icons/fa';
+import { FaTimes } from 'react-icons/fa';
 
 const Course = () => {
     const [courses, setCourses] = useState([]);
@@ -18,7 +18,7 @@ const Course = () => {
                 } else {
                     setCourses([]);
                     setError('No courses found');
-                }   
+                }
             } catch (error) {
                 console.error('Error fetching courses:', error);
                 setError('Error fetching courses');
@@ -30,19 +30,19 @@ const Course = () => {
         fetchCourses();
     }, []);
 
-    const handleApprove = async (courseId) => {
-        try {
-            await axios.put(`https://localhost:7127/api/Courses/ApproveCourse?id=${courseId}`);
-            setCourses(courses.filter(course => course.course_Id !== courseId));
-        } catch (error) {
-            console.error('Error approving course:', error);
-        }
-    };
+    // const handleApprove = async (courseId) => {
+    //     try {
+    //         await axios.put(`https://localhost:7127/api/Courses/ApproveCourse?id=${courseId}`);
+    //         setCourses(courses.filter((course) => course.course_Id !== courseId));
+    //     } catch (error) {
+    //         console.error('Error approving course:', error);
+    //     }
+    // };
 
     const handleDelete = async (courseId) => {
         try {
             await axios.delete(`https://localhost:7127/api/Courses/DeleteCourse?id=${courseId}`);
-            setCourses(courses.filter(course => course.course_Id !== courseId));
+            setCourses(courses.filter((course) => course.course_Id !== courseId));
         } catch (error) {
             console.error('Error rejecting course:', error);
         }

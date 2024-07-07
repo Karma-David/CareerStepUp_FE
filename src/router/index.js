@@ -51,14 +51,13 @@ export const publishRouter = [
     { path: '/UpTopic/:id', component: UpTopic },
     { path: '/UpLesson/', component: UpLesson },
     { path: '/UpNewCourse', component: UpNewCourse },
-
     { path: '/PageVideoLearn', component: PageVideoLearn, layout: HeaderOnly },
-    { path: '/PayPage', component: PayPage},
-    { path: '/PaymentPageSuccess', component: PaymentPageSuccess},
-    { path: '/Lecturers', component: Lecturers},
-    { path: '/NotConfirmedLecturer', component: NotConfirmedLecturer},
-    { path: '/Course', component: Course},
-    { path: '/LecturerProfile/:lecturerId', component: LecturerProfile},
+    { path: '/PayPage', component: PayPage },
+    { path: '/PaymentPageSuccess', component: PaymentPageSuccess },
+    { path: '/Lecturers', component: Lecturers },
+    { path: '/NotConfirmedLecturer', component: NotConfirmedLecturer },
+    { path: '/Course', component: Course },
+    { path: '/LecturerProfile/:lecturerId', component: LecturerProfile },
     { path: '/Test/:id', component: Test },
 ];
 
