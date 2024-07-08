@@ -58,7 +58,7 @@ export const publishRouter = [
     { path: '/UpTopic/:id', component: UpTopic },
     { path: '/UpLesson/', component: UpLesson },
     { path: '/UpNewCourse', component: UpNewCourse },
-    { path: '/PageVideoLearn', component: PageVideoLearn, layout: HeaderOnly },
+    { path: '/PageVideoLearn/:id', component: PageVideoLearn, layout: HeaderOnly },
     { path: '/PayPage', component: PayPage },
     { path: '/PaymentPageSuccess', component: PaymentPageSuccess },
     { path: '/Lecturers', component: Lecturers },
@@ -66,7 +66,8 @@ export const publishRouter = [
     { path: '/Course', component: Course },
     { path: '/LecturerProfile/:lecturerId', component: LecturerProfile },
     { path: '/LearnerProfile/:learnerId', component: LearnerProfile },
-    { path: '/Test/:id', component: Test },
+    { path: '/CoursesDetail/:id', component: CoursesDetail },
+    // { path: '/Test/:id', component: Test },
 
 ];
 

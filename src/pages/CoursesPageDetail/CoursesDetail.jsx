@@ -18,7 +18,7 @@ function CoursesDetail() {
     const CourseAPI = `https://localhost:7127/api/Courses/GetCourseById?id=${id}`;
     const GetTopicAndLessonAPI = `https://localhost:7127/api/Courses/GetCourseByIdIncludeLessons?id=${id}`;
     const GetIDFromEmailAPI = 'https://localhost:7127/GetUserIDfromToken';
-    const GetLecturerbyID = `https://localhost:7127/api/Lecturer/GetLecturerByID?id=${idUser}`;
+    // const GetLecturerbyID = `https://localhost:7127/api/Lecturer/GetLecturerByID?id=${idUser}`;
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -30,7 +30,7 @@ function CoursesDetail() {
     useEffect(() => {
         const getUserID = async () => {
             try {
-                const email = localStorage.getItem('email');
+                const email = localStorage.getItem('lecturerEmai');
                 if (!email) {
                     throw new Error('Token not found in local storage');
                 }
@@ -103,6 +103,8 @@ function CoursesDetail() {
         const getLecturer = async () => {
             if (idUser) {
                 try {
+                    const GetLecturerbyID = `https://localhost:7127/api/Lecturer/GetLecturerByID?id=${idUser}`;
+                    console.log(`Fetching lecturer with URL: ${GetLecturerbyID}`);
                     const lecturerResponse = await fetch(GetLecturerbyID);
                     if (!lecturerResponse.ok) {
                         throw new Error(`HTTP error! status: ${lecturerResponse.status}`);
@@ -111,16 +113,17 @@ function CoursesDetail() {
                     if (lecturerData.statusCode === 200) {
                         setLecturer(lecturerData.value);
                     } else {
-                        throw new Error(`API error! status: ${lecturerData.statusCode}`);
+                        throw new Error(`API error! status: ${lecturerData.statusCode} - ${lecturerData.message}`);
                     }
                 } catch (error) {
                     console.error('Error fetching lecturer:', error);
+
                     setError(error.message);
                 }
             }
         };
         getLecturer();
-    }, [idUser, GetLecturerbyID]);
+    }, [idUser]);
 
     const handleToggleTopic = (topicId) => {
         setExpandedTopics((prevState) => ({
@@ -199,7 +202,7 @@ function CoursesDetail() {
                                     {expandedTopics[topic.id] && (
                                         <div style={{ marginTop: '10px', marginLeft: '30px' }}>
                                             {topic.lessons.map((lesson) => (
-                                                <div key={lesson.id}>
+                                                <div style={{ display: 'flex', padding: '10px 0px' }} key={lesson.id}>
                                                     <FaPlayCircle style={{ marginRight: '10px', color: 'orange' }} />
 
                                                     <div>
@@ -217,7 +220,14 @@ function CoursesDetail() {
                     <h1>THong tin giang vien</h1>
                     <div className="information-lecturer">
                         {lecturer ? (
-                            <img className="img-lecturer" src={lecturer.avatarUrl} alt={lecturer.firstName} />
+                            <img
+                                className="img-lecturer"
+                                src={
+                                    lecturer.avatar_Url ||
+                                    'https://i.pinimg.com/736x/c6/e5/65/c6e56503cfdd87da299f72dc416023d4.jpg'
+                                }
+                                alt={lecturer.firstName}
+                            />
                         ) : (
                             <p>Loading lecturer information...</p>
                         )}
@@ -228,6 +238,9 @@ function CoursesDetail() {
                                     <div>
                                         <h4>{lecturer.firstName}</h4>
                                         <p>{lecturer.lastName}</p>
+                                        <a style={{ color: 'orange',textDecoration: 'none' }} href={lecturer.certificate} target=' _blank'>
+                                            View Certificate
+                                        </a>
                                     </div>
                                 ) : (
                                     <p>Loading lecturer information...</p>
@@ -266,12 +279,13 @@ function CoursesDetail() {
                     </div>
                     {/* <div className="Course-overview">
                         <ul>
-                            {courseOverview.map((overview, index) => (
-                                <li key={index}>
-                                    {overview.icon}
-                                    <span>{overview.text}</span>
-                                </li>
-                            ))}
+                        {topicsAndLessons && 
+                            topicsAndLessons.topics.map((topic) =>(
+                                topic.lessons.map((lesson) =>(
+                                    <li>{lesson.length}</li>
+                                ))
+                            ))
+                          }
                         </ul>
                     </div> */}
                 </div>
