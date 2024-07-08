@@ -57,7 +57,7 @@ function Header() {
     const rolesArray = rolesString.split(',').map(role => role.trim());
     const isAdmin = rolesArray.includes('admin');
     const isLecturer = rolesArray.includes('lecturer');
-    const isUser = rolesArray.includes('user');
+    // const isUser = rolesArray.includes('user');
     console.log(isAdmin);
     console.log(isLecturer);
 
@@ -66,7 +66,11 @@ function Header() {
         const token = localStorage.getItem('token');
         if (token) {
             setIsAuthenticated(true);
-            fetchUserProfile(); // Fetch user profile data if authenticated
+            localStorage.setItem('isAuthenticated', 'true');
+            fetchUserProfile(); 
+        } else {
+            setIsAuthenticated(false);
+            localStorage.setItem('isAuthenticated', 'false');
         }
     }, []);
 
@@ -95,6 +99,8 @@ function Header() {
 
     const handleLogout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('lecturerEmai');
+        localStorage.setItem('isAuthenticated', 'false');
         setIsAuthenticated(false);
         navigate('/');
     };

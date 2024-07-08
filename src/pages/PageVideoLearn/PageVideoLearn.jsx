@@ -1,43 +1,143 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import './PageVideoLearn.css';
 import { useParams } from 'react-router-dom';
 import { FaChevronDown, FaChevronUp, FaPlayCircle } from 'react-icons/fa';
+import { CiLock } from 'react-icons/ci';
 
 function PageVideoLearn() {
     const { id } = useParams();
     const CourseUserAPI = `https://localhost:7127/api/Courses/GetCourseByIdIncludeLessons?id=${id}`;
+    const GetIDFromEmailAPI = 'https://localhost:7127/GetUserIDfromToken';
     const [course, setCourse] = useState(null);
     const [visibleTopics, setVisibleTopics] = useState({});
     const [selectedVideo, setSelectedVideo] = useState('');
+    const [selectedLessonId, setSelectedLessonId] = useState(null);
+    const [unlockedLessons, setUnlockedLessons] = useState({});
+    const videoRef = useRef(null);
+    const [error, setError] = useState(null);
+    const [userId, setUserId] = useState('');
+
+    useEffect(() => {
+        const getUserID = async () => {
+            try {
+                const email = localStorage.getItem('email');
+                if (!email) {
+                    throw new Error('Email not found in local storage');
+                }
+                const res = await fetch(GetIDFromEmailAPI, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify( email ), // Send email as a JSON object
+                });
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                const data = await res.json();
+                if (data.statusCode === 200) {
+                    setUserId(data.value); // Assuming data.value contains the user ID
+                } else {
+                    throw new Error(`API error! status: ${data.statusCode}, message: ${data.message}`);
+                }
+            } catch (error) {
+                console.error('Error fetching user ID:', error);
+                setError(error.message);
+            }
+        };
+        getUserID();
+    }, [GetIDFromEmailAPI]);
+
+    useEffect(() => {
+        const GetCourse = async () => {
+            try {
+                const response = await fetch(CourseUserAPI);
+                const data = await response.json();
+                setCourse(data.value);
+
+                // Initialize unlocked lessons state
+                const storedUnlockedLessons = JSON.parse(localStorage.getItem(`${userId}-unlockedLessons`)) || [];
+                const initialUnlockedLessons = { [data.value.topics[0].lessons[0].id]: true };
+                storedUnlockedLessons.forEach((lessonId) => {
+                    initialUnlockedLessons[lessonId] = true;
+                });
+                setUnlockedLessons(initialUnlockedLessons);
+            } catch (error) {
+                console.error('Error fetching course:', error);
+                setError(error.message);
+            }
+        };
+
+        if (userId) {
+            GetCourse();
+        }
+    }, [CourseUserAPI, userId]);
 
     const toggleVisibility = (id) => {
         setVisibleTopics((prev) => ({ ...prev, [id]: !prev[id] }));
     };
 
     const handleLessonClick = (lesson) => {
-        setSelectedVideo(lesson.videoLesson_URL);
+        if (unlockedLessons[lesson.id]) {
+            setSelectedVideo(lesson.videoLesson_URL);
+            setSelectedLessonId(lesson.id);
+        }
     };
 
-    useEffect(() => {
-        const GetCourse = async () => {
-            const response = await fetch(CourseUserAPI);
-            const data = await response.json();
-            setCourse(data.value);
-        };
+    const unlockNextLesson = useCallback(() => {
+        let nextLessonId = null;
 
-        GetCourse();
-    }, [CourseUserAPI]);
+        for (let i = 0; i < course.topics.length; i++) {
+            const lessons = course.topics[i].lessons;
+            for (let j = 0; j < lessons.length; j++) {
+                if (lessons[j].id === selectedLessonId) {
+                    if (j + 1 < lessons.length) {
+                        nextLessonId = lessons[j + 1].id;
+                    } else if (i + 1 < course.topics.length) {
+                        nextLessonId = course.topics[i + 1].lessons[0].id;
+                    }
+                    break;
+                }
+            }
+            if (nextLessonId) break;
+        }
+
+        if (nextLessonId) {
+            setUnlockedLessons((prev) => {
+                const updated = { ...prev, [nextLessonId]: true };
+                localStorage.setItem(`${userId}-unlockedLessons`, JSON.stringify(Object.keys(updated)));
+                return updated;
+            });
+        }
+    }, [course, selectedLessonId, userId]);
+
+    useEffect(() => {
+        if (videoRef.current) {
+            const videoElement = videoRef.current;
+            const handleVideoEnded = () => {
+                unlockNextLesson();
+            };
+
+            videoElement.addEventListener('ended', handleVideoEnded);
+            return () => {
+                videoElement.removeEventListener('ended', handleVideoEnded);
+            };
+        }
+    }, [unlockNextLesson]);
 
     const renderIcon = (id) => {
         return visibleTopics[id] ? (
-            <FaChevronDown style={{ color: 'orange', marginLeft: '155px' }} />
+            <FaChevronDown style={{ color: 'orange' }} />
         ) : (
-            <FaChevronUp style={{ color: 'orange', marginLeft: '155px' }} />
+            <FaChevronUp style={{ color: 'orange' }} />
         );
     };
 
     if (!course) {
         return <div>Loading...</div>;
+    }
+    if (error) {
+        return <h1>Error: {error}</h1>;
     }
 
     return (
@@ -45,6 +145,7 @@ function PageVideoLearn() {
             <div className="body-video">
                 <div className="Video-course">
                     <video
+                        ref={videoRef}
                         className="video"
                         src={
                             selectedVideo ||
@@ -63,15 +164,16 @@ function PageVideoLearn() {
                 <div>
                     {course.topics.map((topic, index) => (
                         <div key={topic.id}>
-                            <div>
+                            <div style={{ backgroundColor: '#f7f8fa' }}>
                                 <h2
                                     style={{
                                         userSelect: 'none',
                                         display: 'flex',
-                                        alignItems: 'center',
-                                        marginTop: '20px',
-                                        marginBottom: '20px',
+                                        justifyContent: 'space-between',
+                                        marginBottom: '0px',
                                         marginLeft: '10px',
+                                        borderBottom: '1px solid #dedfe0',
+                                        height: '40px',
                                     }}
                                     onClick={() => toggleVisibility(topic.id)}
                                 >
@@ -82,14 +184,33 @@ function PageVideoLearn() {
                             <div>
                                 {visibleTopics[topic.id] && (
                                     <div style={{ marginTop: '10px', marginLeft: '30px' }}>
-                                        {topic.lessons.map((lesson) => (
-                                            <div key={lesson.id} style={{ margin: '20px 0px', display: 'flex' }}>
-                                                <FaPlayCircle style={{ marginRight: '10px', color: 'orange' }} />
+                                        {topic.lessons.map((lesson, index) => (
+                                            <div
+                                                key={lesson.id}
+                                                style={{
+                                                    display: 'flex',
+                                                    height: '50px',
+                                                    backgroundColor:
+                                                        lesson.id === selectedLessonId ? '#f0512333' : 'transparent',
+                                                }}
+                                            >
+                                                <FaPlayCircle
+                                                    style={{ marginRight: '10px', color: 'orange', marginTop: '10px' }}
+                                                />
                                                 <h4
-                                                    style={{ userSelect: 'none' }}
+                                                    style={{
+                                                        display: 'flex',
+                                                        justifyContent: 'space-between',
+                                                        userSelect: 'none',
+                                                        marginTop: '10px',
+                                                        width: '100%',
+                                                        color: unlockedLessons[lesson.id] ? 'black' : 'gray',
+                                                        pointerEvents: unlockedLessons[lesson.id] ? 'auto' : 'none',
+                                                    }}
                                                     onClick={() => handleLessonClick(lesson)}
                                                 >
-                                                    {lesson.name}
+                                                    {index + 1}.{lesson.name}
+                                                    {!unlockedLessons[lesson.id] && <CiLock />}
                                                 </h4>
                                             </div>
                                         ))}

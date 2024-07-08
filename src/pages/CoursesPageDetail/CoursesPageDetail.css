@@ -17,7 +17,8 @@
     margin-left: 100px;
 }
 .image-detail-course {
-    border-radius: 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(236, 67, 6, 0.884);
     width: 385px;
     height: 216px;
     object-fit: contain;
@@ -58,8 +59,10 @@
 }
 .img-lecturer {
     margin-top: 15px;
-    width: 30%;
-    height: 30%;
+    width: 240px;
+    height: 146px;
+    object-fit: contain;
+    border: 1px solid #ccc;
     border-radius: 10px;
 }
 .lecturer-characteristics {
@@ -67,4 +70,3 @@
         list-style: none;
     }
 }
-

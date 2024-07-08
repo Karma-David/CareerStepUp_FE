@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import {  useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import './homepage.css';
 import Footer from './footer';
+
 
 function Home() {
     const [courses, setCourses] = useState([]);
@@ -12,7 +13,7 @@ function Home() {
     const [pageIndex, setPageIndex] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const location = useLocation();
-
+    
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
         const searchValue = searchParams.get('search');
@@ -53,39 +54,41 @@ function Home() {
             setPageIndex(newPageIndex);
         }
     };
-
+    localStorage.removeItem('emailLecturer','jobs');
     const renderCourses = (courses) => {
-        const handleCardClick = (id) => {
+        const handleCardClick = (id,lecturerEmail) => {
             window.location.href = `/CoursesDetail/${id}`;
+            localStorage.setItem('lecturerEmai',lecturerEmail); // Assign lecturerEmail to emailLecture here
         };
-        return courses.map((course, index) => (
-            <div className="col" key={index}>
-                <div
-                    className="card h-100 custom-card"
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => handleCardClick(course.course_id)}
-                >
-                    <img
-                        style={{ width: '260px', height: '140px', objectFit: 'contain' }}
-                        src={course.course_Img}
-                        className="card-img-top custom-card-img"
-                        alt={course.title}
-                    />
-                    <div className="card-body">
-                        <h2 className="card-title">{course.title}</h2>
-                        <p className="card-text">Lecturer: {course.lecturerEmail}</p>
 
-                        <p className="card-text">Price: ${course.price}</p>
-                        {/* <p className="card-text">ID: {course.course_id}</p> */}
+        return courses.map((course, index) => {
+           
 
-                        {course.isPremium && <p className="card-text">VIP</p>}
-                        <p className="card-text">Subscriber: {course.subscriber}</p>
-                        <p className="card-text">ID: {course.course_id}</p>
-
+            return (
+                <div className="col" key={index}>
+                    <div
+                        className="card h-100 custom-card"
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => handleCardClick(course.course_id,course.lecturerEmail)}
+                    >
+                        <img
+                            style={{ width: '260px', height: '140px', objectFit: 'contain' }}
+                            src={course.course_Img}
+                            className="card-img-top custom-card-img"
+                            alt={course.title}
+                        />
+                        <div className="card-body">
+                            <h2 className="card-title">{course.title}</h2>
+                            <p className="card-text">Lecturer: {course.lecturerEmail}</p>
+                            <p className="card-text">Price: ${course.price}</p>
+                            {course.isPremium && <p className="card-text">VIP</p>}
+                            <p className="card-text">Subscriber: {course.subscriber}</p>
+                            {/* <p className="card-text">ID: {course.course_id}</p> */}
+                        </div>
                     </div>
                 </div>
-            </div>
-        ));
+            );
+        });
     };
 
     if (loading) {
