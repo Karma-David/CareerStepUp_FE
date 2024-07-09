@@ -3,6 +3,7 @@ import './PageVideoLearn.css';
 import { useParams } from 'react-router-dom';
 import { FaChevronDown, FaChevronUp, FaPlayCircle } from 'react-icons/fa';
 import { CiLock } from 'react-icons/ci';
+import Comment from './Comment';
 
 function PageVideoLearn() {
     const { id } = useParams();
@@ -62,6 +63,12 @@ function PageVideoLearn() {
                     initialUnlockedLessons[lessonId] = true;
                 });
                 setUnlockedLessons(initialUnlockedLessons);
+
+                // Set default selected video and lesson
+                if (data.value.topics.length > 0 && data.value.topics[0].lessons.length > 0) {
+                    setSelectedVideo(data.value.topics[0].lessons[0].videoLesson_URL);
+                    setSelectedLessonId(data.value.topics[0].lessons[0].id);
+                }
             } catch (error) {
                 console.error('Error fetching course:', error);
                 setError(error.message);
@@ -155,8 +162,7 @@ function PageVideoLearn() {
                     />
                 </div>
                 <div className="description-course">
-                    <h1>Description</h1>
-                    <p>{course.courseName}</p>
+                    <Comment lessonID={selectedLessonId}/>
                 </div>
             </div>
             <div className="list-topic">
