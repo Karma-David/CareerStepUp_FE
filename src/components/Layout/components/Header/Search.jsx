@@ -17,12 +17,11 @@ function Search() {
     useEffect(() => {
         // Function to get search query parameter from URL
         const getSearchFromUrl = () => {
-
             const urlParams = new URLSearchParams(window.location.search);
             const searchQuery = urlParams.get('search');
             if (searchQuery) {
                 setSearchValue(searchQuery);
-                 // Show KhoaHoc results when searchValue is set from URL
+                // Show KhoaHoc results when searchValue is set from URL
             }
         };
 
@@ -52,7 +51,6 @@ function Search() {
             }
         };
     }, []);
-    
 
     useEffect(() => {
         const isSearchInputFocused = () => {
@@ -79,35 +77,40 @@ function Search() {
     };
 
     return (
-        <Tippy
-            interactive
-            visible={showResult && !!searchValue}
-            render={(attrs) => (
-                <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                    {showResult && (
-                        <KhoaHoc search={searchValue} />
-                    )}
-                </div>
-            )}
-        >
-            <form className={cx('search')} onSubmit={handleSubmit}>
-                <input
-                    value={searchValue}
-                    placeholder="Search account or video"
-                    spellCheck={false}
-                    onChange={handleSearchChange}
-                    ref={searchInputRef} // Assign ref to manage focus
-                />
-                {!!searchValue && (
-                    <button type="button" className={cx('clear')} onClick={handleClear}>
-                        <FontAwesomeIcon icon={faCircleXmark} />
-                    </button>
+        <div className="form-value">
+            <Tippy
+                interactive
+                visible={showResult && !!searchValue}
+                render={(attrs) => (
+                    <div
+                        style={{ border: '1px solid', backgroundColor: '#ccc',borderRadius: '5px'  }}
+                        className={cx('search-result')}
+                        tabIndex="-1"
+                        {...attrs}
+                    >
+                        {showResult && <KhoaHoc search={searchValue} />}
+                    </div>
                 )}
-                <button type="submit" className={cx('search-btn')}>
-                    <FontAwesomeIcon icon={faMagnifyingGlass} />
-                </button>
-            </form>
-        </Tippy>
+            >
+                <form className={cx('search')} onSubmit={handleSubmit}>
+                    <input
+                        value={searchValue}
+                        placeholder="Search account or video"
+                        spellCheck={false}
+                        onChange={handleSearchChange}
+                        ref={searchInputRef} // Assign ref to manage focus
+                    />
+                    {!!searchValue && (
+                        <button type="button" className={cx('clear')} onClick={handleClear}>
+                            <FontAwesomeIcon icon={faCircleXmark} />
+                        </button>
+                    )}
+                    <button type="submit" className={cx('search-btn')}>
+                        <FontAwesomeIcon icon={faMagnifyingGlass} />
+                    </button>
+                </form>
+            </Tippy>
+        </div>
     );
 }
 
