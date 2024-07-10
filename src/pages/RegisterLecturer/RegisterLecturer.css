@@ -1,3 +1,9 @@
+html {
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #ff8f26, #ff5117);
+}
+
 .Register-Lecturer {
     margin-top: 100px;
     margin-left: auto;
@@ -5,17 +11,18 @@
     width: 400px;
     background-color: #fff;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     text-align: center;
 }
 
 .Register-Lecturer h1 {
     margin-bottom: 20px;
     color: #fff;
-    background-color: orangered;
+    background: linear-gradient(to right bottom, #ff8f26, #ff5117);
     border-radius: 10px;
-    padding: 10px;
+    padding: 10px 0;
+    font-size: 1.5em;
 }
 
 .form-regis-lecturer {
@@ -28,36 +35,50 @@
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
-    color: #555;
+    color: #333;
 }
 
 .form-input,
-.form-textarea,
-.form-button {
+.form-textarea {
     width: 100%;
     margin-bottom: 20px;
     padding: 10px;
     font-size: 16px;
-    border-radius: 4px;
+    border-radius: 10px;
     box-sizing: border-box;
+    border: 1px solid rgba(22, 24, 35, 0.2);
+    transition: border-color 0.3s ease;
 }
 
-.form-input,
-.form-textarea {
-    border: 1px solid #ccc;
+.form-input:focus,
+.form-textarea:focus {
+    border-color: #ff5117;
+    outline: none;
 }
 
 .form-textarea {
     resize: vertical;
+    height: 100px;
 }
 
 .form-button {
-    background-color: #007bff;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 10px;
     border: none;
-    color: white;
+    background: linear-gradient(to right bottom, #ff8f26, #ff5117);
+    color: #fff;
     cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
 }
 
 .form-button:hover {
-    background-color: #0056b3;
+    background: #ff5117;
+    transform: scale(1.05);
+}
+
+input[readonly] {
+    background-color: #f9f9f9;
+    color: #555;
 }

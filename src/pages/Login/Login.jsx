@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { FaUser, FaLock } from 'react-icons/fa';
+import { FaUser, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import Button from '@/components/Button';
 import './Login.css';
@@ -12,6 +12,7 @@ const Login = () => {
         email: '',
         password: '',
     });
+    const [showPassword, setShowPassword] = useState(false);
 
     const navigate = useNavigate();
 
@@ -40,7 +41,7 @@ const Login = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify( data?.token ), // Pass token in body
+                body: JSON.stringify({ token: data?.token }), // Pass token in body
             });
     
             if (!infoRes.ok) {
@@ -51,7 +52,6 @@ const Login = () => {
             console.log(infoData?.value?.roles);
             localStorage.setItem('role', infoData?.value?.roles);
     
-           
             navigate('/'); // Chuyển hướng đến HomePage
         } catch (error) {
             console.error('Error:', error);
@@ -77,7 +77,7 @@ const Login = () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(credential), // Bao bọc credential trong một đối tượng
+                    body: JSON.stringify({ credential }), // Bao bọc credential trong một đối tượng
                 });
 
                 if (!res.ok) {
@@ -93,7 +93,7 @@ const Login = () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(data?.token ), // Pass token in body
+                    body: JSON.stringify({ token: data?.token }), // Pass token in body
                 });
     
                 if (!infoRes.ok) {
@@ -160,11 +160,16 @@ const Login = () => {
                         <div className="input-password">
                             <input
                                 onChange={(e) => setFormData({ ...formData, password: e?.target?.value })}
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 placeholder="Password"
                                 required
                             />
                             <FaLock />
+                            {showPassword ? (
+                                <FaEyeSlash className="password-toggle" onClick={() => setShowPassword(!showPassword)} />
+                            ) : (
+                                <FaEye className="password-toggle" onClick={() => setShowPassword(!showPassword)} />
+                            )}
                         </div>
                     </div>
 
