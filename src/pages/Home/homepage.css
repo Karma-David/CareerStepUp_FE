@@ -1,24 +1,9 @@
-/* General styles */
-html,
-body {
-    height: 100%;
-    font-family: 'Arial', sans-serif;
-    background: #f4f4f9;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Container for the carousel */
 .container-slide {
-    padding: 20px;
-    margin: 20px auto;
+    padding: 10px;
+    margin: 20px;
     border-radius: 15px;
     background-color: black;
-    max-width: 1200px;
 }
-
-/* Course list container */
 .course-list {
     display: flex;
     flex-wrap: wrap;
@@ -26,149 +11,79 @@ body {
     padding: 20px;
 }
 
-/* Individual course item */
 .course-item {
-    background-color: #fff;
+    background-color: #f8f9fa;
     border: 1px solid #dee2e6;
-    border-radius: 15px;
+    border-radius: 5px;
     width: 300px;
     margin: 10px;
     padding: 20px;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.course-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .course-item img {
     width: 100%;
-    height: 140px;
-    border-radius: 10px;
-    object-fit: cover;
+    height: auto;
+    border-radius: 5px;
+}
+
+.content {
+    padding-top: 22px;
+    padding-bottom: 22px;
 }
 
 .course-item h5 {
     margin-top: 15px;
     font-size: 18px;
     font-weight: bold;
-    color: #333;
 }
 
-/* Custom card for course */
 .custom-card {
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.custom-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .custom-card-img {
-    border-radius: 15px 15px 0 0;
-    width: 100%;
-    height: 140px;
-    object-fit: cover;
-}
-
-/* Footer styles */
-footer {
-    background-color: #343a40;
-    color: #ffffff;
     border-radius: 15px;
-    padding: 20px;
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+}
+.footer-heading {
+    color: #dee2e6;
+    font-size: 1.7rem;
+    font-weight: 600;
+    border-bottom: 2px solid #ffffff; /* Đường viền dưới tiêu đề */
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
 
-footer a {
-    color: #ffffff;
-    text-decoration: none;
-    transition: color 0.3s ease;
+footer p {
+    font-size: 2rem;
+    line-height: 1.6;
 }
 
-footer a:hover {
-    color: #d4d4d4;
+ul {
+    padding-left: 0;
 }
 
-/* Specific styling for the footer sections */
-footer .col-md-4 {
-    margin-bottom: 20px;
+li {
+    margin-bottom: 0.5rem;
 }
 
-footer .col-md-4 h2 {
-    font-size: 20px;
-    font-weight: bold;
-}
-
-footer .col-md-4 p,
-footer .col-md-4 ul {
-    font-size: 14px;
-    color: #d4d4d4;
-}
-
-footer .col-md-4 ul {
-    padding: 0;
-    list-style: none;
-}
-
-footer .col-md-4 ul li {
-    margin-bottom: 10px;
-}
-
-/* Pagination styles */
-.pagination {
+.social-icons {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px 0;
+    gap: 15px; /* Khoảng cách giữa các biểu tượng */
 }
 
-.pagination button {
-    background: #ff8f26;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    margin: 0 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
+.social-icon {
+    color: #ffffff; /* Màu cho các biểu tượng mạng xã hội */
+    font-size: 1.5rem; /* Kích thước biểu tượng */
+    transition: color 0.3s; /* Hiệu ứng chuyển màu khi di chuột */
 }
 
-.pagination button:hover {
-    background: #ff5117;
-}
-
-.pagination span {
-    margin: 0 10px;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-/* Loading spinner styles */
-.text-center {
-    text-align: center;
-}
-
-.spinner-border {
-    width: 3rem;
-    height: 3rem;
-    border-width: 0.3rem;
-}
-
-.spinner-border .visually-hidden {
-    display: inline-block;
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
+.social-icon:hover {
+    color: #007bff; /* Màu khi di chuột qua các biểu tượng */
 }

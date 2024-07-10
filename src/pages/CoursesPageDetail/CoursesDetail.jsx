@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './CoursesPageDetail.css';
 import Button from '@/components/Button';
-import { FaMinus, FaPlayCircle, FaPlus } from 'react-icons/fa';
+import { FaMinus, FaPlus } from 'react-icons/fa';
 
 function CoursesDetail() {
     const { id } = useParams();
@@ -235,8 +235,6 @@ function CoursesDetail() {
                                         <div style={{ marginTop: '10px', marginLeft: '30px' }}>
                                             {topic.lessons.map((lesson) => (
                                                 <div style={{ display: 'flex', padding: '10px 0px' }} key={lesson.id}>
-                                                    <FaPlayCircle style={{ marginRight: '10px', color: 'orange' }} />
-
                                                     <div>
                                                         <h4 style={{ userSelect: 'none' }}>{lesson.name}</h4>
                                                     </div>

@@ -109,12 +109,11 @@ function Home() {
 
     return (
         <div>
-            <div className="container-slide">{/* Carousel code */}</div>
             <div className="container mt-5">
-                <h1 className="text-left mb-4">All Courses</h1>
-                <div className="row row-cols-1 row-cols-md-4 g-4">{renderCourses(courses)}</div>
+                <h1 className="text-left mb-4 ">All Courses</h1>
+                <div className="row row-cols-1 row-cols-md-4 g-4 content">{renderCourses(courses)}</div>
             </div>
-            <div className="pagination">
+            <div className="pagination text-center mt-4">
                 <button onClick={() => handlePageChange(pageIndex - 1)} disabled={pageIndex === 1}>
                     Previous
                 </button>
@@ -123,7 +122,7 @@ function Home() {
                     Next
                 </button>
             </div>
-            <div style={{ marginTop: '50px' }} className="container">
+            <div className="container" style={{ marginTop: '50px' }}>
                 <Footer />
             </div>
         </div>
