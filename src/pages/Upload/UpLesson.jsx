@@ -22,7 +22,7 @@ function UpLesson({ topicId }) {
             try {
                 const response = await fetch(lessonAPI);
                 const data = await response.json();
-                setLessons(data.value);
+                setLessons(data.value || []);
             } catch (error) {
                 console.error('Lỗi khi lấy bài học:', error);
                 setLessons([]);
@@ -39,10 +39,13 @@ function UpLesson({ topicId }) {
 
     const handleInputChange = (e) => {
         const { name, value, files } = e.target;
-        if (name === 'newTopic') {
+        if (name === 'newLesson') {
             setNewLesson(value || '');
         } else if (name === 'editLesson') {
-            setUpdateLesson({ ...updateLesson, lesson_name: value });
+            setUpdateLesson((prev) => ({
+                ...prev,
+                lesson_name: value,
+            }));
         } else if (name === 'videoFile') {
             setVideoFile(files[0]);
         } else if (name === 'videoName') {
@@ -66,7 +69,7 @@ function UpLesson({ topicId }) {
                     return response.json();
                 })
                 .then((data) => {
-                    setLessons([...lessons, data]);
+                    setLessons((prevLessons) => [...prevLessons, data]);
                     setNewLesson('');
                 })
                 .catch((error) => {
@@ -78,6 +81,8 @@ function UpLesson({ topicId }) {
     const handleUpdateLesson = (lesson) => {
         setUpdateLesson(lesson);
         setEditLesson(null);
+        setVideoFile(null);
+        setVideoName('');
     };
 
     const handleSaveLesson = () => {
@@ -103,8 +108,10 @@ function UpLesson({ topicId }) {
                 })
                 .then((data) => {
                     const updatedLesson = data;
-                    setLessons(
-                        lessons.map((lesson) => (lesson.lesson_id === updateLesson.lesson_id ? updatedLesson : lesson)),
+                    setLessons((prevLessons) =>
+                        prevLessons.map((lesson) =>
+                            lesson.lesson_id === updateLesson.lesson_id ? updatedLesson : lesson,
+                        ),
                     );
                     setUpdateLesson(null);
                     setVideoFile(null);
@@ -125,7 +132,7 @@ function UpLesson({ topicId }) {
                 if (!response.ok) {
                     throw new Error('Failed to delete lesson');
                 }
-                setLessons(lessons.filter((lesson) => lesson.lesson_id !== lessonId));
+                setLessons((prevLessons) => prevLessons.filter((lesson) => lesson.lesson_id !== lessonId));
             })
             .catch((error) => {
                 console.error('Error deleting lesson:', error);
@@ -157,13 +164,13 @@ function UpLesson({ topicId }) {
                     }
                     return response.json();
                 })
-                .then((data) => {
+                .then(() => {
                     setEditLesson(null);
                     setVideoFile(null);
                     setVideoName('');
                 })
-                .catch(() => {
-                    alert('Success');
+                .catch((error) => {
+                    console.error('Error adding video:', error);
                 });
         }
     };
@@ -175,62 +182,61 @@ function UpLesson({ topicId }) {
     };
 
     return (
-        <div>
-            <h1>Danh sách bài học</h1>
-            <h2 style={{ backgroundColor: 'orangered', color: 'white' }}>Lesson</h2>
+        <div className="uplesson-container">
+            <h1 className="page-title">Danh sách bài học</h1>
+            <h2 className="section-title">Lesson</h2>
 
             <div className="list-lesson-topic">
                 {Array.isArray(lessons) && lessons.length > 0 ? (
-                    lessons.map((lesson, index) => (
-                        <div key={index} className="lesson-item">
-                            <div className="name-lesson">
-                                <h2>{lesson.lesson_name}</h2>
-                            </div>
-                            <div className="button-handle-lesson">
-                                <button onClick={() => handleUpdateLesson(lesson)}>Cập nhật</button>
-                                <button onClick={() => handleDeleteLesson(lesson.lesson_id)}>Xóa</button>
-                                <button onClick={() => handleEditLesson(lesson)}>Chỉnh sửa Bài học</button>
-                                <button onClick={() => handleAddExercise(lesson.lesson_id)}>Thêm bài tập</button>
-                            </div>
-                        </div>
-                    ))
+                    <table className="lesson-table">
+                        <thead>
+                            <tr>
+                                <th>Lesson Name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {lessons.map((lesson) => (
+                                <tr key={lesson.lesson_id}>
+                                    <td>{lesson.lesson_name}</td>
+                                    <td className="actions-cell">
+                                        <button onClick={() => handleUpdateLesson(lesson)}>Cập nhật</button>
+                                        <button onClick={() => handleDeleteLesson(lesson.lesson_id)}>Xóa</button>
+                                        <button onClick={() => handleEditLesson(lesson)}>Chỉnh sửa Bài học</button>
+                                        <button onClick={() => handleAddExercise(lesson.lesson_id)}>
+                                            Thêm bài tập
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 ) : (
                     <p>Không có bài học nào</p>
                 )}
             </div>
 
-            <div style={{ marginTop: '50px' }} className="new-topic-up">
-                <div>
-                    <h1>New Lesson</h1>
-                </div>
-                <div className="write-new-topic">
-                    <div>
-                        <input
-                            type="text"
-                            name="newTopic"
-                            placeholder="Enter lesson name"
-                            value={newLesson}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                    <div>
-                        <button
-                            style={{ height: '50px', marginLeft: '50px', marginTop: '10px', borderRadius: '10px' }}
-                            onClick={handleAddLesson}
-                        >
-                            <FontAwesomeIcon style={{ marginLeft: '10px', marginRight: '10px' }} icon={faPlus} />
-                            <span style={{ marginRight: '10px' }}>Add Lesson</span>
-                        </button>
-                    </div>
+            <div className="new-lesson-container">
+                <h2 className="section-title">New Lesson</h2>
+                <div className="write-new-lesson">
+                    <input
+                        type="text"
+                        name="newLesson"
+                        placeholder="Enter lesson name"
+                        value={newLesson}
+                        onChange={handleInputChange}
+                    />
+                    <button className="add-lesson-button" onClick={handleAddLesson}>
+                        <FontAwesomeIcon icon={faPlus} />
+                        <span>Add Lesson</span>
+                    </button>
                 </div>
             </div>
 
             {updateLesson && (
-                <div style={{ marginTop: '50px' }} className="edit-lesson-up">
-                    <div>
-                        <h1>Edit Lesson</h1>
-                    </div>
-                    <div className="write-edit-lesson">
+                <div className="edit-lesson-container">
+                    <h2 className="section-title">Edit Lesson</h2>
+                    <div className="edit-lesson-form">
                         <input
                             type="text"
                             name="editLesson"
@@ -246,17 +252,10 @@ function UpLesson({ topicId }) {
                             value={videoName}
                             onChange={handleInputChange}
                         />
-                        <button style={{ margin: '10px' }} onClick={handleSaveLesson}>
+                        <button className="save-lesson-button" onClick={handleSaveLesson}>
                             Cập nhật bài học
                         </button>
-                        <button
-                            style={{ margin: '10px' }}
-                            onClick={() => {
-                                setUpdateLesson(null);
-                                setVideoFile(null);
-                                setVideoName('');
-                            }}
-                        >
+                        <button className="cancel-lesson-button" onClick={handleCancelEdit}>
                             Hủy
                         </button>
                     </div>
@@ -264,11 +263,9 @@ function UpLesson({ topicId }) {
             )}
 
             {editLesson && (
-                <div style={{ marginTop: '50px' }} className="edit-lesson-up">
-                    <div>
-                        <h1>Edit Lesson Video</h1>
-                    </div>
-                    <div className="write-edit-lesson">
+                <div className="edit-lesson-video-container">
+                    <h2 className="section-title">Edit Lesson Video</h2>
+                    <div className="edit-video-form">
                         <input type="file" name="videoFile" onChange={handleInputChange} />
                         <input
                             type="text"
@@ -277,20 +274,17 @@ function UpLesson({ topicId }) {
                             value={videoName}
                             onChange={handleInputChange}
                         />
-                        <button style={{ margin: '10px' }} onClick={handleSaveVideo}>
-                            Cập nhật Video
+                        <button className="save-video-button" onClick={handleSaveVideo}>
+                            Thêm Video
                         </button>
-                        <button style={{ margin: '10px' }} onClick={handleCancelEdit}>
+                        <button className="cancel-video-button" onClick={handleCancelEdit}>
                             Hủy
                         </button>
                     </div>
                 </div>
             )}
-            {showExerciseForm && (
-                <div>
-                    <Exercise lessonsID={editLessonID} />
-                </div>
-            )}
+
+            {showExerciseForm && <Exercise topicId={editLessonID} />}
         </div>
     );
 }

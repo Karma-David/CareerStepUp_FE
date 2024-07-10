@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import './Upload.css';
+import './newCourse.css'; // Chúng ta sẽ thêm CSS vào đây
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import UpTopic from './UpTopic';
 
 const CreateCourseAPI = 'https://localhost:7127/api/Courses/CreateCourse';
+
 function UpNewCourse() {
     const [courses, setCourses] = useState([]);
     const [newCourse, setNewCourse] = useState('');
@@ -30,7 +31,6 @@ function UpNewCourse() {
         if (name === 'newCourse') setNewCourse(value);
         if (name === 'description') setDescription(value);
         if (name === 'price') setPrice(value);
-        console.log(value);
     };
 
     const handleAddCourse = () => {
@@ -42,11 +42,6 @@ function UpNewCourse() {
             formData.append('price', price);
             if (file) {
                 formData.append('course_Img', file);
-            }
-
-            // Debugging: log formData contents
-            for (let pair of formData.entries()) {
-                console.log(pair[0] + ': ' + pair[1]);
             }
 
             fetch(CreateCourseAPI, {
@@ -80,12 +75,13 @@ function UpNewCourse() {
                 });
         }
     };
+
     return (
-        <div className="new-course-up">
-            <div>
+        <div className="up-new-course-container">
+            <div className="header">
                 <h1>New Course</h1>
             </div>
-            <div className="write-new-course">
+            <div className="form-container">
                 <input
                     type="text"
                     name="newCourse"
@@ -109,16 +105,12 @@ function UpNewCourse() {
                 />
                 <input type="file" onChange={handleFileChange} />
             </div>
-            <div>
-                <button
-                    style={{ height: '50px', marginLeft: '660px', marginTop: '40px', borderRadius: '10px' }}
-                    onClick={handleAddCourse}
-                >
+            <div className="button-container">
+                <button className="add-course-button" onClick={handleAddCourse}>
                     <FontAwesomeIcon style={{ marginLeft: '10px', marginRight: '10px' }} icon={faPlus} />
-                    <span style={{ marginRight: '10px' }}>Add Course</span>
+                    <span>Add Course</span>
                 </button>
             </div>
-            <UpTopic />
         </div>
     );
 }
