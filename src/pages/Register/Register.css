@@ -1,94 +1,128 @@
 html {
     height: 100%;
+    font-family: 'Arial', sans-serif;
+    background: #f4f4f9;
 }
+
 .form-box-register {
     width: 100%;
-    display: grid;
-    place-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
-.form {
-    width: 40%;
-    margin-top: 70px;
-    line-height: 60px;
-    border: 1px solid rgba(22, 24, 35, 0.2);
-    border-radius: 10px;
 
-    h1 {
-        display: flex;
-        justify-content: center;
-        border: 1px solid rgba(22, 24, 35, 0.2);
-        border-radius: 10px;
-        background: linear-gradient(to right bottom, #ff8f26, #ff5117);
-        color: azure;
-    }
-}
-.input-username-register {
-    height: 50px;
-    width: 70%;
-    margin-left: 65px;
-    margin-top: 20px;
+.form {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 70px;
+    padding: 20px;
     border: 1px solid rgba(22, 24, 35, 0.2);
     border-radius: 10px;
-    input {
-        width: 390px;
-        height: 40px;
-        padding-top: 15px;
-    }
-    &:hover {
-        border: 1px solid rgba(23, 33, 94, 0.796);
-    }
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
-.input-email-register {
+
+.form h1 {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    background: linear-gradient(to right bottom, #ff8f26, #ff5117);
+    color: #fff;
+}
+
+.register-form .input-username-register,
+.register-form .input-email-register,
+.register-form .input-password-register {
+    position: relative;
     height: 50px;
-    width: 70%;
-    margin-left: 65px;
-    margin-top: 20px;
+    width: 100%;
+    margin-bottom: 20px;
     border: 1px solid rgba(22, 24, 35, 0.2);
     border-radius: 10px;
-    input {
-        width: 390px;
-        height: 40px;
-        padding-top: 15px;
-    }
-    &:hover {
-        border: 1px solid rgba(23, 33, 94, 0.796);
-    }
+    transition: border-color 0.3s ease;
 }
-.input-password-register {
-    height: 50px;
-    width: 70%;
-    margin-left: 65px;
-    margin-top: 20px;
-    border: 1px solid rgba(22, 24, 35, 0.2);
+
+.register-form input {
+    width: calc(100% - 40px);
+    height: 100%;
+    padding: 0 10px;
+    border: none;
     border-radius: 10px;
-    input {
-        width: 390px;
-        height: 40px;
-        padding-top: 15px;
-    }
-    &:hover {
-        border: 1px solid rgba(23, 33, 94, 0.796);
-    }
+    outline: none;
+    font-size: 16px;
+    color: #333;
+    background: #f4f4f9;
+    padding-left: 40px;
 }
+
+.register-form .icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #aaa;
+}
+
+.register-form .input-username-register:hover,
+.register-form .input-email-register:hover,
+.register-form .input-password-register:hover {
+    border-color: #17335e;
+}
+
+.register-form .input-username-register:focus-within,
+.register-form .input-email-register:focus-within,
+.register-form .input-password-register:focus-within {
+    border-color: #17335e;
+}
+
+.remember-forgot {
+    margin: 20px 0;
+}
+
+.remember-forgot label {
+    font-size: 14px;
+    color: #333;
+}
+
 .submit-register {
     height: 40px;
-    width: 300px;
-    margin-left: 135px;
-    border: 1px solid rgba(22, 24, 35, 0.2);
+    width: 100%;
+    margin-bottom: 20px;
+    border: none;
     border-radius: 10px;
     background: linear-gradient(to right bottom, #ff8f26, #ff5117);
     cursor: pointer;
-    color: azure;
+    color: #fff;
+    font-size: 16px;
+    transition: background 0.3s ease, transform 0.3s ease;
 }
-.register-link {
-    margin-left: 10px;
+
+.submit-register:hover {
+    background: #ff5117;
+    transform: scale(1.05);
 }
+
+.register-link p {
+    font-size: 14px;
+    color: #333;
+}
+
 .link-button-login {
-    height: 30px;
-    width: 80px;
-    margin-left: 15px;
-    border: 1px solid rgba(22, 24, 35, 0.2);
+    display: inline-block;
+    padding: 5px 10px;
+    border: none;
     border-radius: 10px;
     background: linear-gradient(to right bottom, #ff8f26, #ff5117);
-    color: azure;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.link-button-login:hover {
+    background: #ff5117;
+    transform: scale(1.05);
 }

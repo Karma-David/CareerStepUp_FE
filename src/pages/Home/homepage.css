@@ -1,9 +1,24 @@
+/* General styles */
+html,
+body {
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+    background: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Container for the carousel */
 .container-slide {
-    padding: 10px;
-    margin: 20px;
+    padding: 20px;
+    margin: 20px auto;
     border-radius: 15px;
     background-color: black;
+    max-width: 1200px;
 }
+
+/* Course list container */
 .course-list {
     display: flex;
     flex-wrap: wrap;
@@ -11,53 +26,149 @@
     padding: 20px;
 }
 
+/* Individual course item */
 .course-item {
-    background-color: #f8f9fa;
+    background-color: #fff;
     border: 1px solid #dee2e6;
-    border-radius: 5px;
+    border-radius: 15px;
     width: 300px;
     margin: 10px;
     padding: 20px;
     text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.course-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .course-item img {
     width: 100%;
-    height: auto;
-    border-radius: 5px;
+    height: 140px;
+    border-radius: 10px;
+    object-fit: cover;
 }
 
 .course-item h5 {
     margin-top: 15px;
     font-size: 18px;
     font-weight: bold;
+    color: #333;
 }
 
+/* Custom card for course */
 .custom-card {
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.custom-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .custom-card-img {
-    border-radius: 15px;
-    object-fit: cover;
+    border-radius: 15px 15px 0 0;
     width: 100%;
-    height: auto;
+    height: 140px;
+    object-fit: cover;
 }
+
+/* Footer styles */
 footer {
     background-color: #343a40;
     color: #ffffff;
     border-radius: 15px;
+    padding: 20px;
 }
 
 footer a {
     color: #ffffff;
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 footer a:hover {
     color: #d4d4d4;
-    text-decoration: none;
+}
+
+/* Specific styling for the footer sections */
+footer .col-md-4 {
+    margin-bottom: 20px;
+}
+
+footer .col-md-4 h2 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+footer .col-md-4 p,
+footer .col-md-4 ul {
+    font-size: 14px;
+    color: #d4d4d4;
+}
+
+footer .col-md-4 ul {
+    padding: 0;
+    list-style: none;
+}
+
+footer .col-md-4 ul li {
+    margin-bottom: 10px;
+}
+
+/* Pagination styles */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.pagination button {
+    background: #ff8f26;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.pagination button:hover {
+    background: #ff5117;
+}
+
+.pagination span {
+    margin: 0 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Loading spinner styles */
+.text-center {
+    text-align: center;
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.3rem;
+}
+
+.spinner-border .visually-hidden {
+    display: inline-block;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
 }
