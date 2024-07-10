@@ -183,7 +183,7 @@ const LecturerProfile = () => {
                     </div>
                 </div>
             </form>
-            <div className="col-md-3 d-flex align-items-center justify-content-end">
+            {/* <div className="col-md-3 d-flex align-items-center justify-content-end">
                 {lecturer.isApprove ? (
                     <button
                         className="btn btn-primary"
@@ -199,7 +199,7 @@ const LecturerProfile = () => {
                         Ban
                     </button>
                 )}
-            </div>
+            </div> */}
             <div className="form-check-group">
                 <div className="form-check">
                     <input

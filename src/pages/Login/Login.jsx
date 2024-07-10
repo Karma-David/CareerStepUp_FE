@@ -41,17 +41,17 @@ const Login = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ token: data?.token }), // Pass token in body
+                body: JSON.stringify(data?.token), // Pass token in body
             });
-    
+
             if (!infoRes.ok) {
                 throw new Error(`HTTP error! status: ${infoRes.status}`);
             }
-    
+
             const infoData = await infoRes.json();
-            console.log(infoData?.value?.roles);
+            console.log(infoData);
             localStorage.setItem('role', infoData?.value?.roles);
-    
+
             navigate('/'); // Chuyển hướng đến HomePage
         } catch (error) {
             console.error('Error:', error);
@@ -95,15 +95,15 @@ const Login = () => {
                     },
                     body: JSON.stringify({ token: data?.token }), // Pass token in body
                 });
-    
+
                 if (!infoRes.ok) {
                     throw new Error(`HTTP error! status: ${infoRes.status}`);
                 }
-    
+
                 const infoData = await infoRes.json();
                 console.log(infoData?.value?.roles);
                 localStorage.setItem('role', infoData?.value?.roles);
-    
+
                 navigate('/'); // Chuyển hướng đến HomePage
             } catch (error) {
                 console.error('Error:', error);
@@ -160,13 +160,16 @@ const Login = () => {
                         <div className="input-password">
                             <input
                                 onChange={(e) => setFormData({ ...formData, password: e?.target?.value })}
-                                type={showPassword ? "text" : "password"}
+                                type={showPassword ? 'text' : 'password'}
                                 placeholder="Password"
                                 required
                             />
                             <FaLock />
                             {showPassword ? (
-                                <FaEyeSlash className="password-toggle" onClick={() => setShowPassword(!showPassword)} />
+                                <FaEyeSlash
+                                    className="password-toggle"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                />
                             ) : (
                                 <FaEye className="password-toggle" onClick={() => setShowPassword(!showPassword)} />
                             )}

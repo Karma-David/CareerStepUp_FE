@@ -72,7 +72,7 @@ export const publishRouter = [
     { path: '/Course', component: Course },
     { path: '/LecturerProfile/:lecturerId', component: LecturerProfile },
     { path: '/LearnerProfile/:learnerId', component: LearnerProfile },
-    { path: '/Test/:id', component: Test },
+    // { path: '/Test/:id', component: Test },
     { path: '/WithdrawalsList', component: WithdrawalsList },
     { path: '/WidthDrawDetail', component: WidthDrawDetail },
   

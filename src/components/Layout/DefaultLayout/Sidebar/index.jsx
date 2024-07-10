@@ -1,6 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faRoad, faUser, faGraduationCap, faGauge, faTable, faChartBar, faCashRegister, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
+import {
+    faHouse,
+    faRoad,
+    faUser,
+    faGraduationCap,
+    // faGauge,
+    // faTable,
+    // faChartBar,
+    // faCashRegister,
+    // faMoneyBill,
+    faUpload,
+} from '@fortawesome/free-solid-svg-icons';
 
 import classNames from 'classnames/bind';
 import style from './Sidebar.module.scss';
@@ -40,7 +51,7 @@ const Sidebar = () => {
                     </span>
                 </ButtonSidebar>
 
-                {/* Hiển thị mục Lecturers chỉ khi role là admin */}
+                {/* Hiển thị mục Lecturers chỉ khi role là admin
                 {isAdmin && (
                     <ButtonSidebar to={'/Lecturers'}>
                         <FontAwesomeIcon style={{ color: 'black' }} icon={faUser} className={cx('icon', 'black-icon')} />
@@ -71,7 +82,7 @@ const Sidebar = () => {
                     <span style={{ color: 'black' }} className={cx('text')}>
                         WidthDraw
                     </span>
-                </ButtonSidebar>
+                </ButtonSidebar> */}
 
                 {/* <ButtonSidebar to={'/Course'}>
                 <FontAwesomeIcon style={{color:'black'}} icon={faBook} className={cx('icon', 'black-icon')} />
