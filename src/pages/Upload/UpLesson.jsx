@@ -190,7 +190,7 @@ function UpLesson({ topicId }) {
                                 <button onClick={() => handleUpdateLesson(lesson)}>Cập nhật</button>
                                 <button onClick={() => handleDeleteLesson(lesson.lesson_id)}>Xóa</button>
                                 <button onClick={() => handleEditLesson(lesson)}>Chỉnh sửa Bài học</button>
-                                <button onClick={() => handleAddExercise(lesson.lesson_id)}>thêm bài tập</button>
+                                <button onClick={() => handleAddExercise(lesson.lesson_id)}>Thêm bài tập</button>
                             </div>
                         </div>
                     ))
@@ -218,8 +218,8 @@ function UpLesson({ topicId }) {
                             style={{ height: '50px', marginLeft: '50px', marginTop: '10px', borderRadius: '10px' }}
                             onClick={handleAddLesson}
                         >
-                           <FontAwesomeIcon style={{ marginLeft: '10px', marginRight: '10px' }} icon={faPlus} />
-                           <span style={{ marginRight: '10px' }}>Add Lesson</span>
+                            <FontAwesomeIcon style={{ marginLeft: '10px', marginRight: '10px' }} icon={faPlus} />
+                            <span style={{ marginRight: '10px' }}>Add Lesson</span>
                         </button>
                     </div>
                 </div>
