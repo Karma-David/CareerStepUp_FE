@@ -34,8 +34,6 @@ import LearnerProfile from '@/pages/AdminPage/Components/Students/LearnerProfile
 import WithdrawalsList from '@/pages/AdminPage/Components/WidthDraw/WidthDraw';
 import WidthDrawDetail from '@/pages/AdminPage/Components/WidthDraw/WidthDrawDetail';
 
-
-
 export const publishRouter = [
     { path: '/', component: Home },
     { path: '/roadmap', component: RoadMap },
@@ -48,7 +46,6 @@ export const publishRouter = [
     { path: '/ResetPass', component: ResetPass, layout: null },
     //{ path: '/AdminPage', component: AdminPage },
 
-    
     // { path: '/AdminPage', component: AdminPage },
 
     { path: '/RegisterLecturer', component: RegisterLecturer },
@@ -75,10 +72,9 @@ export const publishRouter = [
     // { path: '/Test/:id', component: Test },
     { path: '/WithdrawalsList', component: WithdrawalsList },
     { path: '/WidthDrawDetail', component: WidthDrawDetail },
-  
+
     { path: '/CoursesDetail/:id', component: CoursesDetail },
     // { path: '/Test/:id', component: Test },
-
 ];
 
 export const privateRouter = [];

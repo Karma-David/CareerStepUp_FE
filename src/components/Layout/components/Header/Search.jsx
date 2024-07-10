@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-
 import classNames from 'classnames/bind';
 import style from './Header.module.scss'; // Update the import path if necessary
 import { faCircleXmark, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -13,6 +12,7 @@ function Search() {
     const [searchValue, setSearchValue] = useState('');
     const [showResult, setShowResult] = useState(false); // State to determine when to show KhoaHoc results
     const searchInputRef = useRef(null); // Ref to manage search input focus
+    const tippyRef = useRef(null); // Ref to manage Tippy container
 
     useEffect(() => {
         // Function to get search query parameter from URL
@@ -21,7 +21,7 @@ function Search() {
             const searchQuery = urlParams.get('search');
             if (searchQuery) {
                 setSearchValue(searchQuery);
-                // Show KhoaHoc results when searchValue is set from URL
+                setShowResult(true); // Show KhoaHoc results when searchValue is set from URL
             }
         };
 
@@ -32,7 +32,11 @@ function Search() {
             setShowResult(true); // Show KhoaHoc results when search input is focused/clicked
         };
 
-        const handleBlur = () => {
+        const handleBlur = (event) => {
+            if (tippyRef.current && tippyRef.current.contains(event.relatedTarget)) {
+                // Don't hide if the new focused element is inside the Tippy container
+                return;
+            }
             setShowResult(false); // Hide KhoaHoc results when search input loses focus
         };
 
@@ -83,9 +87,10 @@ function Search() {
                 visible={showResult && !!searchValue}
                 render={(attrs) => (
                     <div
-                        style={{ border: '1px solid', backgroundColor: '#ccc',borderRadius: '5px'  }}
+                        style={{ border: '1px solid', backgroundColor: '#ccc', borderRadius: '5px' }}
                         className={cx('search-result')}
                         tabIndex="-1"
+                        ref={tippyRef} // Assign ref to Tippy container
                         {...attrs}
                     >
                         {showResult && <KhoaHoc search={searchValue} />}

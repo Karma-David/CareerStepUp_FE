@@ -79,9 +79,8 @@ function Home() {
                         <div className="card-body">
                             <h2 className="card-title">{course.title}</h2>
                             <p className="card-text">Lecturer: {course.lecturerEmail}</p>
-                            <p className="card-text">Price: ${course.price}</p>
                             {course.isPremium && <p className="card-text">VIP</p>}
-                            <p className="card-text">Subscriber: {course.subscriber}</p>
+                            <p className="card-text">Subscriber: {course.subcriber}</p>
                             {/* <p className="card-text">ID: {course.course_id}</p> */}
                         </div>
                     </div>
