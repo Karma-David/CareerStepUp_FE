@@ -139,7 +139,7 @@ function UpTopic() {
                 {topics.map((topic, index) => (
                     <div key={topic.id} className="topic-item">
                         <div className="name-topic">
-                            <h3>{topic.topic_Name}</h3> {/* Hiển thị tên của topic */}
+                            <h3>{topic.name}</h3> {/* Hiển thị tên của topic */}
                         </div>
                         <div className="button-handle-topic">
                             <button className="edit-button" onClick={() => handleUpdateTopic(topic)}>
