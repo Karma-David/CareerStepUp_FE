@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import {  useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import './homepage.css';
 import Footer from './footer';
-
 
 function Home() {
     const [courses, setCourses] = useState([]);
@@ -13,7 +12,7 @@ function Home() {
     const [pageIndex, setPageIndex] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const location = useLocation();
-    
+
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
         const searchValue = searchParams.get('search');
@@ -55,23 +54,21 @@ function Home() {
         }
     };
 
-    localStorage.removeItem('emailLecturer','jobs');
+    localStorage.removeItem('emailLecturer', 'jobs');
 
     const renderCourses = (courses) => {
-        const handleCardClick = (id,lecturerEmail) => {
+        const handleCardClick = (id, lecturerEmail) => {
             window.location.href = `/CoursesDetail/${id}`;
-            localStorage.setItem('lecturerEmai',lecturerEmail); // Assign lecturerEmail to emailLecture here
+            localStorage.setItem('lecturerEmai', lecturerEmail); // Assign lecturerEmail to emailLecture here
         };
 
         return courses.map((course, index) => {
-           
-
             return (
                 <div className="col" key={index}>
                     <div
                         className="card h-100 custom-card"
                         style={{ cursor: 'pointer' }}
-                        onClick={() => handleCardClick(course.course_id,course.lecturerEmail)}
+                        onClick={() => handleCardClick(course.course_id, course.lecturerEmail)}
                     >
                         <img
                             style={{ width: '260px', height: '140px', objectFit: 'contain' }}
@@ -113,12 +110,11 @@ function Home() {
 
     return (
         <div>
-            <div className="container-slide">{/* Carousel code */}</div>
             <div className="container mt-5">
-                <h1 className="text-left mb-4">All Courses</h1>
-                <div className="row row-cols-1 row-cols-md-4 g-4">{renderCourses(courses)}</div>
+                <h1 className="text-left mb-4 ">All Courses</h1>
+                <div className="row row-cols-1 row-cols-md-4 g-4 content">{renderCourses(courses)}</div>
             </div>
-            <div className="pagination">
+            <div className="pagination text-center mt-4">
                 <button onClick={() => handlePageChange(pageIndex - 1)} disabled={pageIndex === 1}>
                     Previous
                 </button>
@@ -127,7 +123,7 @@ function Home() {
                     Next
                 </button>
             </div>
-            <div style={{ marginTop: '50px' }} className="container">
+            <div className="container" style={{ marginTop: '50px' }}>
                 <Footer />
             </div>
         </div>
