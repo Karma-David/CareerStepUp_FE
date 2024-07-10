@@ -136,12 +136,14 @@ function CoursesDetail() {
                             'Content-Type': 'application/json',
                         },
                     });
+
                     if (!res.ok) {
                         throw new Error(`HTTP error! status: ${res.status}`);
                     }
                     const data = await res.json();
                     if (data.statusCode === 200) {
                         setIsEnrolled(data.value);
+                        console.log(data.value);
                     } else {
                         throw new Error(`API error! status: ${data.statusCode}`);
                     }
@@ -302,12 +304,7 @@ function CoursesDetail() {
                     </div>
                     <div className="button-start-learn">
                         {isAuthenticated ? (
-                            <Button
-                                to={isEnrolled ? `/PageVideoLearn/${id}` : '/Login'}
-                                onClick={!isEnrolled ? handleStartLearn : null}
-                            >
-                                {isEnrolled ? 'Continue' : 'Learn now'}
-                            </Button>
+                            <Button to={`/PageVideoLearn/${id}`}>{isEnrolled ? 'Continue' : 'Learn now'}</Button>
                         ) : (
                             <>
                                 <Button to={'/Login'} onClick={handleStartLearn}>

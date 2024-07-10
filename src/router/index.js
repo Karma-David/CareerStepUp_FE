@@ -12,10 +12,7 @@ import ResetPass from '@/pages/ResetPass/Resetpass';
 
 // import AdminPage from '@/pages/AdminPage/AdminPage';
 
-import IntroductToIT from '@/pages/CoursesPageDetail/IntroductToIT';
 import PageVideoLearn from '@/pages/PageVideoLearn/PageVideoLearn';
-import HtmlCss from '@/pages/CoursesPageDetail/HtmlCss';
-import ReponsGridSystem from '@/pages/CoursesPageDetail/ReponsGridSystem';
 import PayPage from '@/pages/PaymentPage/PayPage';
 import { HeaderOnly } from '@/components/Layout';
 import Lecturers from '@/pages/AdminPage/Components/Lecturers/Lecturers';
@@ -49,9 +46,6 @@ export const publishRouter = [
     // { path: '/AdminPage', component: AdminPage },
 
     { path: '/RegisterLecturer', component: RegisterLecturer },
-    { path: '/IntroductToIT', component: IntroductToIT },
-    { path: '/HtmlCss', component: HtmlCss },
-    { path: '/ReponsGridSystem', component: ReponsGridSystem },
     { path: '/PayPage', component: PayPage },
     { path: '/Lecturers', component: Lecturers },
     { path: '/Students', component: Students },
