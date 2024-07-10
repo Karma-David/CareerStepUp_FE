@@ -25,7 +25,7 @@ html {
     margin-bottom: 20px;
     font-size: 2em;
     color: #fff;
-    background: linear-gradient(to right bottom, #ff8f26, #ff5117);
+    /* background: linear-gradient(to right bottom, #ff8f26, #ff5117); */
     padding: 10px 0;
     border-radius: 10px;
 }
