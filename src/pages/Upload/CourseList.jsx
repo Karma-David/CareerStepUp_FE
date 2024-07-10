@@ -33,7 +33,7 @@ const CourseList = () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify( email ),
+                    body: JSON.stringify(email),
                 });
                 if (!res.ok) {
                     throw new Error(`HTTP error! status: ${res.status}`);
@@ -130,9 +130,7 @@ const CourseList = () => {
                     throw new Error('Network response was not ok');
                 }
                 setCourses(
-                    courses.map((course) =>
-                        course.course_id === editingCourse.course_id ? updatedCourse : course
-                    )
+                    courses.map((course) => (course.course_id === editingCourse.course_id ? updatedCourse : course)),
                 );
                 setEditingCourse(null);
                 setNewCourse('');
@@ -170,7 +168,7 @@ const CourseList = () => {
 
     return (
         <div>
-            <div className="list-course-lecturer" style={{ marginLeft: '150px' }}>
+            <div className="list-course-lecturer" style={{ marginLeft: '230px' }}>
                 {courses.map((course, index) => (
                     <div key={course.course_id} className="course-item">
                         <div className="name-course">
@@ -179,9 +177,7 @@ const CourseList = () => {
                         <div className="button-handle-course">
                             <button onClick={() => handleUpdateCourse(course)}>Update</button>
                             <button onClick={() => handleDeleteCourse(index)}>Delete</button>
-                            <button onClick={() => handleEditCourse(course.course_id)}>
-                                Edit Topic - Lesson
-                            </button>
+                            <button onClick={() => handleEditCourse(course.course_id)}>Edit Topic - Lesson</button>
                         </div>
                     </div>
                 ))}
