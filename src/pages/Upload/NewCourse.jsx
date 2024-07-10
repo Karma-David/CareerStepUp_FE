@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './newCourse.css'; // Chúng ta sẽ thêm CSS vào đây
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import UpTopic from './UpTopic';
+// import UpTopic from './UpTopic';
 
 const CreateCourseAPI = 'https://localhost:7127/api/Courses/CreateCourse';
 
