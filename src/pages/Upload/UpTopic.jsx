@@ -28,7 +28,6 @@ function UpTopic() {
                 }
             } catch (error) {
                 console.error('Lỗi khi lấy khóa học:', error);
-                // Handle error, e.g., set state to empty or show error message
             }
         };
 
@@ -39,11 +38,9 @@ function UpTopic() {
         setEditingTopicId(topicId); // Đặt ID của topic đang được chỉnh sửa
     };
 
-    //Lỗi Input
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         if (name === 'newTopic') {
-            // Ensure value is always a string, default to empty string if undefined or null
             setNewTopic(value || '');
         }
     };
@@ -58,7 +55,7 @@ function UpTopic() {
             fetch(CreateTopicAPI, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json', // Ensure correct content type
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ topic_Name: newTopic }), // Assuming TopicForm structure
             })
@@ -69,14 +66,11 @@ function UpTopic() {
                     return response.json();
                 })
                 .then((data) => {
-                    console.log('New topic added successfully:', data);
                     setNewTopic('');
-                    // Update topics state with new topic added
                     setTopics((prevTopics) => [...prevTopics, data]); // Add new topic to the state
                 })
                 .catch((error) => {
                     console.error('Error adding new topic:', error);
-                    // Handle error, e.g., show error message to user
                 });
         }
     };
@@ -87,30 +81,30 @@ function UpTopic() {
     };
 
     const handleSaveTopic = () => {
-        const updatedTopic = {
-            ...editTopic,
-            topic_Name: newTopic,
-        };
+        if (editTopic) {
+            const updatedTopic = {
+                ...editTopic,
+                topic_Name: newTopic,
+            };
 
-        fetch(`${EditTopicAPI}/${editTopic.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(updatedTopic),
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                // Update topics state locally
-                setTopics(topics.map((t) => (t.id === editTopic.id ? updatedTopic : t)));
-                setEditTopic(null);
-                setNewTopic('');
-                alert('Edit successfully');
-                // getTopic();
+            fetch(`${EditTopicAPI}/${editTopic.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedTopic),
             })
-            .catch((error) => console.error('Error updating topic:', error));
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    setTopics(topics.map((t) => (t.id === editTopic.id ? updatedTopic : t)));
+                    setEditTopic(null);
+                    setNewTopic('');
+                    alert('Edit successfully');
+                })
+                .catch((error) => console.error('Error updating topic:', error));
+        }
     };
 
     const handleDeleteCourse = (index) => {
@@ -120,7 +114,7 @@ function UpTopic() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ course_id: topicToDelete.id }), // Thêm dữ liệu nếu cần thiết
+            body: JSON.stringify({ topic_Id: topicToDelete.id }), // Thay đổi tên key thành topic_Id
         })
             .then((response) => {
                 if (!response.ok) {
@@ -130,38 +124,40 @@ function UpTopic() {
                 updatedTopics.splice(index, 1);
                 setTopics(updatedTopics);
             })
-            .catch((error) => console.error('Error deleting course:', error));
+            .catch((error) => console.error('Error deleting topic:', error));
     };
 
-    // Render lại toàn bộ component khi topics thay đổi
     useEffect(() => {
-        // Các tác vụ cần thực hiện khi topics thay đổi, ví dụ như fetch lại dữ liệu
         console.log('Topics updated, re-rendering UpTopic');
     }, [topics]);
 
     return (
-        <div>
-            <h1>Course Name: {courseName}</h1>
-            <h2 style={{ backgroundColor: 'orangered', color: 'white' }}>Topic</h2>
-            <div style={{ marginLeft: '150px' }} className="list-topic-course">
+        <div className="up-topic-container">
+            <h1 className="course-name">Course Name: {courseName}</h1>
+            <h2 className="topic-header">Topic</h2>
+            <div className="list-topic-course">
                 {topics.map((topic, index) => (
                     <div key={topic.id} className="topic-item">
                         <div className="name-topic">
-                            <h3>{topic.name}</h3>
+                            <h3>{topic.topic_Name}</h3> {/* Hiển thị tên của topic */}
                         </div>
                         <div className="button-handle-topic">
-                            <button onClick={() => handleUpdateTopic(topic)}>Update</button>
-                            <button onClick={() => handleDeleteCourse(index)}>Delete</button>
-                            <button onClick={() => handleEditLesson(topic.id)}>Edit lesson</button>
+                            <button className="edit-button" onClick={() => handleUpdateTopic(topic)}>
+                                Update
+                            </button>
+                            <button className="delete-button" onClick={() => handleDeleteCourse(index)}>
+                                Delete
+                            </button>
+                            <button className="edit-lesson-button" onClick={() => handleEditLesson(topic.id)}>
+                                Edit Lesson
+                            </button>
                         </div>
                     </div>
                 ))}
             </div>
             {editTopic && (
                 <div className="edit-topic">
-                    <div>
-                        <h1>Update Topic</h1>
-                    </div>
+                    <h1>Update Topic</h1>
                     <div className="write-new-topic">
                         <input
                             type="text"
@@ -170,43 +166,32 @@ function UpTopic() {
                             value={newTopic}
                             onChange={handleInputChange}
                         />
-                        <button style={{ margin: '10px' }} onClick={handleSaveTopic}>
-                            Lưu
+                        <button className="save-button" onClick={handleSaveTopic}>
+                            Save
                         </button>
-                        <button style={{ margin: '10px' }} onClick={() => setEditTopic(null)}>
-                            Hủy
+                        <button className="cancel-button" onClick={() => setEditTopic(null)}>
+                            Cancel
                         </button>
                     </div>
                 </div>
             )}
-            <div style={{ marginTop: '30px' }} className="new-topic-up">
-                <div>
-                    <h1>New Topic</h1>
-                </div>
+            <div className="new-topic-up">
+                <h1>New Topic</h1>
                 <div className="write-new-topic">
-                    <div>
-                        <input
-                            type="text"
-                            name="newTopic"
-                            placeholder="Enter topic name"
-                            value={newTopic}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                    <div>
-                        <button
-                            style={{ height: '50px', marginLeft: '50px', marginTop: '10px', borderRadius: '10px' }}
-                            onClick={handleAddTopic}
-                        >
-                            <FontAwesomeIcon style={{ marginLeft: '10px', marginRight: '10px' }} icon={faPlus} />
-                            <span style={{ marginRight: '10px' }}>Add Topic</span>
-                        </button>
-                    </div>
+                    <input
+                        type="text"
+                        name="newTopic"
+                        placeholder="Enter topic name"
+                        value={newTopic}
+                        onChange={handleInputChange}
+                    />
+                    <button className="add-topic-button" onClick={handleAddTopic}>
+                        <FontAwesomeIcon style={{ marginLeft: '10px', marginRight: '10px' }} icon={faPlus} />
+                        <span>Add Topic</span>
+                    </button>
                 </div>
             </div>
-            <div style={{ marginTop: '50px' }} className="Lesson-area">
-                {editingTopicId && <UpLesson topicId={editingTopicId} />}
-            </div>
+            <div className="lesson-area">{editingTopicId && <UpLesson topicId={editingTopicId} />}</div>
         </div>
     );
 }

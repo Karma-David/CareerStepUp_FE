@@ -12,10 +12,7 @@ import ResetPass from '@/pages/ResetPass/Resetpass';
 
 // import AdminPage from '@/pages/AdminPage/AdminPage';
 
-import IntroductToIT from '@/pages/CoursesPageDetail/IntroductToIT';
 import PageVideoLearn from '@/pages/PageVideoLearn/PageVideoLearn';
-import HtmlCss from '@/pages/CoursesPageDetail/HtmlCss';
-import ReponsGridSystem from '@/pages/CoursesPageDetail/ReponsGridSystem';
 import PayPage from '@/pages/PaymentPage/PayPage';
 import { HeaderOnly } from '@/components/Layout';
 import Lecturers from '@/pages/AdminPage/Components/Lecturers/Lecturers';
@@ -34,8 +31,6 @@ import LearnerProfile from '@/pages/AdminPage/Components/Students/LearnerProfile
 import WithdrawalsList from '@/pages/AdminPage/Components/WidthDraw/WidthDraw';
 import WidthDrawDetail from '@/pages/AdminPage/Components/WidthDraw/WidthDrawDetail';
 
-
-
 export const publishRouter = [
     { path: '/', component: Home },
     { path: '/roadmap', component: RoadMap },
@@ -48,13 +43,9 @@ export const publishRouter = [
     { path: '/ResetPass', component: ResetPass, layout: null },
     //{ path: '/AdminPage', component: AdminPage },
 
-    
     // { path: '/AdminPage', component: AdminPage },
 
     { path: '/RegisterLecturer', component: RegisterLecturer },
-    { path: '/IntroductToIT', component: IntroductToIT },
-    { path: '/HtmlCss', component: HtmlCss },
-    { path: '/ReponsGridSystem', component: ReponsGridSystem },
     { path: '/PayPage', component: PayPage },
     { path: '/Lecturers', component: Lecturers },
     { path: '/Students', component: Students },
@@ -75,10 +66,9 @@ export const publishRouter = [
     // { path: '/Test/:id', component: Test },
     { path: '/WithdrawalsList', component: WithdrawalsList },
     { path: '/WidthDrawDetail', component: WidthDrawDetail },
-  
+
     { path: '/CoursesDetail/:id', component: CoursesDetail },
     // { path: '/Test/:id', component: Test },
-
 ];
 
 export const privateRouter = [];

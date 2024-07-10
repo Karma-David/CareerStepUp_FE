@@ -30,7 +30,7 @@ function PageVideoLearn() {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify( email ), // Send email as a JSON object
+                    body: JSON.stringify(email), // Send email as a JSON object
                 });
                 if (!res.ok) {
                     throw new Error(`HTTP error! status: ${res.status}`);
@@ -162,7 +162,7 @@ function PageVideoLearn() {
                     />
                 </div>
                 <div className="description-course">
-                    <Comment lessonID={selectedLessonId}/>
+                    <Comment lessonID={selectedLessonId} />
                 </div>
             </div>
             <div className="list-topic">
