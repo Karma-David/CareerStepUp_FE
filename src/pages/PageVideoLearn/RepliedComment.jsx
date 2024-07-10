@@ -20,7 +20,7 @@ function RepliedComment({ CommentID, UserName }) {
     }, [ReplyAPi]);
     return (
         <div>
-            <h2 style={{ color: 'black' }}>Reply Comment ID: {CommentID}</h2>
+            {/* <h2 style={{ color: 'black' }}>Reply Comment ID: {CommentID}</h2> */}
             <div>
                 {replies.map((reply, index) => (
                     <div style={{ marginLeft: '80px', borderLeft: '1px solid' }} key={index}>
