@@ -12,6 +12,9 @@ const LecturerProfile = () => {
     const [isConfirmed, setIsConfirmed] = useState(false); // State for isConfirmed checkbox
     const [showApproveButton, setShowApproveButton] = useState(false);
 
+    // const [selectedCourseId, setSelectedCourseId] = useState(null); // State to hold selected course id for approval
+
+
     useEffect(() => {
         const fetchLecturerAndCourses = async () => {
             try {

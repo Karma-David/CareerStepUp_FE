@@ -1,92 +1,146 @@
 html {
     height: 100%;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #ff8f26, #ff5117);
 }
+
 .form-login {
     width: 100%;
-    display: grid;
-    place-items: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.form-box-login {
-    width: 40%;
-    margin-top: 70px;
-    line-height: 60px;
-    border: 1px solid rgba(22, 24, 35, 0.2);
-    border-radius: 10px;
 
-    h1 {
-        display: flex;
-        justify-content: center;
-        border: 1px solid rgba(22, 24, 35, 0.2);
-        border-radius: 10px;
-        background: linear-gradient(to right bottom, #ff8f26, #ff5117);
-        color: azure;
-    }
+.form-box-login {
+    width: 35%;
+    padding: 30px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
 }
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 2em;
+    color: #fff;
+    background: linear-gradient(to right bottom, #ff8f26, #ff5117);
+    padding: 10px 0;
+    border-radius: 10px;
+}
+
 .input-box {
-    max-width: 80%;
-    margin-left: 60px;
-    margin-top: 40px;
+    width: 100%;
+    margin: 20px 0;
 }
-.input-username {
-    margin-bottom: 10px;
+
+.input-box div {
+    margin: 10px 0;
+    position: relative;
+}
+
+.input-box input {
+    width: calc(100% - 40px);
+    padding: 10px 15px;
     border: 1px solid rgba(22, 24, 35, 0.2);
     border-radius: 10px;
-    input {
-        height: 50px;
-        width: 440px;
-        padding-left: 15px;
-        padding-right: 25px;
-    }
-    &:hover {
-        border: 1px solid rgba(23, 33, 94, 0.796);
-    }
+    font-size: 1em;
+    transition: border-color 0.3s ease;
 }
-.input-password {
-    border: 1px solid rgba(22, 24, 35, 0.2);
-    border-radius: 10px;
-    input {
-        height: 50px;
-        width: 440px;
-        padding-left: 15px;
-        padding-right: 25px;
-    }
-    &:hover {
-        border: 1px solid rgba(23, 33, 94, 0.796);
-    }
+
+.input-box input:focus {
+    border-color: #ff5117;
+    outline: none;
 }
+
+.input-box .input-username,
+.input-box .input-password {
+    display: flex;
+    align-items: center;
+}
+
+.input-box svg {
+    position: absolute;
+    right: 15px;
+    font-size: 1.2em;
+    color: rgba(22, 24, 35, 0.5);
+    transition: color 0.3s ease;
+}
+
+.password-toggle {
+    cursor: pointer;
+    color: rgba(22, 24, 35, 0.5);
+    transition: color 0.3s ease;
+}
+
+.password-toggle:hover {
+    color: #ff5117;
+}
+
 .remember-forgot {
     display: flex;
     justify-content: space-between;
-    margin-left: 60px;
+    align-items: center;
+    margin-top: 10px;
+    font-size: 0.9em;
 }
-.Forgot-Pass {
-    margin-right: 50px;
+
+.remember-forgot label {
+    display: flex;
+    align-items: center;
 }
-.link-button-Forgot-password {
-    margin-right: 60px;
-    margin-top: 15px;
-    height: 20px;
-    border: 1px solid rgba(22, 24, 35, 0.2);
-    border-radius: 10px;
-    background: linear-gradient(to right bottom, #ff8f26, #ff5117);
-    color: azure;
+
+.remember-forgot input {
+    margin-right: 5px;
 }
+
+.Forgot-Pass a {
+    color: #ff5117;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.Forgot-Pass a:hover {
+    color: #ff8f26;
+    text-decoration: underline;
+}
+
 .submit-form-login {
-    height: 40px;
-    width: 300px;
-    margin-left: 135px;
-    border: 1px solid rgba(22, 24, 35, 0.2);
+    width: 100%;
+    padding: 10px 0;
+    margin: 20px 0;
+    border: none;
     border-radius: 10px;
     background: linear-gradient(to right bottom, #ff8f26, #ff5117);
-    color: azure;
+    color: #fff;
+    font-size: 1em;
     cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
 }
-.link-button-Register {
-    height: 30px;
-    width: 80px;
-    margin-left: 15px;
-    border: 1px solid rgba(22, 24, 35, 0.2);
-    border-radius: 10px;
-    background-color: rgba(59, 73, 161, 0.699);
-    color: azure;
+
+.submit-form-login:hover {
+    background: #ff5117;
+    transform: scale(1.05);
+}
+
+.google-login-button {
+    margin: 20px 0;
+}
+
+.register-link {
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+.register-link a {
+    color: #3b49a1;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.register-link a:hover {
+    color: #2b38a1;
+    text-decoration: underline;
 }

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './Upload.css';
 import { useNavigate } from 'react-router-dom';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Button from '@/components/Button';
+
 
 const CourseUserAPI = 'https://localhost:7127/api/Courses/CourseInLecturerProfile';
 const EditCourseAPI = 'https://localhost:7127/api/Courses/EditCourse';
@@ -12,17 +12,55 @@ const DeleteCourseAPI = 'https://localhost:7127/api/Courses/DeleteCourse';
 const RequestWidthDrawAPI = 'https://localhost:7127/api/Courses/RequestWidthDrawProposeOnACourse';
 
 function CourseList() {
+
+const CourseList = () => {
     const [courses, setCourses] = useState([]);
     const [newCourse, setNewCourse] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState(0);
     const [file, setFile] = useState(null);
     const [editingCourse, setEditingCourse] = useState(null);
+    const [userId, setUserId] = useState('');
     const [email, setEmail] = useState('');
     const [cart, setCart] = useState([]);
     const [showConfirm, setShowConfirm] = useState(false);
     const [selectedCourse, setSelectedCourse] = useState(null);
     const navigate = useNavigate();
+
+    const CourseLecturerAPI = `https://localhost:7127/api/Courses/CourseOfALecturer?id=${userId}&isConfirmed=${true}`;
+    const GetIDFromEmailAPI = 'https://localhost:7127/GetUserIDfromToken';
+    const EditCourseAPI = 'https://localhost:7127/api/Courses/EditCourse';
+    const DeleteCourseAPI = 'https://localhost:7127/api/Courses/DeleteCourse';
+
+    useEffect(() => {
+        const getUserID = async () => {
+            try {
+                const email = localStorage.getItem('email');
+                if (!email) {
+                    throw new Error('Email not found in local storage');
+                }
+                const res = await fetch(GetIDFromEmailAPI, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify( email ),
+                });
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                const data = await res.json();
+                if (data.statusCode === 200) {
+                    setUserId(data.value); // Assuming data.value contains the user ID
+                } else {
+                    throw new Error(`API error! status: ${data.statusCode}, message: ${data.message}`);
+                }
+            } catch (error) {
+                console.error('Error fetching user ID:', error);
+            }
+        };
+        getUserID();
+    }, [GetIDFromEmailAPI]);
 
     useEffect(() => {
         const storedEmail = localStorage.getItem('email');
@@ -32,8 +70,21 @@ function CourseList() {
     }, []);
 
     useEffect(() => {
-        GetCourses().then(setCourses);
-    }, []);
+        const fetchCourses = async () => {
+            try {
+                const response = await fetch(CourseLecturerAPI);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch courses');
+                }
+                const data = await response.json();
+                setCourses(data.value);
+            } catch (error) {
+                console.error('Error fetching courses:', error);
+            }
+        };
+
+        fetchCourses();
+    }, [CourseLecturerAPI]);
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
@@ -66,12 +117,22 @@ function CourseList() {
         }
     };
 
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        if (name === 'newCourse') setNewCourse(value);
-        if (name === 'description') setDescription(value);
-        if (name === 'price') setPrice(value);
-        console.log(value);
+        switch (name) {
+            case 'newCourse':
+                setNewCourse(value);
+                break;
+            case 'description':
+                setDescription(value);
+                break;
+            case 'price':
+                setPrice(value);
+                break;
+            default:
+                break;
+        }
     };
 
     const handleUpdateCourse = (course) => {
@@ -85,8 +146,8 @@ function CourseList() {
         const updatedCourse = {
             ...editingCourse,
             title: newCourse,
-            description: description,
-            price: price,
+            description,
+            price,
             course_Img: file, // Handle file update appropriately
         };
 
@@ -108,7 +169,9 @@ function CourseList() {
                     throw new Error('Network response was not ok');
                 }
                 setCourses(
-                    courses.map((course) => (course.course_id === editingCourse.course_id ? updatedCourse : course)),
+                    courses.map((course) =>
+                        course.course_id === editingCourse.course_id ? updatedCourse : course
+                    )
                 );
                 setEditingCourse(null);
                 setNewCourse('');
@@ -244,7 +307,7 @@ function CourseList() {
 
     return (
         <div>
-            <div style={{ marginLeft: '150px' }} className="list-course-lecturer">
+            <div className="list-course-lecturer" style={{ marginLeft: '150px' }}>
                 {courses.map((course, index) => (
                     <div key={course.course_id} className="course-item">
                         <div className="name-course">
@@ -253,6 +316,7 @@ function CourseList() {
                         <div className="button-handle-course">
                             <button onClick={() => handleUpdateCourse(course)}>Update</button>
                             <button onClick={() => handleDeleteCourse(index)}>Delete</button>
+
                             <button onClick={() => handleEditCourse(course.course_id)}>Edit Topic - Lesson</button>
                         </div>
                         <div className="name-course">
@@ -265,6 +329,11 @@ function CourseList() {
                         >
                             WidthDraw
                         </button>
+                            <button onClick={() => handleEditCourse(course.course_id)}>
+                                Edit Topic - Lesson
+                            </button>
+                        </div>
+
                     </div>
                 ))}
             </div>
@@ -358,6 +427,6 @@ function CourseList() {
             </div>
         </div>
     );
-}
+};
 
 export default CourseList;

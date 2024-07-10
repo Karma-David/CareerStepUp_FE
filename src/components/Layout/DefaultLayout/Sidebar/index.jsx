@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faRoad, faUser, faGraduationCap, faGauge, faTable, faChartBar, faCashRegister, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
+
 import classNames from 'classnames/bind';
 import style from './Sidebar.module.scss';
 import ButtonSidebar from '@/components/Layout/DefaultLayout/ButtonSidebar';
@@ -8,11 +9,19 @@ import ButtonSidebar from '@/components/Layout/DefaultLayout/ButtonSidebar';
 const cx = classNames.bind(style);
 
 const Sidebar = () => {
-    // Lấy role từ local storage, mặc định là mảng rỗng nếu không có
-    const rolesString = localStorage.getItem('role') || '';
-    const rolesArray = rolesString.split(',').map(role => role.trim());
-    const isAdmin = rolesArray.includes('admin');
-    console.log(isAdmin);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [isLecturer, setIsLecturer] = useState(false);
+
+    useEffect(() => {
+        const rolesString = localStorage.getItem('role') || '';
+        const rolesArray = rolesString.split(',').map((role) => role.trim());
+        setIsAdmin(rolesArray.includes('admin'));
+        setIsLecturer(rolesArray.includes('lecturer'));
+
+        const authStatus = localStorage.getItem('isAuthenticated') === 'true';
+        setIsAuthenticated(authStatus);
+    }, []);
 
     return (
         <aside style={{ border: '1px solid #8cbd8530' }} className={cx('wrapper')}>
@@ -64,12 +73,51 @@ const Sidebar = () => {
                     </span>
                 </ButtonSidebar>
 
-=======
                 {/* <ButtonSidebar to={'/Course'}>
                 <FontAwesomeIcon style={{color:'black'}} icon={faBook} className={cx('icon', 'black-icon')} />
                 <span style={{color:'black'}} className={cx('text')}>C-Form</span>
                 </ButtonSidebar> */}
+                {isAuthenticated && (
+                    <>
+                        {isAdmin && (
+                            <>
+                                <ButtonSidebar to={'/Lecturers'}>
+                                    <FontAwesomeIcon
+                                        style={{ color: 'black' }}
+                                        icon={faUser}
+                                        className={cx('icon', 'black-icon')}
+                                    />
+                                    <span style={{ color: 'black' }} className={cx('text')}>
+                                        Lecturers
+                                    </span>
+                                </ButtonSidebar>
+                                <ButtonSidebar to={'/Students'}>
+                                    <FontAwesomeIcon
+                                        style={{ color: 'black' }}
+                                        icon={faGraduationCap}
+                                        className={cx('icon', 'black-icon')}
+                                    />
+                                    <span style={{ color: 'black' }} className={cx('text')}>
+                                        Learner
+                                    </span>
+                                </ButtonSidebar>
+                            </>
+                        )}
 
+                        {isLecturer && (
+                            <ButtonSidebar to={'/Upload'}>
+                                <FontAwesomeIcon
+                                    style={{ color: 'black' }}
+                                    icon={faUpload}
+                                    className={cx('icon', 'black-icon')}
+                                />
+                                <span style={{ color: 'black' }} className={cx('text')}>
+                                    C-Form
+                                </span>
+                            </ButtonSidebar>
+                        )}
+                    </>
+                )}
             </div>
         </aside>
     );

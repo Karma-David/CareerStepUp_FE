@@ -71,6 +71,7 @@ function UpTopic() {
                 .then((data) => {
                     console.log('New topic added successfully:', data);
                     setNewTopic('');
+                    // Update topics state with new topic added
                     setTopics((prevTopics) => [...prevTopics, data]); // Add new topic to the state
                 })
                 .catch((error) => {
@@ -131,6 +132,12 @@ function UpTopic() {
             })
             .catch((error) => console.error('Error deleting course:', error));
     };
+
+    // Render lại toàn bộ component khi topics thay đổi
+    useEffect(() => {
+        // Các tác vụ cần thực hiện khi topics thay đổi, ví dụ như fetch lại dữ liệu
+        console.log('Topics updated, re-rendering UpTopic');
+    }, [topics]);
 
     return (
         <div>
