@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faRoad, faUser, faGraduationCap, faGauge } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faRoad, faUser, faGraduationCap, faGauge, faTable, faChartBar, faCashRegister, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 import style from './Sidebar.module.scss';
 import ButtonSidebar from '@/components/Layout/DefaultLayout/ButtonSidebar';
@@ -39,6 +39,7 @@ const Sidebar = () => {
                             Lecturers
                         </span>
                     </ButtonSidebar>
+                    
                 )}
 
                 <ButtonSidebar to={'/Students'}>
@@ -49,6 +50,17 @@ const Sidebar = () => {
                     />
                     <span style={{ color: 'black' }} className={cx('text')}>
                         Learner
+                    </span>
+                </ButtonSidebar>
+
+                <ButtonSidebar to={'/WithdrawalsList'}>
+                    <FontAwesomeIcon
+                        style={{ color: 'black' }}
+                        icon={faMoneyBill}
+                        className={cx('icon', 'black-icon')}
+                    />
+                    <span style={{ color: 'black' }} className={cx('text')}>
+                        WidthDraw
                     </span>
                 </ButtonSidebar>
 

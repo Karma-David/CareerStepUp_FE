@@ -41,31 +41,12 @@ const KhoaHoc = ({ search }) => {
 
     return (
         <div className={cx('search-container', 'white-bg')}>
-            <input
-                type="number"
-                value={fromPrice !== null ? fromPrice : ''}
-                onChange={handleFromPriceChange}
-                placeholder="From price"
-                className={cx('price-input')}
-            />
-            <input
-                type="number"
-                value={toPrice !== null ? toPrice : ''}
-                onChange={handleToPriceChange}
-                placeholder="To price"
-                className={cx('price-input')}
-            />
-            <select value={sortBy} onChange={handleSortChange} className={cx('sort-select')}>
-                <option value="">Sort by</option>
-                <option value="DonGia_asc">Price Ascending</option>
-                <option value="DonGia_desc">Price Descending</option>
-            </select>
             <div className={cx('course-list')}>
                 {courses.slice(0, 4).map(course => (
                     <div key={course.course_id} className={cx('course-item')}>
                         <h4>{course.title}</h4>
-                        <p>Price: ${course.price}</p>
-                        <p>Lecturer: {course.LecturerEmail}</p>
+                        {course.isPremium&&<p>VIP</p>}
+                        <p>Subcriber: {course.subcriber}</p>
                     </div>
                 ))}
             </div>

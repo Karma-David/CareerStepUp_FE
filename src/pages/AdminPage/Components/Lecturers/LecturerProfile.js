@@ -51,7 +51,7 @@ const LecturerProfile = () => {
             const courseResponse = await axios.get(
                 `https://localhost:7127/api/Courses/CourseOfALecturer?id=${lecturerId}&isConfirmed=${isConfirmed}`,
             );
-            
+
             setCourses(courseResponse.data.value);
         } catch (error) {
             console.error('Error approving course:', error);
@@ -68,7 +68,7 @@ const LecturerProfile = () => {
             const courseResponse = await axios.get(
                 `https://localhost:7127/api/Courses/CourseOfALecturer?id=${lecturerId}&isConfirmed=${isConfirmed}`,
             );
-            
+
             setCourses(courseResponse.data.value);
         } catch (error) {
             console.error('Error locking course:', error);
@@ -180,6 +180,23 @@ const LecturerProfile = () => {
                     </div>
                 </div>
             </form>
+            <div className="col-md-3 d-flex align-items-center justify-content-end">
+                {lecturer.isApprove ? (
+                    <button
+                        className="btn btn-primary"
+                        onClick={() => handleApproveLecturer(lecturer.lecturerId)} // Define this handler to approve the lecturer
+                    >
+                        Approve
+                    </button>
+                ) : (
+                    <button
+                        className="btn btn-danger"
+                        onClick={() => handleBanLecturer(lecturer.lecturerId)} // Define this handler to ban the lecturer
+                    >
+                        Ban
+                    </button>
+                )}
+            </div>
             <div className="form-check-group">
                 <div className="form-check">
                     <input

@@ -75,7 +75,8 @@ function Header() {
                                 <div className={cx('profile-menu')} tabIndex="-1" {...attrs}>
                                     <div className={cx('button-avatar')}>
                                         <Button to="/profile">View My Profile</Button>
-                                        {isAdmin&&isLecturer&&<Button to="/RegisterLecturer">Register Lecturer</Button>}
+                                        {!isAdmin||!isLecturer&&<Button to="/RegisterLecturer">Register Lecturer</Button>}
+                                        {isLecturer&&<Button to="/Upload">My Course</Button>}
                                         <Button onClick={handleLogout}>Log out</Button>
                                     </div>
                                 </div>

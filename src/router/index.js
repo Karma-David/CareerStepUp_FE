@@ -28,6 +28,9 @@ import PaymentPageSuccess from '@/pages/PaymentPage/PaymentPageSuccess';
 import NotConfirmedLecturer from '@/pages/AdminPage/Components/NotConfirmedLecturer/NotConfirmedLecturer';
 import LecturerProfile from '@/pages/AdminPage/Components/Lecturers/LecturerProfile';
 import LearnerProfile from '@/pages/AdminPage/Components/Students/LearnerProfile';
+import WithdrawalsList from '@/pages/AdminPage/Components/WidthDraw/WidthDraw';
+import WidthDrawDetail from '@/pages/AdminPage/Components/WidthDraw/WidthDrawDetail';
+
 
 export const publishRouter = [
     { path: '/', component: Home },
@@ -61,6 +64,9 @@ export const publishRouter = [
     { path: '/LecturerProfile/:lecturerId', component: LecturerProfile },
     { path: '/LearnerProfile/:learnerId', component: LearnerProfile },
     { path: '/Test/:id', component: Test },
+    { path: '/WithdrawalsList', component: WithdrawalsList },
+    { path: '/WidthDrawDetail', component: WidthDrawDetail },
+  
 ];
 
 export const privateRouter = [];
