@@ -41,7 +41,7 @@ const KhoaHoc = ({ search }) => {
     const handleCardClick = (id) => {
         window.location.href = `/CoursesDetail/${id}`;
     };
-    
+
     return (
         <div className={cx('search-container', 'white-bg')}>
             <div className={cx('wrapper')}>
@@ -75,7 +75,6 @@ const KhoaHoc = ({ search }) => {
                             <h4>{course.title}</h4>
                             {course.isPremium && <p>VIP</p>}
                             <p>Subcriber: {course.subcriber}</p>
-                            <p>Lecturer: {course.lecturerEmail}</p>
                         </div>
                     ))}
                 </div>

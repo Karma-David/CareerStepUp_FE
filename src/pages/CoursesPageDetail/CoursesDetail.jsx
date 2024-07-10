@@ -13,12 +13,13 @@ function CoursesDetail() {
     const [idUser, setIdUser] = useState('');
     const [lecturer, setLecturer] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isEnrolled, setIsEnrolled] = useState(false);
     const [expandedTopics, setExpandedTopics] = useState({});
 
     const CourseAPI = `https://localhost:7127/api/Courses/GetCourseById?id=${id}`;
     const GetTopicAndLessonAPI = `https://localhost:7127/api/Courses/GetCourseByIdIncludeLessons?id=${id}`;
     const GetIDFromEmailAPI = 'https://localhost:7127/GetUserIDfromToken';
-    // const GetLecturerbyID = `https://localhost:7127/api/Lecturer/GetLecturerByID?id=${idUser}`;
+    const IsEnrolledAPI = `https://localhost:7127/api/Courses/isEnrolled`;
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -125,12 +126,42 @@ function CoursesDetail() {
         getLecturer();
     }, [idUser]);
 
+    useEffect(() => {
+        const checkEnrollment = async () => {
+            if (idUser) {
+                try {
+                    const res = await fetch(`${IsEnrolledAPI}?user_id=${idUser}&course_id=${id}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+                    if (!res.ok) {
+                        throw new Error(`HTTP error! status: ${res.status}`);
+                    }
+                    const data = await res.json();
+                    if (data.statusCode === 200) {
+                        setIsEnrolled(data.value);
+                    } else {
+                        throw new Error(`API error! status: ${data.statusCode}`);
+                    }
+                } catch (error) {
+                    console.error('Error checking enrollment status:', error);
+                    setError(error.message);
+                }
+            }
+        };
+
+        checkEnrollment();
+    }, [idUser, id, IsEnrolledAPI]);
+
     const handleToggleTopic = (topicId) => {
         setExpandedTopics((prevState) => ({
             ...prevState,
             [topicId]: !prevState[topicId],
         }));
     };
+
     const renderIcon = (topicId) => {
         return expandedTopics[topicId] ? (
             <FaMinus style={{ color: 'orange' }} />
@@ -146,6 +177,7 @@ function CoursesDetail() {
     if (error) {
         return <h1>Error: {error}</h1>;
     }
+
     const handleStartLearn = () => {
         return alert('You need to be logged in');
     };
@@ -238,7 +270,11 @@ function CoursesDetail() {
                                     <div>
                                         <h4>{lecturer.firstName}</h4>
                                         <p>{lecturer.lastName}</p>
-                                        <a style={{ color: 'orange',textDecoration: 'none' }} href={lecturer.certificate} target=' _blank'>
+                                        <a
+                                            style={{ color: 'orange', textDecoration: 'none' }}
+                                            href={lecturer.certificate}
+                                            target=" _blank"
+                                        >
                                             View Certificate
                                         </a>
                                     </div>
@@ -268,11 +304,16 @@ function CoursesDetail() {
                     </div>
                     <div className="button-start-learn">
                         {isAuthenticated ? (
-                            <Button to={`/PageVideoLearn/${id}`}>Learn now</Button>
+                            <Button
+                                to={isEnrolled ? `/PageVideoLearn/${id}` : '/Login'}
+                                onClick={!isEnrolled ? handleStartLearn : null}
+                            >
+                                {isEnrolled ? 'Continue' : 'Learn now'}
+                            </Button>
                         ) : (
                             <>
                                 <Button to={'/Login'} onClick={handleStartLearn}>
-                                    Learn now
+                                    Login
                                 </Button>
                             </>
                         )}

@@ -1,9 +1,11 @@
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import Button from '@/components/Button';
 import './CoursesPageDetail.css';
 import { TiTick } from 'react-icons/ti';
 
 function CourseDetail({
-
     title,
     description,
     targets,
@@ -14,6 +16,47 @@ function CourseDetail({
     courseOverview,
     lecturerInfo,
 }) {
+    const { course_id } = useParams(); // Fetch course_id from URL
+    const [userId, setUserId] = useState(null);
+    const [isEnrolled, setIsEnrolled] = useState(false);
+
+    useEffect(() => {
+        console.log(course_id);
+        const fetchUserId = async () => {
+            try {
+                const email = localStorage.getItem('email');
+                if (email) {
+                    const response = await axios.post('https://localhost:7127/GetUserIDfromToken', { email });
+                    setUserId(response.data);
+                    console.log(response.data);
+                } else {
+                    console.error('Email not found in localStorage');
+                }
+            } catch (error) {
+                console.error('Error fetching user ID:', error);
+            }
+        };
+
+        fetchUserId();
+    }, []);
+
+    useEffect(() => {
+        if (userId && course_id) {
+            const checkEnrollment = async () => {
+                try {
+                    const response = await axios.get(
+                        `https://localhost:7127/api/Courses/isEnrolled?user_id=${userId}&course_id=${course_id}`,
+                    );
+                    setIsEnrolled(response.data);
+                } catch (error) {
+                    console.error('Error checking enrollment status:', error);
+                }
+            };
+
+            checkEnrollment();
+        }
+    }, [userId, course_id]);
+
     return (
         <div className="container-detail">
             <div className="content-detail">
@@ -44,7 +87,7 @@ function CourseDetail({
                                 <ul>
                                     {lecturerInfo.characteristics.map((characteristic, index) => (
                                         <li key={index}>
-                                            <TiTick style={{color:'#f05123'}} />
+                                            <TiTick style={{ color: '#f05123' }} />
                                             <span>{characteristic}</span>
                                         </li>
                                     ))}
@@ -72,7 +115,7 @@ function CourseDetail({
                     </div>
                     <div className="button-start-learn">
                         {isAuthenticated ? (
-                            <Button to={'/PageVideoLearn'}>{buttonText}</Button>
+                            <Button to={'/PageVideoLearn'}>{isEnrolled ? 'Continue' : 'Learn'}</Button>
                         ) : (
                             <>
                                 <Button to={'/Login'} onClick={onButtonClick}>
