@@ -54,7 +54,9 @@ function Home() {
             setPageIndex(newPageIndex);
         }
     };
+
     localStorage.removeItem('emailLecturer','jobs');
+
     const renderCourses = (courses) => {
         const handleCardClick = (id,lecturerEmail) => {
             window.location.href = `/CoursesDetail/${id}`;

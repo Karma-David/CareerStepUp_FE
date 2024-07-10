@@ -8,6 +8,7 @@ import Register from '@/pages/Register/Register';
 import ForgotPass from '@/pages/ForgotPass/ForgotPass';
 import RegisterLecturer from '@/pages/RegisterLecturer/RegisterLecturer';
 import ResetPass from '@/pages/ResetPass/Resetpass';
+//import AdminPage from '@/pages/AdminPage/AdminPage';
 
 // import AdminPage from '@/pages/AdminPage/AdminPage';
 
@@ -30,6 +31,10 @@ import PaymentPageSuccess from '@/pages/PaymentPage/PaymentPageSuccess';
 import NotConfirmedLecturer from '@/pages/AdminPage/Components/NotConfirmedLecturer/NotConfirmedLecturer';
 import LecturerProfile from '@/pages/AdminPage/Components/Lecturers/LecturerProfile';
 import LearnerProfile from '@/pages/AdminPage/Components/Students/LearnerProfile';
+import WithdrawalsList from '@/pages/AdminPage/Components/WidthDraw/WidthDraw';
+import WidthDrawDetail from '@/pages/AdminPage/Components/WidthDraw/WidthDrawDetail';
+
+
 
 export const publishRouter = [
     { path: '/', component: Home },
@@ -41,6 +46,7 @@ export const publishRouter = [
     { path: '/Register', component: Register, layout: null },
     { path: '/ForgotPass', component: ForgotPass, layout: null },
     { path: '/ResetPass', component: ResetPass, layout: null },
+    //{ path: '/AdminPage', component: AdminPage },
 
     
     // { path: '/AdminPage', component: AdminPage },
@@ -66,6 +72,10 @@ export const publishRouter = [
     { path: '/Course', component: Course },
     { path: '/LecturerProfile/:lecturerId', component: LecturerProfile },
     { path: '/LearnerProfile/:learnerId', component: LearnerProfile },
+    { path: '/Test/:id', component: Test },
+    { path: '/WithdrawalsList', component: WithdrawalsList },
+    { path: '/WidthDrawDetail', component: WidthDrawDetail },
+  
     { path: '/CoursesDetail/:id', component: CoursesDetail },
     // { path: '/Test/:id', component: Test },
 
