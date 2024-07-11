@@ -167,13 +167,16 @@ const CourseList = () => {
     };
 
     return (
+
         <div className="course-list-wrapper">
             <div className="course-list-container">
+
                 {courses.map((course, index) => (
                     <div key={course.course_id} className="course-item">
                         <div className="course-info">
                             <h3>{course.title}</h3>
                         </div>
+
                         <div className="course-actions">
                             <button onClick={() => handleUpdateCourse(course)} className="button-update">
                                 Update
@@ -184,6 +187,7 @@ const CourseList = () => {
                             <button onClick={() => handleEditCourse(course.course_id)} className="button-edit">
                                 Edit Topic - Lesson
                             </button>
+
                         </div>
                     </div>
                 ))}

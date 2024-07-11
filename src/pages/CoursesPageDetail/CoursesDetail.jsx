@@ -193,7 +193,7 @@ function CoursesDetail() {
                 </div>
                 <div className="list-Learn">
                     <div>
-                        <h1>Course content</h1>
+                        <h1>Information Course</h1>
                     </div>
                     <div>
                         {topicsAndLessons &&
@@ -263,7 +263,7 @@ function CoursesDetail() {
                     </ul>
                 </div>
                 <div className="description-lecturer">
-                    <h1>Lecturer information</h1>
+                    <h1>THong tin giang vien</h1>
                     <div className="information-lecturer">
                         {lecturer ? (
                             <img

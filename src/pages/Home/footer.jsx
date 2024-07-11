@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+// import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter, faInstagram, faApple } from '@fortawesome/free-brands-svg-icons';
 import './homepage.css';
 
