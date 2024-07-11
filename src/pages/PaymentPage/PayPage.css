@@ -1,56 +1,27 @@
-/* PaymentPage.css */
+/* PayPage.css */
 .payment-page {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f4f4f4;
-  }
-  
-  .payment-container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #f0f2f5;
+}
+
+.payment-container {
     text-align: center;
-    width: 400px;
-  }
-  
-  .payment-title {
-    font-size: 24px;
-    margin-bottom: 20px;
+    padding: 40px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.payment-success-icon {
+    font-size: 10rem; /* Tăng kích thước biểu tượng */
+    color: #4caf50;
+}
+
+.payment-title {
+    margin-top: 20px;
+    font-size: 3rem; /* Tăng kích thước tiêu đề */
     color: #333;
-  }
-  
-  .payment-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .payment-form label {
-    font-size: 14px;
-    margin-bottom: 5px;
-    text-align: left;
-  }
-  
-  .payment-form input {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .payment-form button {
-    padding: 10px;
-    background-color: #0088cc;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .payment-form button:hover {
-    background-color: #005f99;
-  }
-  
+}

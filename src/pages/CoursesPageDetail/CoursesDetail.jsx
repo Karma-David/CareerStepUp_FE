@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './CoursesPageDetail.css';
 import Button from '@/components/Button';
-import { FaMinus, FaPlus } from 'react-icons/fa';
+import { FaGlobe, FaInfinity, FaMinus, FaPlus } from 'react-icons/fa';
 
 function CoursesDetail() {
     const { id } = useParams();
@@ -193,7 +193,7 @@ function CoursesDetail() {
                 </div>
                 <div className="list-Learn">
                     <div>
-                        <h1>Noi dung khoa hoc</h1>
+                        <h1>Course content</h1>
                     </div>
                     <div>
                         {topicsAndLessons &&
@@ -248,8 +248,22 @@ function CoursesDetail() {
                             ))}
                     </div>
                 </div>
+
+                <div className="requirements">
+                    <h2>Course Requirements</h2>
+                    <ul>
+                        <li>Computer with internet connection (Windows, Ubuntu or MacOS)</li>
+                        <li>
+                            High sense of self-study, high responsibility, perseverance and not afraid of difficulties
+                        </li>
+                        <li>Don't be impatient, calmly study and do homework after each lesson</li>
+                        <li>
+                            You don't need to know anything more, in the course I will show you what you need to know
+                        </li>
+                    </ul>
+                </div>
                 <div className="description-lecturer">
-                    <h1>THong tin giang vien</h1>
+                    <h1>Lecturer information</h1>
                     <div className="information-lecturer">
                         {lecturer ? (
                             <img
@@ -268,8 +282,7 @@ function CoursesDetail() {
                             <div className="lecturer-characteristics">
                                 {lecturer ? (
                                     <div>
-                                        <h4>{lecturer.firstName}</h4>
-                                        <p>{lecturer.lastName}</p>
+                                        <h4>Name: {lecturer.firstName}</h4>
                                         <a
                                             style={{ color: 'orange', textDecoration: 'none' }}
                                             href={lecturer.certificate}
@@ -324,6 +337,24 @@ function CoursesDetail() {
                           }
                         </ul>
                     </div> */}
+                </div>
+                <div className="learn-anytime">
+                    <div className="learn-anytime-icon">
+                        <FaGlobe size={20} />
+                    </div>
+                    <div className="learn-anytime-text">
+                        <h2>Learn Anytime, Anywhere</h2>
+                        <p>Access to the course from any device, at any time.</p>
+                    </div>
+                </div>
+                <div className="learn-anytime forever">
+                    <div className="learn-anytime-icon">
+                        <FaInfinity size={20} />
+                    </div>
+                    <div className="learn-anytime-text">
+                        <h2>Learn Forever</h2>
+                        <p>Lifetime access to the course material.</p>
+                    </div>
                 </div>
             </div>
         </div>
