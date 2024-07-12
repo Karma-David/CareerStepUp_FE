@@ -1,72 +1,234 @@
+/* Container for course detail and image */
 .container-detail {
-    width: 100%;
-    padding: 30px 45px;
-    margin-top: 30px;
-    display: -webkit-box;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #f4f4f4;
 }
-.content-target-detail {
+
+/* Content section for course details */
+.content-detail {
+    flex: 2;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+}
+
+/* Header section for course title and description */
+.header-detail {
+    margin-bottom: 20px;
+}
+
+.header-detail h1 {
+    margin: 0;
+    font-size: 2em;
+    color: #333;
+}
+
+.header-detail p {
+    font-size: 1.2em;
+    color: #666;
+}
+
+/* Section for course content */
+.list-Learn {
+    margin-top: 20px;
+}
+
+.list-Learn h1 {
+    font-size: 1.5em;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+/* Styling for the list of topics and lessons */
+.topic-container {
+    border: 1px solid #b2b2b2;
+    border-radius: 5px;
+    background-color: rgb(243, 238, 238);
+    margin-top: 10px;
+}
+
+.topic-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: 1px solid #dcdcdc;
+}
+
+.topic-title h2 {
+    margin: 0;
+    margin-left: 10px;
+    color: #333;
+}
+
+/* Show/hide lessons under the topic */
+.lessons-list {
+    margin-left: 30px;
+    padding: 10px 0;
+}
+
+.lesson-item {
+    padding: 5px 0;
+    color: #555;
+}
+
+/* Section for lecturer information */
+.description-lecturer {
     margin-top: 30px;
 }
 
-.list-target {
-    li {
-        list-style: none;
-    }
+.description-lecturer h1 {
+    font-size: 1.5em;
+    color: #444;
 }
-.image-detail {
-    margin-left: 100px;
-}
-.image-detail-course {
-    border-radius: 5px;
-    border: 1px solid rgba(236, 67, 6, 0.884);
-    width: 385px;
-    height: 216px;
-    object-fit: contain;
-}
-.status-courses {
-    margin-bottom: 30px;
-    margin-left: 145px;
-    p {
-        font-size: 35px;
-        color: orangered;
-        margin-top: 20px;
-        margin-left: 10px;
-    }
-}
-.button-start-learn {
-    margin-left: 120px;
-}
-.Course-overview {
-    margin-top: 20px;
-    margin-left: 115px;
-    li {
-        list-style: none;
-        line-height: 40px;
-    }
-    span {
-        margin-left: 15px;
-    }
-}
-.decription-lecturer {
-    margin-top: 20px;
-}
+
 .information-lecturer {
-    display: inline-flex;
-    span {
-        margin-left: 15px;
-        margin-top: 15px;
-    }
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
+
 .img-lecturer {
-    margin-top: 15px;
-    width: 240px;
-    height: 146px;
-    object-fit: contain;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
 }
+
 .lecturer-characteristics {
-    li {
-        list-style: none;
-    }
+    color: #333;
+}
+
+.lecturer-characteristics h4 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.lecturer-characteristics p {
+    margin: 5px 0;
+}
+
+.certificate-link {
+    color: orange;
+    text-decoration: none;
+}
+
+.certificate-link:hover {
+    text-decoration: underline;
+}
+
+/* Image section for course */
+.image-detail {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-course-detail {
+    width: 100%;
+    max-width: 350px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.image-detail-course {
+    width: 100%;
+    height: auto;
+}
+
+/* Button section for course enrollment */
+.box-status-courses {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.status-courses {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1.2em;
+}
+
+.button-start-learn {
+    margin-top: 20px;
+}
+
+/* New Requirements Section */
+.requirements {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+.requirements h2 {
+    font-size: 1.5em;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+.requirements ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.requirements li {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.requirements li:before {
+    content: '•';
+    color: orange;
+    margin-right: 10px;
+}
+
+/* Learn Anytime, Anywhere Section */
+.learn-anytime {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.learn-anytime h2 {
+    font-size: 1.5em;
+    color: #444;
+    margin: 0;
+    flex: 1;
+}
+
+.learn-anytime p {
+    color: #555;
+    margin: 15px;
+}
+
+.learn-anytime .icon-container {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.learn-anytime .icon {
+    color: orange;
+    margin: 0 5px;
+    font-size: 1.5em;
+}
+.forever {
+    padding-right: 80px;
 }

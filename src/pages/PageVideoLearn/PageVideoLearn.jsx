@@ -132,6 +132,13 @@ function PageVideoLearn() {
         }
     }, [unlockNextLesson]);
 
+    useEffect(() => {
+        if (videoRef.current && selectedVideo) {
+            videoRef.current.load();
+            videoRef.current.play();
+        }
+    }, [selectedVideo]);
+
     const renderIcon = (id) => {
         return visibleTopics[id] ? (
             <FaChevronDown style={{ color: 'orange' }} />
@@ -176,7 +183,7 @@ function PageVideoLearn() {
                                         userSelect: 'none',
                                         display: 'flex',
                                         justifyContent: 'space-between',
-                                        marginBottom: '0px',
+                                        marginBottom: '5px',
                                         marginLeft: '10px',
                                         borderBottom: '1px solid #dedfe0',
                                         height: '40px',

@@ -1,42 +1,161 @@
+/* UpTopic.css */
+
+.up-topic-container {
+    padding: 30px; /* Tăng padding cho container */
+    max-width: 1000px; /* Tăng max-width cho container */
+    margin: 0 auto; /* Căn giữa container */
+    background: #f0f0f0; /* Thay đổi nền cho toàn bộ container */
+    border-radius: 10px; /* Thêm bo góc cho container */
+}
+
+.course-name {
+    font-size: 40px; /* Tăng kích thước chữ cho tên khóa học */
+    font-weight: bold;
+    margin-bottom: 25px;
+    text-align: center;
+    color: #333; /* Thay đổi màu chữ cho tên khóa học */
+}
+
+.topic-header {
+    background-color: orangered;
+    color: white;
+    padding: 20px; /* Tăng padding cho tiêu đề Topic */
+    font-size: 32px; /* Tăng kích thước chữ cho tiêu đề Topic */
+    text-align: center;
+    border-radius: 10px;
+    margin-bottom: 30px; /* Tăng khoảng cách giữa tiêu đề và danh sách topic */
+}
+
+.list-topic-course {
+    margin-top: 20px;
+}
+
 .topic-item {
-    width: 1000px;
+    background: #fff; /* Nền trắng cho item */
+    border: 1px solid #ddd;
+    padding: 20px; /* Tăng padding cho từng item */
+    border-radius: 10px; /* Bo góc cho item */
+    margin-bottom: 15px; /* Tăng khoảng cách giữa các item */
     display: flex;
     justify-content: space-between;
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 5px;
-    margin: 10px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Thêm bóng cho item */
 }
-.write-new-topic {
-    margin-left: 605px;
-    input {
-        margin: 10px;
-        width: 200px;
-        height: 50px;
-        border-radius: 5px;
-        border: 1px solid #333;
-        padding: 10px;
-    }
+
+.name-topic h3 {
+    font-size: 28px; /* Tăng kích thước chữ cho tên topic */
+    color: #333; /* Thay đổi màu chữ cho tên topic */
+    margin: 0; /* Bỏ margin mặc định */
 }
-.edit-topic {
-    input {
-        margin: 10px;
-        width: 200px;
-        height: 50px;
-        border-radius: 5px;
-        border: 1px solid #333;
-        padding: 10px;
-    }
-}
-.name-topic {
-    width: 100px;
-    margin-left: 10px;
-}
+
 .button-handle-topic {
-    width: 500px;
     display: flex;
-    justify-content: space-around;
+    gap: 15px; /* Tăng khoảng cách giữa các nút */
+}
+
+.edit-button,
+.delete-button,
+.edit-lesson-button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 24px; /* Tăng padding cho các nút */
+    border: none;
+    border-radius: 10px; /* Bo góc cho các nút */
+    font-size: 18px; /* Tăng kích thước chữ cho các nút */
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Thêm bóng cho các nút */
+}
+
+.edit-button:hover,
+.delete-button:hover,
+.edit-lesson-button:hover {
+    opacity: 0.9; /* Thay đổi opacity khi hover */
+}
+
+.delete-button {
+    background-color: #dc3545;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+.edit-lesson-button {
+    background-color: #28a745;
+}
+
+.edit-lesson-button:hover {
+    background-color: #218838;
+}
+
+.edit-topic {
+    margin-top: 30px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px; /* Bo góc cho phần chỉnh sửa topic */
+    background: #fff; /* Nền trắng cho phần chỉnh sửa topic */
+}
+
+.edit-topic h1 {
+    font-size: 28px; /* Tăng kích thước chữ cho tiêu đề phần chỉnh sửa topic */
+    color: #333; /* Thay đổi màu chữ cho tiêu đề phần chỉnh sửa topic */
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.write-new-topic {
+    margin-top: 20px;
+}
+
+.write-new-topic input {
+    width: 100%;
+    padding: 15px; /* Tăng padding cho input */
+    margin-bottom: 20px; /* Tăng khoảng cách dưới input */
+    font-size: 20px; /* Tăng kích thước chữ cho input */
+    border-radius: 10px; /* Bo góc cho input */
+    border: 1px solid #ddd; /* Thay đổi màu border cho input */
+}
+
+.save-button,
+.cancel-button {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 30px; /* Tăng padding cho các nút */
+    border: none;
+    border-radius: 10px; /* Bo góc cho các nút */
+    font-size: 20px; /* Tăng kích thước chữ cho các nút */
+    cursor: pointer;
+    margin-right: 15px; /* Thêm khoảng cách giữa hai nút */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Thêm bóng cho các nút */
+}
+
+.cancel-button {
+    background-color: #6c757d;
+}
+
+.cancel-button:hover {
+    background-color: #5a6268;
+}
+
+.add-topic-button {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 30px; /* Tăng padding cho nút thêm topic */
+    border: none;
+    border-radius: 10px; /* Bo góc cho nút thêm topic */
+    font-size: 20px; /* Tăng kích thước chữ cho nút thêm topic */
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Thêm bóng cho nút thêm topic */
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Thêm khoảng cách giữa icon và chữ */
+    margin-top: 10px; /* Thêm khoảng cách trên nút thêm topic */
+}
+
+.add-topic-button:hover {
+    background-color: #0056b3;
+}
+
+.lesson-area {
+    margin-top: 50px;
 }

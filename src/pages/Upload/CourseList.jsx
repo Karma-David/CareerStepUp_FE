@@ -33,7 +33,7 @@ const CourseList = () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify( email ),
+                    body: JSON.stringify(email),
                 });
                 if (!res.ok) {
                     throw new Error(`HTTP error! status: ${res.status}`);
@@ -130,9 +130,7 @@ const CourseList = () => {
                     throw new Error('Network response was not ok');
                 }
                 setCourses(
-                    courses.map((course) =>
-                        course.course_id === editingCourse.course_id ? updatedCourse : course
-                    )
+                    courses.map((course) => (course.course_id === editingCourse.course_id ? updatedCourse : course)),
                 );
                 setEditingCourse(null);
                 setNewCourse('');
@@ -169,60 +167,90 @@ const CourseList = () => {
     };
 
     return (
-        <div>
-            <div className="list-course-lecturer" style={{ marginLeft: '150px' }}>
+
+        <div className="course-list-wrapper">
+            <div className="course-list-container">
+
                 {courses.map((course, index) => (
                     <div key={course.course_id} className="course-item">
-                        <div className="name-course">
+                        <div className="course-info">
                             <h3>{course.title}</h3>
                         </div>
-                        <div className="button-handle-course">
-                            <button onClick={() => handleUpdateCourse(course)}>Update</button>
-                            <button onClick={() => handleDeleteCourse(index)}>Delete</button>
-                            <button onClick={() => handleEditCourse(course.course_id)}>
+
+                        <div className="course-actions">
+                            <button onClick={() => handleUpdateCourse(course)} className="button-update">
+                                Update
+                            </button>
+                            <button onClick={() => handleDeleteCourse(index)} className="button-delete">
+                                Delete
+                            </button>
+                            <button onClick={() => handleEditCourse(course.course_id)} className="button-edit">
                                 Edit Topic - Lesson
                             </button>
+
                         </div>
                     </div>
                 ))}
             </div>
             {editingCourse && (
-                <div className="edit-course">
+                <div className="edit-course-form">
                     <h1>Update Course</h1>
-                    <input
-                        type="text"
-                        name="newCourse"
-                        placeholder="Enter new course title"
-                        value={newCourse}
-                        onChange={handleInputChange}
-                    />
-                    <input
-                        type="text"
-                        name="description"
-                        placeholder="Enter new course description"
-                        value={description}
-                        onChange={handleInputChange}
-                    />
-                    <input
-                        type="number"
-                        name="price"
-                        placeholder="Enter new course price"
-                        value={price}
-                        onChange={handleInputChange}
-                    />
-                    <input type="file" onChange={handleFileChange} />
-                    <button style={{ margin: '10px' }} onClick={handleSaveCourse}>
-                        Save
-                    </button>
-                    <button style={{ margin: '10px' }} onClick={() => setEditingCourse(null)}>
-                        Cancel
-                    </button>
+                    <form onSubmit={(e) => e.preventDefault()} className="edit-course-form-content">
+                        <div className="form-group">
+                            <label htmlFor="newCourse">Course Title:</label>
+                            <input
+                                id="newCourse"
+                                type="text"
+                                name="newCourse"
+                                placeholder="Enter new course title"
+                                value={newCourse}
+                                onChange={handleInputChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="description">Description:</label>
+                            <input
+                                id="description"
+                                type="text"
+                                name="description"
+                                placeholder="Enter new course description"
+                                value={description}
+                                onChange={handleInputChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="price">Price:</label>
+                            <input
+                                id="price"
+                                type="number"
+                                name="price"
+                                placeholder="Enter new course price"
+                                value={price}
+                                onChange={handleInputChange}
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="file">Upload Image:</label>
+                            <input id="file" type="file" onChange={handleFileChange} />
+                        </div>
+                        <div className="form-actions">
+                            <button type="button" onClick={handleSaveCourse} className="button-save">
+                                Save
+                            </button>
+                            <button type="button" onClick={() => setEditingCourse(null)} className="button-cancel">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
                 </div>
             )}
-            <div style={{ marginLeft: '615px', marginTop: '30px' }}>
-                <Button to="/UpNewCourse">
-                    <FontAwesomeIcon style={{ marginLeft: '10px' }} icon={faPlus} />
-                    <span style={{ margin: '20px' }}>New Course</span>
+            <div className="new-course-button-container">
+                <Button to="/UpNewCourse" className="new-course-button">
+                    <FontAwesomeIcon icon={faPlus} />
+                    <span>New Course</span>
                 </Button>
             </div>
         </div>
