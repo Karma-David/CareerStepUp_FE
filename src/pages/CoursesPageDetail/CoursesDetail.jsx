@@ -28,7 +28,6 @@ function CoursesDetail() {
         }
     }, []);
 
-
     useEffect(() => {
         const getCourses = async () => {
             try {
@@ -167,6 +166,37 @@ function CoursesDetail() {
             ...prevState,
             [topicId]: !prevState[topicId],
         }));
+    };
+    const handleLearnNow = async () => {
+        const email = localStorage.getItem('email');
+        if (!email) {
+            console.error('Email not found in local storage');
+            return;
+        }
+
+        try {
+            const response = await fetch('https://localhost:7127/api/Courses/EnrollCourse', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email,
+                    course: id, // Assuming `id` is the course ID
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            console.log('Enrollment successful:', result);
+
+            // Optionally, handle successful enrollment (e.g., navigate to the course page)
+        } catch (error) {
+            console.error('Error enrolling in course:', error);
+        }
     };
 
     const renderIcon = (topicId) => {
@@ -322,7 +352,9 @@ function CoursesDetail() {
                     </div>
                     <div className="button-start-learn">
                         {isAuthenticated ? (
-                            <Button to={`/PageVideoLearn/${id}`}>{isEnrolled ? 'Continue' : 'Learn now'}</Button>
+                            <Button to={`/PageVideoLearn/${id}`} onClick={!isEnrolled ? handleLearnNow : null}>
+                                {isEnrolled ? 'Continue' : 'Learn now'}
+                            </Button>
                         ) : (
                             <>
                                 <Button to={'/Login'} onClick={handleStartLearn}>
