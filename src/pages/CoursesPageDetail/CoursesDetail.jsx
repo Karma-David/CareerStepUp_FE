@@ -42,11 +42,13 @@ function CoursesDetail() {
                     },
                     body: JSON.stringify(email), // Sending email as a string
                 });
+
                 if (!res.ok) {
                     throw new Error(`HTTP error! status: ${res.status}`);
                 }
 
                 const data = await res.json();
+                console.log('anh3 ' + data.value);
                 if (data.statusCode === 200) {
                     setIdUser(data.value); // Assuming data.value contains the user ID
                 } else {
@@ -141,9 +143,9 @@ function CoursesDetail() {
                         throw new Error(`HTTP error! status: ${res.status}`);
                     }
                     const data = await res.json();
+                    console.log('anh 3e' + data.value);
                     if (data.statusCode === 200) {
                         setIsEnrolled(data.value);
-                        console.log(data.value);
                     } else {
                         throw new Error(`API error! status: ${data.statusCode}`);
                     }
@@ -263,7 +265,7 @@ function CoursesDetail() {
                     </ul>
                 </div>
                 <div className="description-lecturer">
-                    <h1>THong tin giang vien</h1>
+                    <h1>Lecturer Information</h1>
                     <div className="information-lecturer">
                         {lecturer ? (
                             <img
@@ -313,7 +315,7 @@ function CoursesDetail() {
                 </div>
                 <div className="box-status-courses">
                     <div className="status-courses">
-                        <p>Free</p>
+                        <p style={{ marginBottom: '0px' }}>{course.isPremium ? 'Premium' : 'Free'}</p>
                     </div>
                     <div className="button-start-learn">
                         {isAuthenticated ? (

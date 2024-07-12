@@ -96,13 +96,7 @@ function UpNewCourse() {
                     value={description}
                     onChange={handleInputChange}
                 />
-                <input
-                    type="number"
-                    name="price"
-                    placeholder="Enter course price"
-                    value={price}
-                    onChange={handleInputChange}
-                />
+
                 <input type="file" onChange={handleFileChange} />
             </div>
             <div className="button-container">
