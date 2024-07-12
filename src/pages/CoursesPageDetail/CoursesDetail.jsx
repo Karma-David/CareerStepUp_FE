@@ -28,40 +28,6 @@ function CoursesDetail() {
         }
     }, []);
 
-    useEffect(() => {
-        const getUserID = async () => {
-            try {
-                const email = localStorage.getItem('lecturerEmai');
-                if (!email) {
-                    throw new Error('Token not found in local storage');
-                }
-                const res = await fetch(GetIDFromEmailAPI, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(email), // Sending email as a string
-                });
-
-                if (!res.ok) {
-                    throw new Error(`HTTP error! status: ${res.status}`);
-                }
-
-                const data = await res.json();
-                console.log('anh3 ' + data.value);
-                if (data.statusCode === 200) {
-                    setIdUser(data.value); // Assuming data.value contains the user ID
-                } else {
-                    throw new Error(`API error! status: ${data.statusCode}`);
-                }
-            } catch (error) {
-                console.error('Error fetching user ID:', error);
-                setError(error.message);
-            }
-        };
-
-        getUserID();
-    }, [GetIDFromEmailAPI]);
 
     useEffect(() => {
         const getCourses = async () => {
@@ -104,25 +70,50 @@ function CoursesDetail() {
 
     useEffect(() => {
         const getLecturer = async () => {
-            if (idUser) {
-                try {
-                    const GetLecturerbyID = `https://localhost:7127/api/Lecturer/GetLecturerByID?id=${idUser}`;
-                    console.log(`Fetching lecturer with URL: ${GetLecturerbyID}`);
-                    const lecturerResponse = await fetch(GetLecturerbyID);
-                    if (!lecturerResponse.ok) {
-                        throw new Error(`HTTP error! status: ${lecturerResponse.status}`);
-                    }
-                    const lecturerData = await lecturerResponse.json();
-                    if (lecturerData.statusCode === 200) {
-                        setLecturer(lecturerData.value);
-                    } else {
-                        throw new Error(`API error! status: ${lecturerData.statusCode} - ${lecturerData.message}`);
-                    }
-                } catch (error) {
-                    console.error('Error fetching lecturer:', error);
-
-                    setError(error.message);
+            try {
+                const email = localStorage.getItem('lecturerEmai');
+                if (!email) {
+                    throw new Error('Email not found in local storage');
                 }
+
+                const res = await fetch(GetIDFromEmailAPI, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(email), // Sending email as an object
+                });
+
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+
+                const data = await res.json();
+                console.log('lec + ' + data.value);
+
+                const resp = await fetch(`https://localhost:7127/api/Lecturer/GetLecturerByID?id=${data.value}`, {
+                    method: 'GET', // Changed to GET since you're fetching data by ID
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!resp.ok) {
+                    throw new Error(`HTTP error! status: ${resp.status}`);
+                }
+
+                const lec_data = await resp.json();
+
+                if (lec_data.statusCode === 200) {
+                    setLecturer(lec_data.value);
+                } else {
+                    throw new Error(`API error! status: ${lec_data.statusCode} - ${lec_data.message}`);
+                }
+
+                console.log(lec_data.value);
+            } catch (error) {
+                console.error('Error fetching lecturer:', error);
+                setError(error.message);
             }
         };
         getLecturer();
@@ -130,29 +121,41 @@ function CoursesDetail() {
 
     useEffect(() => {
         const checkEnrollment = async () => {
-            if (idUser) {
-                try {
-                    const res = await fetch(`${IsEnrolledAPI}?user_id=${idUser}&course_id=${id}`, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    });
-
-                    if (!res.ok) {
-                        throw new Error(`HTTP error! status: ${res.status}`);
-                    }
-                    const data = await res.json();
-                    console.log('anh 3e' + data.value);
-                    if (data.statusCode === 200) {
-                        setIsEnrolled(data.value);
-                    } else {
-                        throw new Error(`API error! status: ${data.statusCode}`);
-                    }
-                } catch (error) {
-                    console.error('Error checking enrollment status:', error);
-                    setError(error.message);
+            try {
+                const email = localStorage.getItem('email');
+                if (!email) {
+                    throw new Error('Token not found in local storage');
                 }
+                const resp = await fetch(GetIDFromEmailAPI, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(email), // Sending email as a string
+                });
+                const user_id = await resp.json();
+                console.log('user + ' + user_id.value);
+                const res = await fetch(`${IsEnrolledAPI}?user_id=${user_id.value}&course_id=${id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                const data = await res.json();
+                console.log('anh+' + data.value);
+                if (data.statusCode === 200) {
+                    setIsEnrolled(data.value);
+                    console.log(data.value);
+                } else {
+                    throw new Error(`API error! status: ${data.statusCode}`);
+                }
+            } catch (error) {
+                console.error('Error checking enrollment status:', error);
+                setError(error.message);
             }
         };
 
