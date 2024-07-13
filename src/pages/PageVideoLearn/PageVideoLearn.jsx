@@ -164,6 +164,9 @@ function PageVideoLearn() {
 
     const handleVideoLoaded = () => {
         setVideoReady(true);
+        if (videoRef.current) {
+            videoRef.current.play();
+        }
     };
 
     const handleVideoError = () => {
@@ -190,7 +193,7 @@ function PageVideoLearn() {
             <div className="body-video">
                 <div className="Video-course">
                     {showExercise && showExerciseForLesson === selectedLessonId ? (
-                        <Exer onComplete={handleExerciseComplete} lessonID={selectedLessonId} UserID ={userId} />
+                        <Exer onComplete={handleExerciseComplete} lessonID={selectedLessonId} UserID={userId} />
                     ) : (
                         <div>
                             {!videoReady && <p>Loading video...</p>}
@@ -199,7 +202,8 @@ function PageVideoLearn() {
                                 className="video"
                                 src={selectedVideo || 'fallback-video-url.mp4'}
                                 controls
-                                onLoadedData={handleVideoLoaded}
+                                autoPlay
+                                onCanPlay={handleVideoLoaded}
                                 onError={handleVideoError}
                             />
                         </div>
