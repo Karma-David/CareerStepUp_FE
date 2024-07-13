@@ -25,6 +25,10 @@ function CoursesDetail() {
     const IsEnrolledAPI = `https://localhost:7127/api/Courses/isEnrolled`;
 
     useEffect(() => {
+        const rolesString = localStorage.getItem('role') || '';
+        const rolesArray = rolesString.split(',').map((role) => role.trim());
+        setIsPremiumUser(rolesArray.includes('premiumUser'));
+
         const token = localStorage.getItem('token');
         if (token) {
             setIsAuthenticated(true);
@@ -172,13 +176,18 @@ function CoursesDetail() {
         }));
     };
     const handleLearnNow = async () => {
-        if (isPremiumCourse && !isPremiumUser) {
-            const confirmUpgrade = window.confirm('Your account is not a premium account. Would you like to upgrade?');
-            if (confirmUpgrade) {
-                window.location.href = `/PayPage`;
-                return;
-            } else {
-                return;
+        console.log(isPremiumUser);
+        if (isPremiumCourse) {
+            if (!isPremiumUser) {
+                const confirmUpgrade = window.confirm(
+                    'Your account is not a premium account. Would you like to upgrade?',
+                );
+                if (confirmUpgrade) {
+                    window.location.href = `/PayPage`;
+                    return;
+                } else {
+                    return;
+                }
             }
         }
 
