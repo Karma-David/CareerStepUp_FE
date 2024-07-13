@@ -16,6 +16,9 @@ function CoursesDetail() {
     const [isEnrolled, setIsEnrolled] = useState(false);
     const [expandedTopics, setExpandedTopics] = useState({});
 
+    const [isPremiumCourse, setIsPremiumCourse] = useState(false);
+    const [isPremiumUser, setIsPremiumUser] = useState(false);
+
     const CourseAPI = `https://localhost:7127/api/Courses/GetCourseById?id=${id}`;
     const GetTopicAndLessonAPI = `https://localhost:7127/api/Courses/GetCourseByIdIncludeLessons?id=${id}`;
     const GetIDFromEmailAPI = 'https://localhost:7127/GetUserIDfromToken';
@@ -48,6 +51,7 @@ function CoursesDetail() {
 
                 if (courseData.statusCode === 200) {
                     setCourse(courseData.value);
+                    setIsPremiumCourse(courseData.value.isPremium);
                 } else {
                     throw new Error(`API error! status: ${courseData.statusCode}`);
                 }
@@ -123,7 +127,7 @@ function CoursesDetail() {
             try {
                 const email = localStorage.getItem('email');
                 if (!email) {
-                    throw new Error('Token not found in local storage');
+                    return;
                 }
                 const resp = await fetch(GetIDFromEmailAPI, {
                     method: 'POST',
@@ -168,6 +172,17 @@ function CoursesDetail() {
         }));
     };
     const handleLearnNow = async () => {
+        if (isPremiumCourse && !isPremiumUser) {
+            const confirmUpgrade = window.confirm('Your account is not a premium account. Would you like to upgrade?');
+            if (confirmUpgrade) {
+                window.location.href = `/PayPage`;
+                return;
+            } else {
+                return;
+            }
+        }
+
+        // Proceed with enrollment if the course is not premium or the user is a premium user
         const email = localStorage.getItem('email');
         if (!email) {
             console.error('Email not found in local storage');
@@ -193,10 +208,22 @@ function CoursesDetail() {
             const result = await response.json();
             console.log('Enrollment successful:', result);
 
-            // Optionally, handle successful enrollment (e.g., navigate to the course page)
+            // Navigate to the course page after successful enrollment
+            window.location.href = `/PageVideoLearn/${id}`;
         } catch (error) {
             console.error('Error enrolling in course:', error);
         }
+    };
+
+    const handleLearnNowClick = () => {
+        handleLearnNow();
+    };
+
+    // Modify the button component to use handleLearnNowClick
+    <Button onClick={handleLearnNowClick}>{isEnrolled ? 'Continue' : 'Learn now'}</Button>;
+
+    const handleStartLearn = () => {
+        window.location.href = '/Login';
     };
 
     const renderIcon = (topicId) => {
@@ -214,10 +241,6 @@ function CoursesDetail() {
     if (error) {
         return <h1>Error: {error}</h1>;
     }
-
-    const handleStartLearn = () => {
-        return alert('You need to be logged in');
-    };
 
     return (
         <div className="container-detail">
@@ -351,17 +374,7 @@ function CoursesDetail() {
                         <p style={{ marginBottom: '0px' }}>{course.isPremium ? 'Premium' : 'Free'}</p>
                     </div>
                     <div className="button-start-learn">
-                        {isAuthenticated ? (
-                            <Button to={`/PageVideoLearn/${id}`} onClick={!isEnrolled ? handleLearnNow : null}>
-                                {isEnrolled ? 'Continue' : 'Learn now'}
-                            </Button>
-                        ) : (
-                            <>
-                                <Button to={'/Login'} onClick={handleStartLearn}>
-                                    Login
-                                </Button>
-                            </>
-                        )}
+                        <Button onClick={handleLearnNowClick}>{isEnrolled ? 'Continue' : 'Learn now'}</Button>;
                     </div>
                     {/* <div className="Course-overview">
                         <ul>
