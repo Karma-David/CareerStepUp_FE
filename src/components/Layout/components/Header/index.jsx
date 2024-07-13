@@ -23,7 +23,7 @@ function Header() {
             try {
                 const email = localStorage.getItem('email');
                 if (!email) {
-                    throw new Error('Email not found in local storage');
+                    return;
                 }
 
                 const res = await fetch(GetProfileFromEmailAPI, {
