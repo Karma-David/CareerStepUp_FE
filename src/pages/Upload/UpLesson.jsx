@@ -284,7 +284,7 @@ function UpLesson({ topicId }) {
                 </div>
             )}
 
-            {showExerciseForm && <Exercise topicId={editLessonID} />}
+            {showExerciseForm && <Exercise lessonsID={editLessonID} />}
         </div>
     );
 }

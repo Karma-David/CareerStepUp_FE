@@ -146,7 +146,7 @@ const Login = () => {
         <div className="form-login">
             <div className="form-box-login">
                 <form onSubmit={handleSubmit}>
-                    <h1>Login</h1>
+                    <h1 style={{color:'black'}}>Login</h1>
                     <div className="input-box">
                         <div className="input-username">
                             <input
