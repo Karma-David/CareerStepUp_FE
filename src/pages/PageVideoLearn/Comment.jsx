@@ -9,10 +9,12 @@ function Comment({ lessonID }) {
     const [userId, setUserId] = useState('');
     const [newComment, setNewComment] = useState('');
     const [replyingCommentId, setReplyingCommentId] = useState(null);
+
     const [newReply, setNewReply] = useState(null);
 
     const GetIDFromEmailAPI = 'https://localhost:7127/GetUserIDfromToken';
     const createCommentAPI = `https://localhost:7127/api/Comments/CreateComments`;
+
 
     useEffect(() => {
         const getUserID = async () => {
@@ -65,6 +67,26 @@ function Comment({ lessonID }) {
         };
         fetchComments();
     }, [lessonID, newComment]);
+
+
+    const handleDeleteCourse = (commentID) => {
+        fetch(`https://localhost:7127/api/Comments/DeleteComments?id=${commentID}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const updatedComments = comments.filter(comment => comment.comment_Id !== commentID);
+                setComments(updatedComments);
+            })
+            .catch((error) => console.error('Error deleting comment:', error));
+    };
+    
+
 
     const handleReply = (commentId) => {
         setReplyingCommentId(commentId);
@@ -166,6 +188,12 @@ function Comment({ lessonID }) {
                                     onClick={() => handleSeeReply(comment.comment_Id)}
                                 >
                                     {newReply === comment.comment_Id ? 'Hide replies' : 'See replies'}
+                                </button>
+                                <button
+                                    className="comment-reply-button"
+                                    onClick={() => handleDeleteCourse(comment.comment_Id)}
+                                >
+                                    Delete
                                 </button>
                             </div>
 

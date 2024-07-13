@@ -94,10 +94,9 @@ function Header() {
         } catch (error) {
             console.error('Error fetching user profile:', error);
         }
-    };
-
+    }; 
+    
     const handleLogout = () => {
-        localStorage.clear(); // Xóa hết dữ liệu trong localStorage
         setIsAuthenticated(false);
         navigate('/');
     };

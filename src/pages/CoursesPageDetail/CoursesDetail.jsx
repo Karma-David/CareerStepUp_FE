@@ -176,6 +176,7 @@ function CoursesDetail() {
         }));
     };
     const handleLearnNow = async () => {
+
         console.log(isPremiumUser);
         if (isPremiumCourse) {
             if (!isPremiumUser) {
@@ -188,6 +189,7 @@ function CoursesDetail() {
                 } else {
                     return;
                 }
+
             }
         }
 

@@ -1,0 +1,95 @@
+.exer-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+.correct-answer {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.incorrect-answer {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.feedback {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.complete-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.complete-button button {
+    background-color: #0093fc;
+    margin: 20px 0;
+    padding: 10px 20px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.complete-button button:hover {
+    background-color: #007bbd;
+}
+
+.exercise-navigation {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.exercise-navigation button {
+    background-color: #ccc;
+    margin: 0 5px;
+    padding: 10px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.exercise-navigation button.active {
+    background-color: #0093fc;
+    color: white;
+}
+
+.exercise-navigation button:hover {
+    background-color: #007bbd;
+}
+
+.next-lesson-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.next-lesson-button button {
+    background-color: #0093fc;
+    margin: 20px 0;
+    padding: 10px 20px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.next-lesson-button button:hover {
+    background-color: #007bbd;
+}
+
+.passed {
+    color: red;
+    font-size: 2em;
+    text-align: center;
+    margin-top: 20px;
+}
