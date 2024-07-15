@@ -9,36 +9,28 @@ function Comment({ lessonID }) {
     const [userId, setUserId] = useState('');
     const [newComment, setNewComment] = useState('');
     const [replyingCommentId, setReplyingCommentId] = useState(null);
-
-    const [newReply, setNewReply] = useState(null);
+    const [newReplyContent, setNewReplyContent] = useState('');
+    const [replyingCommentIdForReply, setReplyingCommentIdForReply] = useState(null);
 
     const GetIDFromEmailAPI = 'https://localhost:7127/GetUserIDfromToken';
     const createCommentAPI = `https://localhost:7127/api/Comments/CreateComments`;
-
 
     useEffect(() => {
         const getUserID = async () => {
             try {
                 const email = localStorage.getItem('email');
-                if (!email) {
-                    throw new Error('Email not found in local storage');
-                }
+                if (!email) throw new Error('Email not found in local storage');
+
                 const res = await fetch(GetIDFromEmailAPI, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(email),
                 });
-                if (!res.ok) {
-                    throw new Error(`HTTP error! status: ${res.status}`);
-                }
+
+                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
                 const data = await res.json();
-                if (data.statusCode === 200) {
-                    setUserId(data.value); // Assuming data.value contains the user ID
-                } else {
-                    throw new Error(`API error! status: ${data.statusCode}, message: ${data.message}`);
-                }
+                if (data.statusCode === 200) setUserId(data.value);
+                else throw new Error(`API error! status: ${data.statusCode}, message: ${data.message}`);
             } catch (error) {
                 console.error('Error fetching user ID:', error);
                 setError(error.message);
@@ -52,9 +44,7 @@ function Comment({ lessonID }) {
             try {
                 const commentAPI = `https://localhost:7127/api/Comments/GetCommentsByLesson?lessonId=${lessonID}`;
                 const response = await fetch(commentAPI);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const data = await response.json();
                 const sortedComments = (data.value || []).sort((a, b) => b.comment_Id - a.comment_Id);
                 setComments(sortedComments);
@@ -68,57 +58,48 @@ function Comment({ lessonID }) {
         fetchComments();
     }, [lessonID, newComment]);
 
+    const handleDeleteComment = async (commentID) => {
+        try {
+            const res = await fetch(`https://localhost:7127/api/Comments/DeleteComments?id=${commentID}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+            });
 
-    const handleDeleteCourse = (commentID) => {
-        fetch(`https://localhost:7127/api/Comments/DeleteComments?id=${commentID}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const updatedComments = comments.filter(comment => comment.comment_Id !== commentID);
-                setComments(updatedComments);
-            })
-            .catch((error) => console.error('Error deleting comment:', error));
+            if (!res.ok) throw new Error('Network response was not ok');
+            setComments((prevComments) => prevComments.filter((comment) => comment.comment_Id !== commentID));
+        } catch (error) {
+            console.error('Error deleting comment:', error);
+        }
     };
-    
-
 
     const handleReply = (commentId) => {
         setReplyingCommentId(commentId);
+        setReplyingCommentIdForReply(commentId);
     };
 
     const handleCancelReply = () => {
         setReplyingCommentId(null);
+        setReplyingCommentIdForReply(null);
+        setNewReplyContent('');
     };
 
     const handleSeeReply = (commentId) => {
-        if (newReply === commentId) {
-            setNewReply(null);
-        } else {
-            setNewReply(commentId);
-        }
+        setReplyingCommentIdForReply((prevId) => (prevId === commentId ? null : commentId));
     };
 
     const handleCommentSubmit = async (e, parentCommentId) => {
         e.preventDefault();
-        if (!newComment.trim()) return;
+        if (!newComment.trim() && !newReplyContent.trim()) return;
 
         const commentData = {
-            content: newComment,
+            content: parentCommentId ? newReplyContent : newComment,
             parentCommentId: parentCommentId || 0,
         };
 
         try {
             const res = await fetch(`${createCommentAPI}?user_id=${userId}&lesson_id=${lessonID}`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(commentData),
             });
 
@@ -130,23 +111,25 @@ function Comment({ lessonID }) {
             const data = await res.json();
             const newCommentData = data.value;
 
-            const updatedComments = [newCommentData, ...comments];
-            setComments(updatedComments.sort((a, b) => b.comment_Id - a.comment_Id));
+            setComments((prevComments) =>
+                [newCommentData, ...prevComments].sort((a, b) => b.comment_Id - a.comment_Id),
+            );
             setNewComment('');
+            setNewReplyContent('');
             setReplyingCommentId(null);
+            setReplyingCommentIdForReply(null);
+
+            // Reload the page after submitting a comment or reply
+            window.location.reload();
         } catch (error) {
             console.error('Error creating comment:', error);
             setError(error.message);
         }
     };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    if (loading) return <div>Loading...</div>;
 
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
+    if (error) return <div>Error: {error}</div>;
 
     return (
         <div className="comment-container">
@@ -167,8 +150,8 @@ function Comment({ lessonID }) {
             </div>
             <div className="comment-list">
                 {comments.length > 0 ? (
-                    comments.map((comment, index) => (
-                        <div key={index} className="comment-item">
+                    comments.map((comment) => (
+                        <div key={comment.comment_Id} className="comment-item">
                             <div className="comment-header">
                                 <img src={comment.avatar} alt={comment.user_name} className="comment-avatar" />
                                 <span className="comment-user-name">{comment.user_name}</span>
@@ -187,11 +170,11 @@ function Comment({ lessonID }) {
                                     className="comment-see-reply-button"
                                     onClick={() => handleSeeReply(comment.comment_Id)}
                                 >
-                                    {newReply === comment.comment_Id ? 'Hide replies' : 'See replies'}
+                                    {replyingCommentIdForReply === comment.comment_Id ? 'Hide replies' : 'See replies'}
                                 </button>
                                 <button
-                                    className="comment-reply-button"
-                                    onClick={() => handleDeleteCourse(comment.comment_Id)}
+                                    className="comment-delete-button"
+                                    onClick={() => handleDeleteComment(comment.comment_Id)}
                                 >
                                     Delete
                                 </button>
@@ -209,8 +192,8 @@ function Comment({ lessonID }) {
                                         <input
                                             className="reply-input"
                                             type="text"
-                                            value={newComment}
-                                            onChange={(e) => setNewComment(e.target.value)}
+                                            value={newReplyContent}
+                                            onChange={(e) => setNewReplyContent(e.target.value)}
                                             placeholder={`Write a reply to ${comment.user_name}...`}
                                         />
                                         <div className="reply-buttons">
@@ -229,7 +212,7 @@ function Comment({ lessonID }) {
                                 </div>
                             )}
 
-                            {newReply === comment.comment_Id && (
+                            {replyingCommentIdForReply === comment.comment_Id && (
                                 <RepliedComment CommentID={comment.comment_Id} UserName={comment.user_name} />
                             )}
                         </div>
