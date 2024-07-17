@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import ReactDOM from 'react-dom';
+
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { publishRouter } from './router';
 import { DefaultLayout } from '@/components/Layout';
@@ -23,7 +23,11 @@ function App() {
                                 path={route.path}
                                 element={
                                     <Layout>
-                                        <Page />
+                                        <div className="mt-100">
+                                            {' '}
+                                            {/* Thêm lớp Tailwind để dịch xuống */}
+                                            <Page />
+                                        </div>
                                     </Layout>
                                 }
                             />
