@@ -190,7 +190,7 @@ function PageVideoLearn() {
             <div className="body-video">
                 <div className="Video-course">
                     {showExercise && showExerciseForLesson === selectedLessonId ? (
-                        <Exer onComplete={handleExerciseComplete} lessonID={selectedLessonId} UserID ={userId} />
+                        <Exer onComplete={handleExerciseComplete} lessonID={selectedLessonId} UserID={userId} />
                     ) : (
                         <div>
                             {!videoReady && <p>Loading video...</p>}
@@ -210,7 +210,7 @@ function PageVideoLearn() {
                 </div>
             </div>
             <div className="list-topic">
-                <h1>Description Course</h1>
+                <h1 style={{ marginBottom: '50px', fontSize: '25px', color: 'red' }}>Description Course</h1>
                 <div>
                     {course.topics.map((topic, index) => (
                         <div key={topic.id}>
@@ -220,7 +220,7 @@ function PageVideoLearn() {
                                         userSelect: 'none',
                                         display: 'flex',
                                         justifyContent: 'space-between',
-                                        marginBottom: '5px',
+                                        marginBottom: '10px',
                                         marginLeft: '10px',
                                         borderBottom: '1px solid #dedfe0',
                                         height: '40px',
