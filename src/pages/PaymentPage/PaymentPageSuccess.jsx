@@ -27,7 +27,7 @@ const PaymentPage = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ user_id, amount: vnp_Amount }),
+                body: JSON.stringify({ user_id, amount: 500000 }),
             });
 
             if (!response.ok) {
@@ -54,7 +54,23 @@ const PaymentPage = () => {
 
             const loginData = await loginResponse.json();
             console.log(loginData.token);
+
             localStorage.setItem('token', loginData.token);
+            const infoRes = await fetch('https://localhost:7127/GetInformationFromToken', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(loginData.token), // Pass token in body
+            });
+
+            if (!infoRes.ok) {
+                throw new Error(`HTTP error! status: ${infoRes.status}`);
+            }
+
+            const infoData = await infoRes.json();
+            console.log(infoData);
+            localStorage.setItem('role', infoData?.value?.roles);
         } catch (error) {
             console.error('Error during payment process:', error);
         }

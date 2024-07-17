@@ -77,7 +77,7 @@ const Login = () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ credential }), // Bao bọc credential trong một đối tượng
+                    body: JSON.stringify(credential), // Bao bọc credential trong một đối tượng
                 });
 
                 if (!res.ok) {
@@ -93,7 +93,7 @@ const Login = () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ token: data?.token }), // Pass token in body
+                    body: JSON.stringify(data?.token), // Pass token in body
                 });
 
                 if (!infoRes.ok) {
@@ -101,7 +101,7 @@ const Login = () => {
                 }
 
                 const infoData = await infoRes.json();
-                console.log(infoData?.value?.roles);
+                console.log(infoData);
                 localStorage.setItem('role', infoData?.value?.roles);
 
                 navigate('/'); // Chuyển hướng đến HomePage
@@ -146,7 +146,7 @@ const Login = () => {
         <div className="form-login">
             <div className="form-box-login">
                 <form onSubmit={handleSubmit}>
-                    <h1 style={{color:'black'}}>Login</h1>
+                    <h1 style={{ color: 'black' }}>Login</h1>
                     <div className="input-box">
                         <div className="input-username">
                             <input

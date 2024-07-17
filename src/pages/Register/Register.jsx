@@ -41,6 +41,7 @@ const Register = () => {
                         password: formData.password,
                     }),
                 });
+                console.log(response);
                 if (response.ok) {
                     alert('Check your email for verification');
                 } else {
@@ -107,13 +108,8 @@ const Register = () => {
                 </div>
                 <div className="remember-forgot">
                     <label>
-                        <input
-                            type="checkbox"
-                            name="terms"
-                            checked={formData.terms}
-                            onChange={handleChange}
-                        />{' '}
-                        I agree to the terms & conditions
+                        <input type="checkbox" name="terms" checked={formData.terms} onChange={handleChange} /> I agree
+                        to the terms & conditions
                     </label>
                 </div>
                 <div>

@@ -1,0 +1,147 @@
+/* WidthDraw.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.courses-list-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 20px;
+}
+
+.courses-list-container {
+    width: 100%;
+}
+
+.courses-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.courses-item:hover {
+    transform: scale(1.02);
+}
+
+.courses-info {
+    display: flex;
+    flex-direction: row; /* Đổi thành hàng ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: space-between; /* Căn đều các phần tử */
+    width: 100%; /* Đảm bảo phần tử con chiếm hết chiều ngang */
+}
+
+.courses-info h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #0073e6;
+}
+
+.courses-info p {
+    margin: 5px 0;
+    margin-right: 20px; /* Thêm khoảng cách giữa các phần tử */
+}
+
+button {
+    background-color: #0073e6;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+    background-color: #005bb5;
+}
+
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.withdraw-controls {
+    display: flex;
+    align-items: center;
+    margin-left: 20px; /* Đảm bảo khoảng cách với các phần tử khác */
+}
+
+.withdraw-controls button {
+    width: 30px;
+    height: 30px;
+    margin: 0 10px;
+    padding: 0;
+}
+
+.withdraw-controls span {
+    font-size: 16px;
+    font-weight: bold;
+}
+/* WidthDraw.css */
+/* WidthDraw.css */
+
+.total-summary-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f9f9f9;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.total-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.total-summary h3 {
+    margin: 0 20px;
+}
+
+.total-summary button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.total-summary button:first-of-type {
+    background-color: #4caf50; /* Submit button color */
+    color: white;
+}
+
+.total-summary button:last-of-type {
+    background-color: #f44336; /* Cancel button color */
+    color: white;
+}
+
+.total-summary button:disabled {
+    background-color: #ccc; /* Disabled button color */
+    cursor: not-allowed;
+}

@@ -11,6 +11,7 @@ import {
     // faCashRegister,
     // faMoneyBill,
     faUpload,
+    faMoneyBill,
 } from '@fortawesome/free-solid-svg-icons';
 
 import classNames from 'classnames/bind';
@@ -110,6 +111,16 @@ const Sidebar = () => {
                                     />
                                     <span style={{ color: 'black' }} className={cx('text')}>
                                         Learner
+                                    </span>
+                                </ButtonSidebar>
+                                <ButtonSidebar to={'/WithdrawalsList'}>
+                                    <FontAwesomeIcon
+                                        style={{ color: 'black' }}
+                                        icon={faMoneyBill}
+                                        className={cx('icon', 'black-icon')}
+                                    />
+                                    <span style={{ color: 'black' }} className={cx('text')}>
+                                        WidthDraw
                                     </span>
                                 </ButtonSidebar>
                             </>
