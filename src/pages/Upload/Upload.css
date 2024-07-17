@@ -1,6 +1,6 @@
 /* General Styles */
 .course-list-container {
-    margin-left: 150px;
+    margin-left: 120px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -157,4 +157,96 @@
 
 .new-course-button span {
     margin-left: 10px;
+}
+.button-withdraw {
+    margin-top: 10px;
+    background-color: #ff9800;
+    color: white;
+    align-self: flex-end;
+}
+.button-withdraw {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-withdraw {
+    padding: 5px 10px;
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin-left: auto;
+    flex-shrink: 0;
+    width: 100px; /* Adjust width as needed */
+}
+
+.button-withdraw {
+    padding: 5px 10px;
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: auto;
+    font-size: 0.9em;
+}
+.subscriber-info-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    width: 500px;
+    margin-left: auto;
+    margin-right: 110px;
+}
+
+.subscriber-info {
+    display: flex;
+    align-items: center;
+}
+
+.info-item {
+    margin-right: 20px;
+}
+
+.button-withdraw {
+    background-color: #f05a24; /* Example background color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.button-withdraw:hover {
+    background-color: #d44a20; /* Darken color on hover */
+}
+.WidthDraw-button {
+    background-color: #4caf50; /* Màu nền */
+    border: none; /* Không có đường viền */
+    color: white; /* Màu chữ */
+    padding: 15px 32px; /* Khoảng đệm bên trong */
+    text-align: center; /* Canh giữa chữ */
+    text-decoration: none; /* Không có gạch chân */
+    display: inline-block; /* Hiển thị như phần tử inline-block */
+    font-size: 16px; /* Kích thước chữ */
+    margin: 4px 2px; /* Khoảng cách xung quanh */
+    cursor: pointer; /* Con trỏ chuột khi hover */
+    border-radius: 8px; /* Bo tròn góc */
+    margin-left: 100px;
+}
+
+.WidthDraw-button:hover {
+    background-color: #45a049; /* Màu nền khi hover */
 }

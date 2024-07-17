@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import './Upload.css';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Button from '@/components/Button';
+import './Upload.css'; // Your existing CSS file if you need it for other styles
 
 const CourseList = () => {
     const [courses, setCourses] = useState([]);
@@ -167,37 +167,79 @@ const CourseList = () => {
     };
 
     return (
-
-        <div className="course-list-wrapper">
-            <div className="course-list-container">
-
-                {courses.map((course, index) => (
-                    <div key={course.course_id} className="course-item">
-                        <div className="course-info">
-                            <h3>{course.title}</h3>
-                        </div>
-
-                        <div className="course-actions">
-                            <button onClick={() => handleUpdateCourse(course)} className="button-update">
-                                Update
-                            </button>
-                            <button onClick={() => handleDeleteCourse(index)} className="button-delete">
-                                Delete
-                            </button>
-                            <button onClick={() => handleEditCourse(course.course_id)} className="button-edit">
-                                Edit Topic - Lesson
-                            </button>
-
-                        </div>
+        <div className="course-list-wrapper p-4">
+            <button
+                className="WidthDraw-button bg-yellow-500 text-white px-4 py-2 rounded"
+                onClick={() => navigate('/WithDraw')}
+            >
+                WidthDraw
+            </button>
+            <div className="course-list-container mt-4">
+                <div className="course-list-wrapper grid grid-cols-1 gap-4">
+                    <div className="course-list-container space-y-4">
+                        {courses.map((course, index) => (
+                            <div key={index} className="relative">
+                                <div className="course-item bg-white shadow-md rounded p-4">
+                                    <div className="course-info">
+                                        <h3 className="text-xl font-bold">{course.title}</h3>
+                                    </div>
+                                    <div className="course-actions mt-2 flex space-x-2">
+                                        <button
+                                            onClick={() => handleUpdateCourse(course)}
+                                            className="button-update bg-green-500 text-white px-4 py-2 rounded"
+                                        >
+                                            Update
+                                        </button>
+                                        <button
+                                            onClick={() => handleDeleteCourse(index)}
+                                            className="button-delete bg-red-500 text-white px-4 py-2 rounded"
+                                        >
+                                            Delete
+                                        </button>
+                                        <button
+                                            onClick={() => handleEditCourse(course.course_id)}
+                                            className="button-edit bg-blue-500 text-white px-4 py-2 rounded"
+                                        >
+                                            Edit Topic - Lesson
+                                        </button>
+                                    </div>
+                                </div>
+                                <div
+                                    className={`course-additional-info p-4 rounded shadow-inner mt-2 -mt-4 pt-8`}
+                                    style={{
+                                        backgroundColor: course.isPremium ? '#d1fae5' : '#f3f4f6', // Green for premium, gray for non-premium
+                                    }}
+                                >
+                                    <div className="course-subscriber">
+                                        <p>Subscribers: {course.subcriber}</p>
+                                    </div>
+                                    <div className="course-new-action mt-2 flex items-center">
+                                        {course.isPremium ? (
+                                            <p className="text-green-500 mr-4">This is a premium course!</p>
+                                        ) : (
+                                            <button
+                                                // onClick={() => handleGoToPremium(course)}
+                                                className="button-go-to-premium bg-yellow-500 text-white px-4 py-2 rounded mr-4"
+                                            >
+                                                Go to Premium
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                ))}
+                </div>
             </div>
+            <div className="bg-red-500 p-4">This should be red.</div>
             {editingCourse && (
-                <div className="edit-course-form">
-                    <h1>Update Course</h1>
-                    <form onSubmit={(e) => e.preventDefault()} className="edit-course-form-content">
+                <div className="edit-course-form bg-white shadow-md rounded p-6 mt-4">
+                    <h1 className="text-2xl font-bold mb-4">Update Course</h1>
+                    <form onSubmit={(e) => e.preventDefault()} className="edit-course-form-content space-y-4">
                         <div className="form-group">
-                            <label htmlFor="newCourse">Course Title:</label>
+                            <label htmlFor="newCourse" className="block text-gray-700">
+                                Course Title:
+                            </label>
                             <input
                                 id="newCourse"
                                 type="text"
@@ -205,11 +247,14 @@ const CourseList = () => {
                                 placeholder="Enter new course title"
                                 value={newCourse}
                                 onChange={handleInputChange}
+                                className="w-full px-4 py-2 border rounded"
                                 required
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="description">Description:</label>
+                            <label htmlFor="description" className="block text-gray-700">
+                                Description:
+                            </label>
                             <input
                                 id="description"
                                 type="text"
@@ -217,11 +262,14 @@ const CourseList = () => {
                                 placeholder="Enter new course description"
                                 value={description}
                                 onChange={handleInputChange}
+                                className="w-full px-4 py-2 border rounded"
                                 required
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="price">Price:</label>
+                            <label htmlFor="price" className="block text-gray-700">
+                                Price:
+                            </label>
                             <input
                                 id="price"
                                 type="number"
@@ -229,27 +277,46 @@ const CourseList = () => {
                                 placeholder="Enter new course price"
                                 value={price}
                                 onChange={handleInputChange}
+                                className="w-full px-4 py-2 border rounded"
                                 required
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="file">Upload Image:</label>
-                            <input id="file" type="file" onChange={handleFileChange} />
+                            <label htmlFor="file" className="block text-gray-700">
+                                Upload Image:
+                            </label>
+                            <input
+                                id="file"
+                                type="file"
+                                onChange={handleFileChange}
+                                className="w-full px-4 py-2 border rounded"
+                            />
                         </div>
-                        <div className="form-actions">
-                            <button type="button" onClick={handleSaveCourse} className="button-save">
+                        <div className="form-actions flex space-x-4">
+                            <button
+                                type="button"
+                                onClick={handleSaveCourse}
+                                className="button-save bg-green-500 text-white px-4 py-2 rounded"
+                            >
                                 Save
                             </button>
-                            <button type="button" onClick={() => setEditingCourse(null)} className="button-cancel">
+                            <button
+                                type="button"
+                                onClick={() => setEditingCourse(null)}
+                                className="button-cancel bg-gray-500 text-white px-4 py-2 rounded"
+                            >
                                 Cancel
                             </button>
                         </div>
                     </form>
                 </div>
             )}
-            <div className="new-course-button-container">
-                <Button to="/UpNewCourse" className="new-course-button">
-                    <FontAwesomeIcon icon={faPlus} />
+            <div className="new-course-button-container mt-4">
+                <Button
+                    to="/UpNewCourse"
+                    className="new-course-button bg-blue-500 text-white px-4 py-2 rounded flex items-center"
+                >
+                    <FontAwesomeIcon icon={faPlus} className="mr-2" />
                     <span>New Course</span>
                 </Button>
             </div>

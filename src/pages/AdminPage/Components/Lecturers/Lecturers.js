@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './styles.css';
+import { TbExclamationMark } from 'react-icons/tb';
 
 const LecturerTable = () => {
     const [lecturers, setLecturers] = useState([]);
@@ -96,9 +97,15 @@ const LecturerTable = () => {
 function LecturerCard({ lecturer }) {
     return (
         <div className="card">
+            {lecturer.haveNotification && (
+                <div className="notification-icon">
+                    <TbExclamationMark />
+                </div>
+            )}
             <img src={lecturer.avatar_Url} alt={`${lecturer.firstName} ${lecturer.lastName}`} className="profile-pic" />
             <h2>{`${lecturer.firstName} ${lecturer.lastName}`}</h2>
             <p>Email: {lecturer.email}</p>
+
             <Link to={`/LecturerProfile/${lecturer.lecturer_Id}`} className="profile-button" style={{ color: 'black' }}>
                 View Profile
             </Link>

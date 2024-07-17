@@ -15,9 +15,9 @@ const WithdrawalsList = () => {
         const fetchWithdrawals = async () => {
             try {
                 const response = await axios.get('https://localhost:7127/api/Courses/ListWidthDrawPropse', {
-                    params: { 
+                    params: {
                         pageIndex: pageIndex,
-                        isConfirmed: isConfirmed
+                        isConfirmed: isConfirmed,
                     },
                 });
                 setWithdrawals(response.data.value.items);
@@ -44,11 +44,12 @@ const WithdrawalsList = () => {
 
     const encodeParams = (withdrawal) => {
         const params = {
+            isApprove: withdrawal.isApprove,
             user_id: withdrawal.user_id,
-            subInACourses: withdrawal.subInACourses.map(course => ({
+            subInACourses: withdrawal.subInACourses.map((course) => ({
                 course_id: course.course_id,
                 subWithdrawn: course.subWithdrawn,
-            }))
+            })),
         };
         return encodeURIComponent(JSON.stringify(params));
     };
@@ -91,9 +92,15 @@ const WithdrawalsList = () => {
                 {withdrawals.map((withdrawal) => (
                     <div key={withdrawal.user_id} className="withdrawal-item">
                         <Link to={`/WidthDrawDetail?data=${encodeParams(withdrawal)}`} className="width-draw-items">
-                            <div><span>Lecturer ID:</span> {withdrawal.email}</div>
-                            <div><span>Date:</span> {withdrawal.date}</div>
-                            <div><span>Status:</span> {withdrawal.isApprove ? 'Approved' : 'Pending'}</div>
+                            <div>
+                                <span>Lecturer ID:</span> {withdrawal.email}
+                            </div>
+                            <div>
+                                <span>Date:</span> {withdrawal.date}
+                            </div>
+                            <div>
+                                <span>Status:</span> {withdrawal.isApprove ? 'Approved' : 'Pending'}
+                            </div>
                         </Link>
                     </div>
                 ))}
@@ -103,7 +110,10 @@ const WithdrawalsList = () => {
                     Previous
                 </button>
                 <span>Page {pageIndex}</span>
-                <button onClick={() => handlePageChange(pageIndex + 1)} disabled={pageIndex === totalPages || totalPages === 0}>
+                <button
+                    onClick={() => handlePageChange(pageIndex + 1)}
+                    disabled={pageIndex === totalPages || totalPages === 0}
+                >
                     Next
                 </button>
             </div>

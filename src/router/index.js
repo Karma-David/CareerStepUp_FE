@@ -30,6 +30,7 @@ import LecturerProfile from '@/pages/AdminPage/Components/Lecturers/LecturerProf
 import LearnerProfile from '@/pages/AdminPage/Components/Students/LearnerProfile';
 import WithdrawalsList from '@/pages/AdminPage/Components/WidthDraw/WidthDraw';
 import WidthDrawDetail from '@/pages/AdminPage/Components/WidthDraw/WidthDrawDetail';
+import WidthDraw from '@/pages/Upload/WidthDraw';
 
 export const publishRouter = [
     { path: '/', component: Home },
@@ -68,6 +69,7 @@ export const publishRouter = [
     { path: '/WidthDrawDetail', component: WidthDrawDetail },
 
     { path: '/CoursesDetail/:id', component: CoursesDetail },
+    { path: '/WithDraw', component: WidthDraw },
     // { path: '/Test/:id', component: Test },
 ];
 
