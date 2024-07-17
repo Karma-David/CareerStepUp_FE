@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import { FaChevronDown, FaChevronUp, FaPlayCircle } from 'react-icons/fa';
 import { CiLock } from 'react-icons/ci';
 import Comment from './Comment';
-import Exer from './Exer';
 
 function PageVideoLearn() {
     const { id } = useParams();
@@ -15,9 +14,6 @@ function PageVideoLearn() {
     const [selectedVideo, setSelectedVideo] = useState('');
     const [selectedLessonId, setSelectedLessonId] = useState(null);
     const [unlockedLessons, setUnlockedLessons] = useState({});
-    const [showExercise, setShowExercise] = useState(false);
-    const [showExerciseForLesson, setShowExerciseForLesson] = useState(null);
-    const [videoReady, setVideoReady] = useState(false);
     const videoRef = useRef(null);
     const [error, setError] = useState(null);
     const [userId, setUserId] = useState('');
@@ -53,9 +49,13 @@ function PageVideoLearn() {
 
     useEffect(() => {
         const GetCourse = async () => {
+            if (!userId) return;
+
             try {
                 const response = await fetch(CourseUserAPI);
                 const data = await response.json();
+                if (!data.value) throw new Error('Invalid course data');
+
                 setCourse(data.value);
                 const storedUnlockedLessons = JSON.parse(localStorage.getItem(`${userId}-unlockedLessons`)) || [];
                 const initialUnlockedLessons = { [data.value.topics[0].lessons[0].id]: true };
@@ -73,9 +73,7 @@ function PageVideoLearn() {
             }
         };
 
-        if (userId) {
-            GetCourse();
-        }
+        GetCourse();
     }, [CourseUserAPI, userId]);
 
     const toggleVisibility = (id) => {
@@ -86,12 +84,12 @@ function PageVideoLearn() {
         if (unlockedLessons[lesson.id]) {
             setSelectedVideo(lesson.videoLesson_URL);
             setSelectedLessonId(lesson.id);
-            setShowExercise(false);
-            setShowExerciseForLesson(null);
         }
     };
 
     const unlockNextLesson = useCallback(() => {
+        if (!course || !selectedLessonId) return;
+
         let nextLessonId = null;
 
         for (let i = 0; i < course.topics.length; i++) {
@@ -118,61 +116,19 @@ function PageVideoLearn() {
         }
     }, [course, selectedLessonId, userId]);
 
-    const handleExerciseComplete = () => {
-        unlockNextLesson();
-        let nextLessonId = null;
-        for (let i = 0; i < course.topics.length; i++) {
-            const lessons = course.topics[i].lessons;
-            for (let j = 0; j < lessons.length; j++) {
-                if (lessons[j].id === selectedLessonId) {
-                    if (j + 1 < lessons.length) {
-                        nextLessonId = lessons[j + 1].id;
-                    } else if (i + 1 < course.topics.length) {
-                        nextLessonId = course.topics[i + 1].lessons[0].id;
-                    }
-                    break;
-                }
-            }
-            if (nextLessonId) break;
-        }
-
-        if (nextLessonId) {
-            const nextLesson = course.topics
-                .flatMap((topic) => topic.lessons)
-                .find((lesson) => lesson.id === nextLessonId);
-            if (nextLesson) {
-                setSelectedVideo(nextLesson.videoLesson_URL);
-                setSelectedLessonId(nextLesson.id);
-            }
-        }
-
-        setShowExercise(false);
-        setShowExerciseForLesson(null);
-    };
-
-    const handleExerciseClick = (lessonId) => {
-        setShowExercise(true);
-        setShowExerciseForLesson(lessonId);
-    };
-
     useEffect(() => {
-        if (videoRef.current && selectedVideo) {
-            videoRef.current.load();
-            setVideoReady(false); // Reset ready state before loading
-        }
-    }, [selectedVideo]);
-
-    const handleVideoLoaded = () => {
-        setVideoReady(true);
         if (videoRef.current) {
-            videoRef.current.play();
-        }
-    };
+            const videoElement = videoRef.current;
+            const handleVideoEnded = () => {
+                unlockNextLesson();
+            };
 
-    const handleVideoError = () => {
-        console.error('Error loading video');
-        setVideoReady(false);
-    };
+            videoElement.addEventListener('ended', handleVideoEnded);
+            return () => {
+                videoElement.removeEventListener('ended', handleVideoEnded);
+            };
+        }
+    }, [unlockNextLesson]);
 
     const renderIcon = (id) => {
         return visibleTopics[id] ? (
@@ -188,26 +144,20 @@ function PageVideoLearn() {
     if (error) {
         return <h1>Error: {error}</h1>;
     }
+
     return (
         <div className="form-learn">
             <div className="body-video">
                 <div className="Video-course">
-                    {showExercise && showExerciseForLesson === selectedLessonId ? (
-                        <Exer onComplete={handleExerciseComplete} lessonID={selectedLessonId} UserID={userId} />
-                    ) : (
-                        <div>
-                            {!videoReady && <p>Loading video...</p>}
-                            <video
-                                ref={videoRef}
-                                className="video"
-                                src={selectedVideo || 'fallback-video-url.mp4'}
-                                controls
-                                autoPlay
-                                onCanPlay={handleVideoLoaded}
-                                onError={handleVideoError}
-                            />
-                        </div>
-                    )}
+                    <video
+                        ref={videoRef}
+                        className="video"
+                        src={
+                            selectedVideo ||
+                            'https://th.bing.com/th/id/OIF.NHASF4BiTqlwrC9qmeTUjg?w=303&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7'
+                        }
+                        controls
+                    />
                 </div>
                 <div className="description-course">
                     <Comment lessonID={selectedLessonId} />
@@ -224,7 +174,7 @@ function PageVideoLearn() {
                                         userSelect: 'none',
                                         display: 'flex',
                                         justifyContent: 'space-between',
-                                        marginBottom: '5px',
+                                        marginBottom: '0px',
                                         marginLeft: '10px',
                                         borderBottom: '1px solid #dedfe0',
                                         height: '40px',
@@ -239,51 +189,33 @@ function PageVideoLearn() {
                                 {visibleTopics[topic.id] && (
                                     <div style={{ marginTop: '10px', marginLeft: '30px' }}>
                                         {topic.lessons.map((lesson, index) => (
-                                            <div key={lesson.id}>
-                                                <div
+                                            <div
+                                                key={lesson.id}
+                                                style={{
+                                                    display: 'flex',
+                                                    height: '50px',
+                                                    backgroundColor:
+                                                        lesson.id === selectedLessonId ? '#f0512333' : 'transparent',
+                                                }}
+                                            >
+                                                <FaPlayCircle
+                                                    style={{ marginRight: '10px', color: 'orange', marginTop: '10px' }}
+                                                />
+                                                <h4
                                                     style={{
                                                         display: 'flex',
-                                                        height: '50px',
-                                                        backgroundColor:
-                                                            lesson.id === selectedLessonId
-                                                                ? '#f0512333'
-                                                                : 'transparent',
+                                                        justifyContent: 'space-between',
+                                                        userSelect: 'none',
+                                                        marginTop: '10px',
+                                                        width: '100%',
+                                                        color: unlockedLessons[lesson.id] ? 'black' : 'gray',
+                                                        pointerEvents: unlockedLessons[lesson.id] ? 'auto' : 'none',
                                                     }}
+                                                    onClick={() => handleLessonClick(lesson)}
                                                 >
-                                                    <FaPlayCircle
-                                                        style={{
-                                                            marginRight: '10px',
-                                                            color: 'orange',
-                                                            marginTop: '10px',
-                                                        }}
-                                                    />
-                                                    <h4
-                                                        style={{
-                                                            display: 'flex',
-                                                            justifyContent: 'space-between',
-                                                            userSelect: 'none',
-                                                            marginTop: '10px',
-                                                            width: '100%',
-                                                            color: unlockedLessons[lesson.id] ? 'black' : 'gray',
-                                                            pointerEvents: unlockedLessons[lesson.id] ? 'auto' : 'none',
-                                                        }}
-                                                        onClick={() => handleLessonClick(lesson)}
-                                                    >
-                                                        {index + 1}.{lesson.name}
-                                                        {!unlockedLessons[lesson.id] && <CiLock />}
-                                                    </h4>
-                                                </div>
-                                                <div
-                                                    style={{
-                                                        marginLeft: '40px',
-                                                        marginBottom: '10px',
-                                                        cursor: 'pointer',
-                                                        color: 'blue',
-                                                    }}
-                                                    onClick={() => handleExerciseClick(lesson.id)}
-                                                >
-                                                    Bài tập
-                                                </div>
+                                                    {index + 1}.{lesson.name}
+                                                    {!unlockedLessons[lesson.id] && <CiLock />}
+                                                </h4>
                                             </div>
                                         ))}
                                     </div>
