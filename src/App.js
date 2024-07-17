@@ -23,7 +23,11 @@ function App() {
                                 path={route.path}
                                 element={
                                     <Layout>
-                                        <Page />
+                                        <div className="mt-100">
+                                            {' '}
+                                            {/* Thêm lớp Tailwind để dịch xuống */}
+                                            <Page />
+                                        </div>
                                     </Layout>
                                 }
                             />
