@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
+
 const Exercise = ({ exercise, exerciseIndex, topicIndex, lessonIndex, courseData, setCourseData, isDisabled }) => {
     // State for input fields and correct answer
+
     const [question, setQuestion] = useState(exercise.question);
     const [answerA, setAnswerA] = useState(exercise.answer_A);
     const [answerB, setAnswerB] = useState(exercise.answer_B);
@@ -9,14 +11,12 @@ const Exercise = ({ exercise, exerciseIndex, topicIndex, lessonIndex, courseData
     const [answerD, setAnswerD] = useState(exercise.answer_D);
     const [answerTrue, setAnswerTrue] = useState(exercise.answer_True);
 
-    // Function to update courseData on change
     const handleChange = (field, value) => {
         const updatedTopics = [...courseData.topics];
         updatedTopics[topicIndex].lessons[lessonIndex].exercises[exerciseIndex][field] = value;
         setCourseData({ ...courseData, topics: updatedTopics });
     };
 
-    // Update state when component mounts
     useEffect(() => {
         setQuestion(exercise.question);
         setAnswerA(exercise.answer_A);
@@ -26,9 +26,11 @@ const Exercise = ({ exercise, exerciseIndex, topicIndex, lessonIndex, courseData
         setAnswerTrue(exercise.answer_True);
     }, [exercise]);
 
+
     // Delete exercise
     const handleDeleteExercise = () => {
         if (isDisabled) return;
+
         const updatedTopics = [...courseData.topics];
         const updatedLessons = [...updatedTopics[topicIndex].lessons];
         const updatedExercises = updatedLessons[lessonIndex].exercises.filter((_, index) => index !== exerciseIndex);
@@ -36,6 +38,7 @@ const Exercise = ({ exercise, exerciseIndex, topicIndex, lessonIndex, courseData
         updatedTopics[topicIndex].lessons = updatedLessons;
         setCourseData({ ...courseData, topics: updatedTopics });
     };
+
 
     // Change correct answer
     const handleRadioChange = (value) => {
@@ -60,11 +63,14 @@ const Exercise = ({ exercise, exerciseIndex, topicIndex, lessonIndex, courseData
                         value={question}
                         onChange={(e) => {
                             if (isDisabled) return;
+
                             setQuestion(e.target.value);
                             handleChange('question', e.target.value);
                         }}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+
                         disabled={isDisabled}
+
                     />
                 </div>
 
@@ -77,7 +83,9 @@ const Exercise = ({ exercise, exerciseIndex, topicIndex, lessonIndex, courseData
                         checked={answerTrue === 'A'}
                         onChange={() => handleRadioChange('A')}
                         className="mr-2"
+
                         disabled={isDisabled}
+
                     />
                     <label className="block text-gray-700 text-lg font-bold mb-2" htmlFor={`answer_a_${exerciseIndex}`}>
                         Answer A
@@ -87,12 +95,16 @@ const Exercise = ({ exercise, exerciseIndex, topicIndex, lessonIndex, courseData
                         id={`answer_a_${exerciseIndex}`}
                         value={answerA}
                         onChange={(e) => {
+
                             if (isDisabled) return;
+
                             setAnswerA(e.target.value);
                             handleChange('answer_A', e.target.value);
                         }}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2"
+
                         disabled={isDisabled}
+
                     />
                 </div>
 
@@ -105,7 +117,9 @@ const Exercise = ({ exercise, exerciseIndex, topicIndex, lessonIndex, courseData
                         checked={answerTrue === 'B'}
                         onChange={() => handleRadioChange('B')}
                         className="mr-2"
+
                         disabled={isDisabled}
+
                     />
                     <label className="block text-gray-700 text-lg font-bold mb-2" htmlFor={`answer_b_${exerciseIndex}`}>
                         Answer B
@@ -116,11 +130,14 @@ const Exercise = ({ exercise, exerciseIndex, topicIndex, lessonIndex, courseData
                         value={answerB}
                         onChange={(e) => {
                             if (isDisabled) return;
+
                             setAnswerB(e.target.value);
                             handleChange('answer_B', e.target.value);
                         }}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2"
+
                         disabled={isDisabled}
+
                     />
                 </div>
 
@@ -133,7 +150,9 @@ const Exercise = ({ exercise, exerciseIndex, topicIndex, lessonIndex, courseData
                         checked={answerTrue === 'C'}
                         onChange={() => handleRadioChange('C')}
                         className="mr-2"
+
                         disabled={isDisabled}
+
                     />
                     <label className="block text-gray-700 text-lg font-bold mb-2" htmlFor={`answer_c_${exerciseIndex}`}>
                         Answer C
@@ -143,11 +162,14 @@ const Exercise = ({ exercise, exerciseIndex, topicIndex, lessonIndex, courseData
                         id={`answer_c_${exerciseIndex}`}
                         value={answerC}
                         onChange={(e) => {
+
                             if (isDisabled) return;
+
                             setAnswerC(e.target.value);
                             handleChange('answer_C', e.target.value);
                         }}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2"
+
                         disabled={isDisabled}
                     />
                 </div>
@@ -161,7 +183,9 @@ const Exercise = ({ exercise, exerciseIndex, topicIndex, lessonIndex, courseData
                         checked={answerTrue === 'D'}
                         onChange={() => handleRadioChange('D')}
                         className="mr-2"
+
                         disabled={isDisabled}
+
                     />
                     <label className="block text-gray-700 text-lg font-bold mb-2" htmlFor={`answer_d_${exerciseIndex}`}>
                         Answer D
@@ -171,12 +195,16 @@ const Exercise = ({ exercise, exerciseIndex, topicIndex, lessonIndex, courseData
                         id={`answer_d_${exerciseIndex}`}
                         value={answerD}
                         onChange={(e) => {
+
                             if (isDisabled) return;
+
                             setAnswerD(e.target.value);
                             handleChange('answer_D', e.target.value);
                         }}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2"
+
                         disabled={isDisabled}
+
                     />
                 </div>
             </div>
@@ -196,6 +224,7 @@ const Exercise = ({ exercise, exerciseIndex, topicIndex, lessonIndex, courseData
                     strokeWidth={1.5}
                     stroke="currentColor"
                     className="w-8 h-8 cursor-pointer group-hover:opacity-80 z-20"
+
                     onClick={() => {
                         if (isDisabled) return;
                         handleDeleteExercise();
