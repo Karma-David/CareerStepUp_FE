@@ -85,7 +85,7 @@ const LecturerTable = () => {
                 <h1>All Lecturers</h1>
                 <div className="grid-view">
                     {lecturers.map((lecturer) => (
-                        <LecturerCard key={lecturer.lecturer_Id} lecturer={lecturer} />
+                        <LecturerCard key={lecturer.lecturer_Id} lecturer={lecturer} confirmed={confirmed}  />
                     ))}
                     {lecturers.length === 0 && <div className="no-lecturers">No lecturers found</div>}
                 </div>
@@ -94,7 +94,18 @@ const LecturerTable = () => {
     );
 };
 
-function LecturerCard({ lecturer }) {
+function LecturerCard({ lecturer, confirmed }) {
+    const [lecturers, setLecturers] = useState([]);
+
+    const handleApprove = async (lecturerID) => {
+        try {
+            await axios.put(`https://localhost:7127/api/Lecturer/ApproveLecturer?id=${lecturerID}`);
+            setLecturers(lecturers.filter(lecturer => lecturer.lecturer_Id !== lecturerID));
+        } catch (error) {
+            console.error('Error approving lecturer:', error);
+        }
+    };
+
     return (
         <div className="card">
             {lecturer.haveNotification && (
@@ -105,10 +116,18 @@ function LecturerCard({ lecturer }) {
             <img src={lecturer.avatar_Url} alt={`${lecturer.firstName} ${lecturer.lastName}`} className="profile-pic" />
             <h2>{`${lecturer.firstName} ${lecturer.lastName}`}</h2>
             <p>Email: {lecturer.email}</p>
-
-            <Link to={`/LecturerProfile/${lecturer.lecturer_Id}`} className="profile-button" style={{ color: 'black' }}>
-                View Profile
-            </Link>
+            
+            {confirmed ? (
+                <Link
+                    to={`/LecturerProfile/${lecturer.lecturer_Id}`}
+                    className="profile-button"
+                    style={{ color: 'black' }}
+                >
+                    View Profile
+                </Link>
+            ) : (
+                <button className="confirm-button" onClick={() => handleApprove(lecturer.lecturer_Id)} >Confirm</button>
+            )}
         </div>
     );
 }

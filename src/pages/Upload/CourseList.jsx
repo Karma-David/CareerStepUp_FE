@@ -41,6 +41,7 @@ const CourseList = () => {
                 const data = await res.json();
                 if (data.statusCode === 200) {
                     setUserId(data.value); // Assuming data.value contains the user ID
+                    // console.log(data.value);
                 } else {
                     throw new Error(`API error! status: ${data.statusCode}, message: ${data.message}`);
                 }
