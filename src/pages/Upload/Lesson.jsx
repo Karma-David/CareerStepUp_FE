@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Exercise from './Exercise';
 
-const Lesson = ({ lesson, lessonIndex, topicIndex, courseData, setCourseData }) => {
+const Lesson = ({ lesson, lessonIndex, topicIndex, courseData, setCourseData, isDisabled }) => {
     const [videoUrl, setVideoUrl] = useState(lesson.videoLesson?.video_url || '');
     const [isUploading, setIsUploading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleAddExercise = () => {
+        if (isDisabled) return;
         setCourseData((prevCourseData) => {
             const updatedTopics = [...prevCourseData.topics];
             const currentLesson = updatedTopics[topicIndex].lessons[lessonIndex];
@@ -28,6 +29,7 @@ const Lesson = ({ lesson, lessonIndex, topicIndex, courseData, setCourseData }) 
     };
 
     const handleVideoChange = async (e) => {
+        if (isDisabled) return;
         const file = e.target.files[0];
         if (file) {
             setIsUploading(true);
@@ -64,6 +66,7 @@ const Lesson = ({ lesson, lessonIndex, topicIndex, courseData, setCourseData }) 
     };
 
     const handleDeleteLesson = () => {
+        if (isDisabled) return;
         if (window.confirm('Are you sure you want to delete this lesson?')) {
             setCourseData((prevCourseData) => {
                 const updatedTopics = [...prevCourseData.topics];
@@ -89,7 +92,9 @@ const Lesson = ({ lesson, lessonIndex, topicIndex, courseData, setCourseData }) 
                         viewBox="0 0 24 24"
                         strokeWidth={1.5}
                         stroke="currentColor"
-                        className="w-10 h-10 cursor-pointer group-hover:opacity-80 transition-opacity duration-300"
+                        className={`w-10 h-10 cursor-pointer group-hover:opacity-80 transition-opacity duration-300 ${
+                            isDisabled ? 'opacity-50 cursor-not-allowed' : ''
+                        }`}
                         onClick={handleDeleteLesson}
                     >
                         <path
@@ -106,6 +111,7 @@ const Lesson = ({ lesson, lessonIndex, topicIndex, courseData, setCourseData }) 
                 id={`lesson_name_${lessonIndex}`}
                 value={lesson.lesson_name}
                 onChange={(e) => {
+                    if (isDisabled) return;
                     setCourseData((prevCourseData) => {
                         const updatedTopics = [...prevCourseData.topics];
                         updatedTopics[topicIndex].lessons[lessonIndex].lesson_name = e.target.value;
@@ -113,6 +119,7 @@ const Lesson = ({ lesson, lessonIndex, topicIndex, courseData, setCourseData }) 
                     });
                 }}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                disabled={isDisabled}
             />
             <div className="flex items-start space-x-6 mt-4">
                 <div className="flex-shrink-0">
@@ -141,7 +148,7 @@ const Lesson = ({ lesson, lessonIndex, topicIndex, courseData, setCourseData }) 
                         type="file"
                         id={`video_file_${lessonIndex}`}
                         onChange={handleVideoChange}
-                        disabled={isUploading}
+                        disabled={isUploading || isDisabled}
                         className="block w-full text-sm2 text-gray-500 file:mr-4 file:py-7 file:px-8 file:rounded-full file:border-0 file:text-sm2 file:font-semibold file:bg-yellow-50 file:text-yellow-700 hover:file:bg-yellow-100"
                     />
                     {isUploading && <p className="text-gray-500 mt-2">Uploading...</p>}
@@ -159,6 +166,7 @@ const Lesson = ({ lesson, lessonIndex, topicIndex, courseData, setCourseData }) 
                         lessonIndex={lessonIndex}
                         courseData={courseData}
                         setCourseData={setCourseData}
+                        isDisabled={isDisabled}
                     />
                 ))}
             <div className="relative group inline-block">
@@ -171,7 +179,9 @@ const Lesson = ({ lesson, lessonIndex, topicIndex, courseData, setCourseData }) 
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-8 h-8 cursor-pointer mt-4 group-hover:opacity-80"
+                    className={`w-8 h-8 cursor-pointer mt-4 group-hover:opacity-80 ${
+                        isDisabled ? 'opacity-50 cursor-not-allowed' : ''
+                    }`}
                     onClick={handleAddExercise}
                 >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />

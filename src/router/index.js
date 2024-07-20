@@ -1,66 +1,159 @@
-import Home from '@/pages/Home';
-import RoadMap from '@/pages/RoadMap';
-import Profile from '@/pages/Profile';
-import Upload from '@/pages/Upload';
-import Search from '@/pages/Search';
-import Login from '@/pages/Login/Login';
-import Register from '@/pages/Register/Register';
-import ForgotPass from '@/pages/ForgotPass/ForgotPass';
-import RegisterLecturer from '@/pages/RegisterLecturer/RegisterLecturer';
-import ResetPass from '@/pages/ResetPass/Resetpass';
-import PageVideoLearn from '@/pages/PageVideoLearn/PageVideoLearn';
-import PayPage from '@/pages/PaymentPage/PayPage';
-import { HeaderOnly } from '@/components/Layout';
-import Lecturers from '@/pages/AdminPage/Components/Lecturers/Lecturers';
-import Students from '@/pages/AdminPage/Components/Students/Students';
-import Fees from '@/pages/AdminPage/Components/NotConfirmedLecturer/NotConfirmedLecturer';
-import Course from '@/pages/AdminPage/Components/Course/Course';
-import UpTopic from '@/pages/Upload/UpTopic';
-import UpLesson from '@/pages/Upload/UpLesson';
-import UpNewCourse from '@/pages/Upload/NewCourse';
-import CoursesDetail from '@/pages/CoursesPageDetail/CoursesDetail';
-import PaymentPageSuccess from '@/pages/PaymentPage/PaymentPageSuccess';
-import NotConfirmedLecturer from '@/pages/AdminPage/Components/NotConfirmedLecturer/NotConfirmedLecturer';
-import LecturerProfile from '@/pages/AdminPage/Components/Lecturers/LecturerProfile';
-import LearnerProfile from '@/pages/AdminPage/Components/Students/LearnerProfile';
-import WithdrawalsList from '@/pages/AdminPage/Components/WidthDraw/WidthDraw';
-import WidthDrawDetail from '@/pages/AdminPage/Components/WidthDraw/WidthDrawDetail';
-import WidthDraw from '@/pages/Upload/WidthDraw';
-import CourseDetailForm from '@/pages/Upload/CourseDetailForm'; // Import CourseDetailForm
+import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    faHouse,
+    faRoad,
+    faUser,
+    faGraduationCap,
+    // faGauge,
+    // faTable,
+    // faChartBar,
+    // faCashRegister,
+    // faMoneyBill,
+    faUpload,
+    faMoneyBill,
+    faBookBookmark,
+} from '@fortawesome/free-solid-svg-icons';
 
-export const publishRouter = [
-    { path: '/', component: Home },
-    { path: '/roadmap', component: RoadMap },
-    { path: '/profile', component: Profile },
-    { path: '/upload', component: Upload },
-    { path: '/search', component: Search, layout: null },
-    { path: '/Login', component: Login, layout: null },
-    { path: '/Register', component: Register, layout: null },
-    { path: '/ForgotPass', component: ForgotPass, layout: null },
-    { path: '/ResetPass', component: ResetPass, layout: null },
-    { path: '/RegisterLecturer', component: RegisterLecturer },
-    { path: '/PayPage', component: PayPage, layout: null },
-    { path: '/Lecturers', component: Lecturers },
-    { path: '/Students', component: Students },
-    { path: '/Fees', component: Fees },
-    { path: '/Course', component: Course },
-    { path: '/Upload', component: Upload },
-    { path: '/UpTopic/:id', component: UpTopic },
-    { path: '/UpLesson/', component: UpLesson },
-    { path: '/UpNewCourse', component: UpNewCourse },
-    { path: '/PageVideoLearn/:id', component: PageVideoLearn, layout: HeaderOnly },
-    { path: '/PayPage', component: PayPage },
-    { path: '/PaymentPageSuccess', component: PaymentPageSuccess, layout: null },
-    { path: '/Lecturers', component: Lecturers },
-    { path: '/NotConfirmedLecturer', component: NotConfirmedLecturer },
-    { path: '/Course', component: Course },
-    { path: '/LecturerProfile/:lecturerId', component: LecturerProfile },
-    { path: '/LearnerProfile/:learnerId', component: LearnerProfile },
-    { path: '/WithdrawalsList', component: WithdrawalsList },
-    { path: '/WidthDrawDetail', component: WidthDrawDetail },
-    { path: '/CoursesDetail/:id', component: CoursesDetail },
-    { path: '/WithDraw', component: WidthDraw },
-    { path: '/CourseDetailForm/:course_id/:action', component: CourseDetailForm }, // Add CourseDetailForm
-];
+import classNames from 'classnames/bind';
+import style from './Sidebar.module.scss';
+import ButtonSidebar from '@/components/Layout/DefaultLayout/ButtonSidebar';
 
-export const privateRouter = [];
+const cx = classNames.bind(style);
+
+const Sidebar = () => {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [isLecturer, setIsLecturer] = useState(false);
+
+    useEffect(() => {
+        const rolesString = localStorage.getItem('role') || '';
+        const rolesArray = rolesString.split(',').map((role) => role.trim());
+        setIsAdmin(rolesArray.includes('admin'));
+        setIsLecturer(rolesArray.includes('lecturer'));
+
+        const authStatus = localStorage.getItem('isAuthenticated') === 'true';
+        setIsAuthenticated(authStatus);
+    }, []);
+
+    return (
+        <aside style={{ border: '1px solid #8cbd8530' }} className={cx('wrapper')}>
+            <div className={cx('button-sidebar')}>
+                <ButtonSidebar to={'/'}>
+                    <FontAwesomeIcon style={{ color: 'black' }} icon={faHouse} className={cx('icon', 'black-icon')} />
+                    <span style={{ color: 'black' }} className={cx('text')}>
+                        Trang chủ
+                    </span>
+                </ButtonSidebar>
+
+                <ButtonSidebar to={'/RoadMap'}>
+                    <FontAwesomeIcon style={{ color: 'black' }} icon={faRoad} className={cx('icon', 'black-icon')} />
+                    <span style={{ color: 'black' }} className={cx('text')}>
+                        Lộ Trình
+                    </span>
+                </ButtonSidebar>
+
+                {/* Hiển thị mục Lecturers chỉ khi role là admin
+                {isAdmin && (
+                    <ButtonSidebar to={'/Lecturers'}>
+                        <FontAwesomeIcon style={{ color: 'black' }} icon={faUser} className={cx('icon', 'black-icon')} />
+                        <span style={{ color: 'black' }} className={cx('text')}>
+                            Lecturers
+                        </span>
+                    </ButtonSidebar>
+                    
+                )}
+
+                <ButtonSidebar to={'/Students'}>
+                    <FontAwesomeIcon
+                        style={{ color: 'black' }}
+                        icon={faGraduationCap}
+                        className={cx('icon', 'black-icon')}
+                    />
+                    <span style={{ color: 'black' }} className={cx('text')}>
+                        Learner
+                    </span>
+                </ButtonSidebar>
+
+                <ButtonSidebar to={'/WithdrawalsList'}>
+                    <FontAwesomeIcon
+                        style={{ color: 'black' }}
+                        icon={faMoneyBill}
+                        className={cx('icon', 'black-icon')}
+                    />
+                    <span style={{ color: 'black' }} className={cx('text')}>
+                        WidthDraw
+                    </span>
+                </ButtonSidebar> */}
+
+                {/* <ButtonSidebar to={'/Course'}>
+                <FontAwesomeIcon style={{color:'black'}} icon={faBook} className={cx('icon', 'black-icon')} />
+                <span style={{color:'black'}} className={cx('text')}>C-Form</span>
+                </ButtonSidebar> */}
+                {isAuthenticated && (
+                    <>
+                        {isAdmin && (
+                            <>
+                                <ButtonSidebar to={'/Lecturers'}>
+                                    <FontAwesomeIcon
+                                        style={{ color: 'black' }}
+                                        icon={faUser}
+                                        className={cx('icon', 'black-icon')}
+                                    />
+                                    <span style={{ color: 'black' }} className={cx('text')}>
+                                        Lecturers
+                                    </span>
+                                </ButtonSidebar>
+                                <ButtonSidebar to={'/Students'}>
+                                    <FontAwesomeIcon
+                                        style={{ color: 'black' }}
+                                        icon={faGraduationCap}
+                                        className={cx('icon', 'black-icon')}
+                                    />
+                                    <span style={{ color: 'black' }} className={cx('text')}>
+                                        Learner
+                                    </span>
+                                </ButtonSidebar>
+                                <ButtonSidebar to={'/WithdrawalsList'}>
+                                    <FontAwesomeIcon
+                                        style={{ color: 'black' }}
+                                        icon={faMoneyBill}
+                                        className={cx('icon', 'black-icon')}
+                                    />
+                                    <span style={{ color: 'black' }} className={cx('text')}>
+                                        WidthDraw
+                                    </span>
+                                </ButtonSidebar>
+                                <ButtonSidebar to={'/ListChangingCourse'}>
+                                    <FontAwesomeIcon
+                                        style={{ color: 'black' }}
+                                        icon={faBookBookmark}
+                                        className={cx('icon', 'black-icon')}
+                                    />
+                                    <span style={{ color: 'black' }} className={cx('text')}>
+                                        Course
+                                    </span>
+                                </ButtonSidebar>
+                            </>
+                        )}
+
+                        {isLecturer && (
+                            <ButtonSidebar to={'/Upload'}>
+                                <FontAwesomeIcon
+                                    style={{ color: 'black' }}
+                                    icon={faBookBookmark}
+                                    className={cx('icon', 'black-icon')}
+                                />
+                                <span style={{ color: 'black' }} className={cx('text')}>
+                                    My Course
+                                </span>
+                            </ButtonSidebar>
+                        )}
+                    </>
+                )}
+            </div>
+        </aside>
+    );
+};
+
+export default Sidebar;
