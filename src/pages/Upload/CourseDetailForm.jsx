@@ -134,18 +134,21 @@ const CourseDetailForm = () => {
                 requestData.course_id = course_id;
             }
 
+
             const apiUrl =
                 action === '1'
                     ? 'https://localhost:7127/api/Course2/AddCourse2.0'
                     : 'https://localhost:7127/api/Course2/UpdateCourse2.0';
 
             await axios.post(apiUrl, requestData, {
+
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
 
             navigate(`/course/${course_id}`);
+
         } catch (error) {
             console.error('Error saving course data:', error);
         }
