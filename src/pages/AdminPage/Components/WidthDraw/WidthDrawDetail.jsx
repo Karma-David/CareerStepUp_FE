@@ -117,17 +117,17 @@ const WidthDrawDetail = () => {
 
     return (
         <div className="withdraw-detail">
-            <h1>Withdraw Detail</h1>
+            <h1 style={{ color: 'black', fontSize: '30px' }}>Withdraw Detail</h1>
             {courses.length > 0 ? (
                 <div className="detail-section">
                     <h2>Course Details</h2>
                     <table className="course-details-table">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>Sub Withdrawn</th>
+                                <th style={{ color: 'black' }}>ID</th>
+                                <th style={{ color: 'black' }}>Title</th>
+                                <th style={{ color: 'black' }}>Description</th>
+                                <th style={{ color: 'black' }}>Sub Withdrawn</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -147,7 +147,7 @@ const WidthDrawDetail = () => {
             )}
             {lecturer && (
                 <div className="detail-section">
-                    <h2>Lecturer Details</h2>
+                    <h2 style={{ color: 'black' }}>Lecturer Details</h2>
                     <div className="form-group">
                         <label>ID:</label>
                         <span>{lecturer.lecturer_Id}</span>
@@ -163,7 +163,7 @@ const WidthDrawDetail = () => {
                 </div>
             )}
             <div className="detail-section">
-                <h2>Bill</h2>
+                <h2 style={{ color: 'black' }}>Bill</h2>
                 <div className="form-group">
                     <label>Total Amount Sub Withdrawn:</label>
                     <span>{data.subInACourses.reduce((total, item) => total + item.subWithdrawn, 0)}</span>

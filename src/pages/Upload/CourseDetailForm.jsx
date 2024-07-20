@@ -14,7 +14,7 @@ const CourseDetailForm = () => {
         course_Img: '',
         lecturer_id: '',
         topics: [{ topic_name: '', lessons: [] }],
-    });
+
     const [file, setFile] = useState(null);
     const isDisabled = action === '4';
 
@@ -45,6 +45,7 @@ const CourseDetailForm = () => {
         };
 
         if (action === '2' || action === '4') {
+
             loadCourseData();
         }
     }, [course_id, action]);
@@ -61,6 +62,7 @@ const CourseDetailForm = () => {
             formData.append('file', file);
 
             try {
+
                 const response = await axios.post('https://localhost:7127/api/Course2/UploadPhotoForCourse', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
@@ -110,6 +112,7 @@ const CourseDetailForm = () => {
                     const lessons = await Promise.all(
                         topic.lessons.map(async (lesson) => {
                             lesson.videoLesson.upload_Date = new Date().toISOString();
+
                             const { videoFile, VideoLesson, ...lessonWithoutVideoFile } = lesson;
                             return lessonWithoutVideoFile;
                         }),
@@ -169,6 +172,7 @@ const CourseDetailForm = () => {
         }
     };
 
+
     return (
         <div className="container mx-auto p-4">
             <div className="mb-4 bg-blue-100 p-4 rounded">
@@ -183,6 +187,7 @@ const CourseDetailForm = () => {
                     onChange={handleInputChange}
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     disabled={isDisabled}
+
                 />
             </div>
             <div className="mb-4 bg-blue-100 p-4 rounded">
@@ -196,6 +201,7 @@ const CourseDetailForm = () => {
                     onChange={handleInputChange}
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     disabled={isDisabled}
+
                 ></textarea>
             </div>
             <div className="mb-4 bg-blue-100 p-4 rounded">
@@ -209,6 +215,7 @@ const CourseDetailForm = () => {
                         onChange={handleIsPremiumChange}
                         className="mr-2"
                         disabled={isDisabled}
+
                     />
                     <label htmlFor="isPremiumTrue" className="mr-4">
                         Premium
@@ -222,6 +229,7 @@ const CourseDetailForm = () => {
                         onChange={handleIsPremiumChange}
                         className="mr-2"
                         disabled={isDisabled}
+
                     />
                     <label htmlFor="isPremiumFalse">Free</label>
                 </div>
@@ -244,6 +252,7 @@ const CourseDetailForm = () => {
                         onChange={handleFileChange}
                         className="block w-full text-4sm text-gray-500 file:mr-10 file:py-7 file:px-8 file:rounded-full file:border-0 file:text-1sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                         disabled={isDisabled}
+
                     />
                 </div>
             </div>
@@ -305,6 +314,7 @@ const CourseDetailForm = () => {
                         </button>
                     </>
                 )}
+
             </div>
         </div>
     );

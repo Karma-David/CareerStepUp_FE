@@ -30,6 +30,8 @@ const WidthDraw = () => {
                 const data = await res.json();
                 if (data.statusCode === 200) {
                     setUserId(data.value); // Assuming data.value contains the user ID
+                    console.log(email);
+                    console.log(data.value);
                 } else {
                     throw new Error(`API error! status: ${data.statusCode}, message: ${data.message}`);
                 }
@@ -42,7 +44,7 @@ const WidthDraw = () => {
 
     useEffect(() => {
         if (userId) {
-            const CourseLecturerAPI = `https://localhost:7127/api/Courses/CourseOfALecturer?lecturer_id=${userId}&isConfirmed=true`;
+            const CourseLecturerAPI = `https://localhost:7127/api/Courses/CourseOfALecturer?id=${userId}&isConfirmed=true`;
             const fetchCourses = async () => {
                 try {
                     const response = await fetch(CourseLecturerAPI);
@@ -51,6 +53,7 @@ const WidthDraw = () => {
                     }
                     const data = await response.json();
                     setCourses(data.value);
+                    console.log(data.value);
                 } catch (error) {
                     console.error('Error fetching courses:', error);
                 }
