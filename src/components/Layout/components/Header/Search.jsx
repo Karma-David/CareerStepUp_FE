@@ -106,11 +106,15 @@ function Search() {
                         ref={searchInputRef} // Assign ref to manage focus
                     />
                     {!!searchValue && (
-                        <button type="button" className={cx('clear')} onClick={handleClear}>
+                        <button
+                            type="button"
+                            className={cx('clear', 'mr-20 hover:bg-transparent')}
+                            onClick={handleClear}
+                        >
                             <FontAwesomeIcon icon={faCircleXmark} />
                         </button>
                     )}
-                    <button type="submit" className={cx('search-btn')}>
+                    <button type="submit" className={cx('search-btn', 'border-l-1 border-gray-500')}>
                         <FontAwesomeIcon icon={faMagnifyingGlass} />
                     </button>
                 </form>
