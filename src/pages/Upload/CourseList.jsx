@@ -97,10 +97,7 @@ const CourseList = () => {
     };
 
     const handleUpdateCourse = (course) => {
-        setEditingCourse(course);
-        setNewCourse(course.title);
-        setDescription(course.description);
-        setPrice(course.price);
+        navigate(`/CourseDetailForm/${course.course_id}/2`);
     };
 
     const handleSaveCourse = () => {
@@ -313,7 +310,7 @@ const CourseList = () => {
             )}
             <div className="new-course-button-container mt-4">
                 <Button
-                    to="/UpNewCourse"
+                    to="/CourseDetailForm/0/1"
                     className="new-course-button bg-blue-500 text-white px-4 py-2 rounded flex items-center"
                 >
                     <FontAwesomeIcon icon={faPlus} className="mr-2" />
