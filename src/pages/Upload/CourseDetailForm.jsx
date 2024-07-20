@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Topic from './Topic';
 import { fetchCourseData, getLecturerId, uploadImage } from './api';
+import ConfirmModal from './ConfirmModel';
 
 const CourseDetailForm = () => {
     const { course_id, action } = useParams();
@@ -16,7 +17,11 @@ const CourseDetailForm = () => {
         topics: [{ topic_name: '', lessons: [] }],
 
     const [file, setFile] = useState(null);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     const isDisabled = action === '4';
+
 
     useEffect(() => {
         const loadCourseData = async () => {
@@ -93,7 +98,13 @@ const CourseDetailForm = () => {
         setCourseData({ ...courseData, topics: updatedTopics });
     };
 
-    const handleSave = async () => {
+    const handleSave = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleConfirmSave = async () => {
+        setIsModalOpen(false);
+
         try {
             const email = localStorage.getItem('email');
             if (!email) {
@@ -316,6 +327,11 @@ const CourseDetailForm = () => {
                 )}
 
             </div>
+            <ConfirmModal 
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onConfirm={handleConfirmSave}
+            />
         </div>
     );
 };
