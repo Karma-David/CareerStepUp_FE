@@ -23,6 +23,7 @@ const Topic = ({ topic, topicIndex, courseData, setCourseData, isDisabled }) => 
 
     const handleDeleteTopic = () => {
         const updatedTopics = courseData.topics.filter((_, index) => index !== topicIndex);
+
         setCourseData({ ...courseData, topics: updatedTopics });
     };
 

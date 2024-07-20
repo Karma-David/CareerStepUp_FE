@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Topic from './Topic';
 import { fetchCourseData, getLecturerId, uploadImage } from './api';
+import ConfirmModal from './ConfirmModel';
+
 
 const CourseDetailForm = () => {
     const { course_id, action } = useParams();
@@ -18,6 +20,13 @@ const CourseDetailForm = () => {
     });
 
     const [file, setFile] = useState(null);
+
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const isDisabled = action === '4';
+
+
 
     useEffect(() => {
         const loadCourseData = async () => {
@@ -62,7 +71,6 @@ const CourseDetailForm = () => {
             formData.append('file', file);
 
             try {
-                // Upload the file to the API
                 const response = await axios.post('https://localhost:7127/api/Course2/UploadPhotoForCourse', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
@@ -73,6 +81,7 @@ const CourseDetailForm = () => {
                 const newImageUrl = response.data.value;
 
                 // Update courseData with the new image URL
+
                 setCourseData((prevData) => ({
                     ...prevData,
                     course_Img: newImageUrl,
@@ -95,12 +104,20 @@ const CourseDetailForm = () => {
         setCourseData({ ...courseData, topics: updatedTopics });
     };
 
-    const handleSave = async () => {
+
+    const handleSave = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleConfirmSave = async () => {
+        setIsModalOpen(false);
+
         try {
             const email = localStorage.getItem('email');
             if (!email) {
                 throw new Error('Email not found in local storage');
             }
+
             const lecturer_id = await getLecturerId(email);
 
             let courseImgUrl = courseData.course_Img;
@@ -115,6 +132,7 @@ const CourseDetailForm = () => {
                             // URL video đã được cập nhật trước đó trong handleVideoChange
                             lesson.videoLesson.upload_Date = new Date().toISOString();
                             // Xóa videoFile trước khi gửi lên server
+
                             const { videoFile, VideoLesson, ...lessonWithoutVideoFile } = lesson;
                             return lessonWithoutVideoFile;
                         }),
@@ -128,6 +146,7 @@ const CourseDetailForm = () => {
                 course_Img: courseImgUrl,
                 lecturer_id: lecturer_id,
                 status: action,
+
                 topics: topics,
             };
 
@@ -190,6 +209,7 @@ const CourseDetailForm = () => {
         }
     };
 
+
     return (
         <div className="container mx-auto p-4">
             <div className="mb-4 bg-blue-100 p-4 rounded">
@@ -203,6 +223,8 @@ const CourseDetailForm = () => {
                     value={courseData.title}
                     onChange={handleInputChange}
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    disabled={isDisabled}
+
                 />
             </div>
             <div className="mb-4 bg-blue-100 p-4 rounded">
@@ -215,6 +237,8 @@ const CourseDetailForm = () => {
                     value={courseData.description}
                     onChange={handleInputChange}
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    disabled={isDisabled}
+
                 ></textarea>
             </div>
             <div className="mb-4 bg-blue-100 p-4 rounded">
@@ -227,6 +251,9 @@ const CourseDetailForm = () => {
                         checked={courseData.isPremium === true}
                         onChange={handleIsPremiumChange}
                         className="mr-2"
+
+                        disabled={isDisabled}
+
                     />
                     <label htmlFor="isPremiumTrue" className="mr-4">
                         Premium
@@ -239,6 +266,9 @@ const CourseDetailForm = () => {
                         checked={courseData.isPremium === false}
                         onChange={handleIsPremiumChange}
                         className="mr-2"
+
+                        disabled={isDisabled}
+
                     />
                     <label htmlFor="isPremiumFalse">Free</label>
                 </div>
@@ -260,6 +290,9 @@ const CourseDetailForm = () => {
                         id="file"
                         onChange={handleFileChange}
                         className="block w-full text-4sm text-gray-500 file:mr-10 file:py-7 file:px-8 file:rounded-full file:border-0 file:text-1sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+
+                        disabled={isDisabled}
+
                     />
                 </div>
             </div>
@@ -317,21 +350,23 @@ const CourseDetailForm = () => {
                             type="button"
                             onClick={handleApprove}
                             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+
                         >
                             Approve
                         </button>
                     </>
+
                 ) : (
-                    <button
-                        type="button"
-                        onClick={handleSave}
-                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    >
-                        Save
-                    </button>
-                )}
-            </div>
+                   
+
+            <ConfirmModal 
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onConfirm={handleConfirmSave}
+            />
+              )}    
         </div>
+      
     );
 };
 

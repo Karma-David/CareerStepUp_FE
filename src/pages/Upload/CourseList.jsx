@@ -41,6 +41,7 @@ const CourseList = () => {
                 const data = await res.json();
                 if (data.statusCode === 200) {
                     setUserId(data.value); // Assuming data.value contains the user ID
+                    // console.log(data.value);
                 } else {
                     throw new Error(`API error! status: ${data.statusCode}, message: ${data.message}`);
                 }
@@ -138,30 +139,30 @@ const CourseList = () => {
             .catch((error) => console.error('Error updating course:', error));
     };
 
-    const handleDeleteCourse = (index) => {
-        const courseToDelete = courses[index];
-        fetch(`${DeleteCourseAPI}/${courseToDelete.course_id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ course_id: courseToDelete.course_id }),
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const updatedCourses = [...courses];
-                updatedCourses.splice(index, 1);
-                setCourses(updatedCourses);
-            })
-            .catch((error) => console.error('Error deleting course:', error));
-    };
+    // const handleDeleteCourse = (index) => {
+    //     const courseToDelete = courses[index];
+    //     fetch(`${DeleteCourseAPI}/${courseToDelete.course_id}`, {
+    //         method: 'DELETE',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({ course_id: courseToDelete.course_id }),
+    //     })
+    //         .then((response) => {
+    //             if (!response.ok) {
+    //                 throw new Error('Network response was not ok');
+    //             }
+    //             const updatedCourses = [...courses];
+    //             updatedCourses.splice(index, 1);
+    //             setCourses(updatedCourses);
+    //         })
+    //         .catch((error) => console.error('Error deleting course:', error));
+    // };
 
-    const handleEditCourse = (id) => {
-        navigate(`/UpTopic/${id}`);
-        console.log('Editing course with ID:', id);
-    };
+    // const handleEditCourse = (id) => {
+    //     navigate(`/UpTopic/${id}`);
+    //     console.log('Editing course with ID:', id);
+    // };
 
     return (
         <div className="course-list-wrapper p-4">
@@ -176,29 +177,26 @@ const CourseList = () => {
                     <div className="course-list-container space-y-4">
                         {courses.map((course, index) => (
                             <div key={index} className="relative">
-                                <div className="course-item bg-white shadow-md rounded p-4">
-                                    <div className="course-info">
-                                        <h3 className="text-xl font-bold">{course.title}</h3>
+                                <div
+                                    style={{ cursor: 'pointer', height: '100px' }}
+                                    onClick={() => handleUpdateCourse(course)}
+                                    className="course-item bg-white shadow-md rounded p-4"
+                                >
+                                    <div>
+                                        <img
+                                            style={{ objectFit: 'contain', height: '100px', width: '150px' }}
+                                            src={course.course_Img}
+                                            alt={course.title}
+                                            className="course-img "
+                                        />
                                     </div>
-                                    <div className="course-actions mt-2 flex space-x-2">
-                                        <button
-                                            onClick={() => handleUpdateCourse(course)}
-                                            className="button-update bg-green-500 text-white px-4 py-2 rounded"
+                                    <div className="course-info">
+                                        <h3
+                                            style={{ marginRight: '450px', fontSize: '40px' }}
+                                            className="text-xl font-bold  "
                                         >
-                                            Update
-                                        </button>
-                                        <button
-                                            onClick={() => handleDeleteCourse(index)}
-                                            className="button-delete bg-red-500 text-white px-4 py-2 rounded"
-                                        >
-                                            Delete
-                                        </button>
-                                        <button
-                                            onClick={() => handleEditCourse(course.course_id)}
-                                            className="button-edit bg-blue-500 text-white px-4 py-2 rounded"
-                                        >
-                                            Edit Topic - Lesson
-                                        </button>
+                                            {course.title}
+                                        </h3>
                                     </div>
                                 </div>
                                 <div
@@ -228,7 +226,6 @@ const CourseList = () => {
                     </div>
                 </div>
             </div>
-            <div className="bg-red-500 p-4">This should be red.</div>
             {editingCourse && (
                 <div className="edit-course-form bg-white shadow-md rounded p-6 mt-4">
                     <h1 className="text-2xl font-bold mb-4">Update Course</h1>

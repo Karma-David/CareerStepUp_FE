@@ -97,7 +97,7 @@ function Header() {
     };
 
     const handleLogout = () => {
-        localStorage.clear();
+        // localStorage.clear();
         setIsAuthenticated(false);
         navigate('/');
     };
