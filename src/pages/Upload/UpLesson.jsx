@@ -200,11 +200,11 @@ function UpLesson({ topicId }) {
                                 <tr key={lesson.lesson_id}>
                                     <td>{lesson.lesson_name}</td>
                                     <td className="actions-cell">
-                                        <button onClick={() => handleUpdateLesson(lesson)}>Cập nhật</button>
-                                        <button onClick={() => handleDeleteLesson(lesson.lesson_id)}>Xóa</button>
-                                        <button onClick={() => handleEditLesson(lesson)}>Chỉnh sửa Bài học</button>
+                                        <button onClick={() => handleUpdateLesson(lesson)}>Update</button>
+                                        <button onClick={() => handleDeleteLesson(lesson.lesson_id)}>Delete</button>
+                                        <button onClick={() => handleEditLesson(lesson)}>Add video</button>
                                         <button onClick={() => handleAddExercise(lesson.lesson_id)}>
-                                            Thêm bài tập
+                                            Add exercise
                                         </button>
                                     </td>
                                 </tr>
@@ -275,10 +275,10 @@ function UpLesson({ topicId }) {
                             onChange={handleInputChange}
                         />
                         <button className="save-video-button" onClick={handleSaveVideo}>
-                            Thêm Video
+                            Add Video
                         </button>
                         <button className="cancel-video-button" onClick={handleCancelEdit}>
-                            Hủy
+                            Cancle
                         </button>
                     </div>
                 </div>
