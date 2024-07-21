@@ -7,6 +7,7 @@ import Button from '@/components/Button';
 import Tippy from '@tippyjs/react/headless';
 import { FaUserCircle } from 'react-icons/fa';
 import Search from './Search';
+import { TbH2 } from 'react-icons/tb';
 
 const cx = classNames.bind(style);
 
@@ -57,6 +58,7 @@ function Header() {
     const rolesArray = rolesString.split(',').map((role) => role.trim());
     const isAdmin = rolesArray.includes('admin');
     const isLecturer = rolesArray.includes('lecturer');
+    const isUserPre = rolesArray.includes('premiumUser');
     // const isUser = rolesArray.includes('user');
     console.log(isAdmin);
     console.log(isLecturer);
@@ -98,6 +100,7 @@ function Header() {
 
     const handleLogout = () => {
         // localStorage.clear();
+        localStorage.removeItem('role');
         setIsAuthenticated(false);
         navigate('/');
     };
@@ -110,7 +113,24 @@ function Header() {
                 <div>
                     <Search />
                 </div>
-                <div className={cx('action')}>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between' }} className={cx('action')}>
+                    <div>
+                        {isUserPre && (
+                            <h2
+                                style={{
+                                    marginTop: '7px',
+                                    border: '2px solid gold',
+                                    backgroundColor: '#fff8dc',
+                                    padding: '6px',
+                                    borderRadius: '5px',
+                                    color:'#d4af37'
+                                }}
+                            >
+                                Premium
+                            </h2>
+                        )}
+                    </div>
                     {isAuthenticated ? (
                         <Tippy
                             interactive
@@ -118,7 +138,7 @@ function Header() {
                                 <div className={cx('profile-menu')} tabIndex="-1" {...attrs}>
                                     <div className={cx('button-avatar')}>
                                         <Button to="/profile">View My Profile</Button>
-
+                                        {!isUserPre && <Button to="/PayPage">Up Premium</Button>}
                                         {!isAdmin && !isLecturer && (
                                             <Button to="/RegisterLecturer">Register Lecturer</Button>
                                         )}
@@ -129,7 +149,7 @@ function Header() {
                                 </div>
                             )}
                         >
-                            <div style={{ paddingLeft: '168px' }} className={cx('avatar')}>
+                            <div style={{ paddingLeft: '102px' }} className={cx('avatar')}>
                                 {profile.avatar_Url ? (
                                     <img
                                         style={{
