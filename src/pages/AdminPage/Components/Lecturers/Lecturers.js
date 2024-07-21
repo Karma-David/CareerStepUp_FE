@@ -82,7 +82,7 @@ const LecturerTable = () => {
             </div>
 
             <div className="lecturers-page">
-                <h1>All Lecturers</h1>
+                <h1 style={{marginBottom:'15px'}}>All Lecturers</h1>
                 <div className="grid-view">
                     {lecturers.map((lecturer) => (
                         <LecturerCard key={lecturer.lecturer_Id} lecturer={lecturer} confirmed={confirmed}  />

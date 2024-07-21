@@ -10,7 +10,7 @@ import {
     // faChartBar,
     // faCashRegister,
     // faMoneyBill,
-    faUpload,
+    // faUpload,
     faMoneyBill,
     faBookBookmark,
 } from '@fortawesome/free-solid-svg-icons';

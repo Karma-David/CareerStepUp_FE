@@ -91,7 +91,7 @@ const LearnerTable = () => {
             </div>
 
             <div className="learners-page">
-                <h1>All Learners</h1>
+                <h1 style={{marginBottom:'15px'}}>All Learners</h1>
                 <div className="grid-view">
                     {learners.map((learner) => (
                         <LearnerCard key={learner.id} learner={learner} />
