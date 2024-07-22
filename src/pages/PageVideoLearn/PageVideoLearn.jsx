@@ -5,11 +5,13 @@ import { FaChevronDown, FaChevronUp, FaPlayCircle } from 'react-icons/fa';
 import { CiLock } from 'react-icons/ci';
 import Comment from './Comment';
 import Exer from './Exer';
+import ComoleteCourse from './CompleteCourse';
 
 function PageVideoLearn() {
     const { id } = useParams();
     const CourseUserAPI = `https://localhost:7127/api/Courses/GetCourseByIdIncludeLessons?id=${id}`;
     const GetIDFromEmailAPI = 'https://localhost:7127/GetUserIDfromToken';
+    
     const [course, setCourse] = useState(null);
     const [visibleTopics, setVisibleTopics] = useState({});
     const [selectedVideo, setSelectedVideo] = useState('');
@@ -21,6 +23,8 @@ function PageVideoLearn() {
     const videoRef = useRef(null);
     const [error, setError] = useState(null);
     const [userId, setUserId] = useState('');
+    const [lastLessonId, setLastLessonId] = useState(null);
+    const [isCourseCompleted, setIsCourseCompleted] = useState(false);
 
     useEffect(() => {
         const getUserID = async () => {
@@ -57,16 +61,23 @@ function PageVideoLearn() {
                 const response = await fetch(CourseUserAPI);
                 const data = await response.json();
                 setCourse(data.value);
+
                 const storedUnlockedLessons = JSON.parse(localStorage.getItem(`${userId}-unlockedLessons`)) || [];
                 const initialUnlockedLessons = { [data.value.topics[0].lessons[0].id]: true };
                 storedUnlockedLessons.forEach((lessonId) => {
                     initialUnlockedLessons[lessonId] = true;
                 });
                 setUnlockedLessons(initialUnlockedLessons);
+
                 if (data.value.topics.length > 0 && data.value.topics[0].lessons.length > 0) {
                     setSelectedVideo(data.value.topics[0].lessons[0].videoLesson_URL);
                     setSelectedLessonId(data.value.topics[0].lessons[0].id);
                 }
+
+                // Xác định bài học cuối cùng
+                const lastTopic = data.value.topics[data.value.topics.length - 1];
+                const lastLesson = lastTopic.lessons[lastTopic.lessons.length - 1];
+                setLastLessonId(lastLesson.id);
             } catch (error) {
                 console.error('Error fetching course:', error);
                 setError(error.message);
@@ -116,33 +127,41 @@ function PageVideoLearn() {
                 return updated;
             });
         }
-    }, [course, selectedLessonId, userId]);
+
+        // Kiểm tra nếu là bài học cuối cùng
+        if (selectedLessonId === lastLessonId) {
+            setIsCourseCompleted(true);
+        }
+    }, [course, selectedLessonId, userId, lastLessonId]);
 
     const handleExerciseComplete = () => {
         unlockNextLesson();
-        let nextLessonId = null;
-        for (let i = 0; i < course.topics.length; i++) {
-            const lessons = course.topics[i].lessons;
-            for (let j = 0; j < lessons.length; j++) {
-                if (lessons[j].id === selectedLessonId) {
-                    if (j + 1 < lessons.length) {
-                        nextLessonId = lessons[j + 1].id;
-                    } else if (i + 1 < course.topics.length) {
-                        nextLessonId = course.topics[i + 1].lessons[0].id;
-                    }
-                    break;
-                }
-            }
-            if (nextLessonId) break;
-        }
 
-        if (nextLessonId) {
-            const nextLesson = course.topics
-                .flatMap((topic) => topic.lessons)
-                .find((lesson) => lesson.id === nextLessonId);
-            if (nextLesson) {
-                setSelectedVideo(nextLesson.videoLesson_URL);
-                setSelectedLessonId(nextLesson.id);
+        if (!isCourseCompleted) {
+            let nextLessonId = null;
+            for (let i = 0; i < course.topics.length; i++) {
+                const lessons = course.topics[i].lessons;
+                for (let j = 0; j < lessons.length; j++) {
+                    if (lessons[j].id === selectedLessonId) {
+                        if (j + 1 < lessons.length) {
+                            nextLessonId = lessons[j + 1].id;
+                        } else if (i + 1 < course.topics.length) {
+                            nextLessonId = course.topics[i + 1].lessons[0].id;
+                        }
+                        break;
+                    }
+                }
+                if (nextLessonId) break;
+            }
+
+            if (nextLessonId) {
+                const nextLesson = course.topics
+                    .flatMap((topic) => topic.lessons)
+                    .find((lesson) => lesson.id === nextLessonId);
+                if (nextLesson) {
+                    setSelectedVideo(nextLesson.videoLesson_URL);
+                    setSelectedLessonId(nextLesson.id);
+                }
             }
         }
 
@@ -171,6 +190,17 @@ function PageVideoLearn() {
         setVideoReady(false);
     };
 
+    const handleVideoEnded = () => {
+        // Unlock the exercise for the current lesson when the video ends
+        if (selectedLessonId) {
+            setUnlockedLessons((prev) => {
+                const updated = { ...prev, [selectedLessonId]: true };
+                localStorage.setItem(`${userId}-unlockedLessons`, JSON.stringify(Object.keys(updated)));
+                return updated;
+            });
+        }
+    };
+
     const renderIcon = (id) => {
         return visibleTopics[id] ? (
             <FaChevronDown style={{ color: 'orange' }} />
@@ -185,12 +215,26 @@ function PageVideoLearn() {
     if (error) {
         return <h1>Error: {error}</h1>;
     }
+
+    if (isCourseCompleted) {
+        return (
+            <div className="form-learn">
+                <ComoleteCourse courseID ={id} userID = {userId} />
+            </div>
+        );
+    }
+
     return (
         <div className="form-learn">
             <div className="body-video">
                 <div className="Video-course">
                     {showExercise && showExerciseForLesson === selectedLessonId ? (
-                        <Exer onComplete={handleExerciseComplete} lessonID={selectedLessonId} UserID={userId} />
+                        <Exer
+                            onComplete={handleExerciseComplete}
+                            lessonID={selectedLessonId}
+                            UserID={userId}
+                            CourseComplete={isCourseCompleted}
+                        />
                     ) : (
                         <div>
                             {!videoReady && <p>Loading video...</p>}
@@ -201,6 +245,7 @@ function PageVideoLearn() {
                                 controls
                                 onLoadedData={handleVideoLoaded}
                                 onError={handleVideoError}
+                                onEnded={handleVideoEnded} // Handle video ended event
                             />
                         </div>
                     )}
@@ -274,9 +319,9 @@ function PageVideoLearn() {
                                                         marginLeft: '40px',
                                                         marginBottom: '10px',
                                                         cursor: 'pointer',
-                                                        color: 'blue',
+                                                        color: unlockedLessons[lesson.id] ? 'blue' : 'gray',
                                                     }}
-                                                    onClick={() => handleExerciseClick(lesson.id)}
+                                                    onClick={() => unlockedLessons[lesson.id] && handleExerciseClick(lesson.id)}
                                                 >
                                                     Bài tập
                                                 </div>

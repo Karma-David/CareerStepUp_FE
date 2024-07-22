@@ -25,7 +25,7 @@ const CourseDetailForm = () => {
     useEffect(() => {
         const loadCourseData = async () => {
             try {
-                const data = await fetchCourseData(course_id);
+                const data = await fetchCourseData(course_id,action);
 
                 const topics = data.topics.map((topic) => {
                     const lessons = topic.lessons.map((lesson) => ({
@@ -312,6 +312,7 @@ const CourseDetailForm = () => {
                 >
                     Cancel
                 </button>
+
                 {action == '4' ? (
                     <>
                         <button
