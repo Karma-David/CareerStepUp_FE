@@ -15,6 +15,8 @@ const Lesson = ({ lesson, lessonIndex, topicIndex, courseData, setCourseData, is
             if (!currentLesson.exercises) {
                 currentLesson.exercises = [];
             }
+            if (currentLesson.exercises.some((ex) => ex.question === '')) return prevCourseData; // Prevent adding if there's already an empty exercise
+
             currentLesson.exercises.push({
                 question: '',
                 answer_A: '',
@@ -70,7 +72,7 @@ const Lesson = ({ lesson, lessonIndex, topicIndex, courseData, setCourseData, is
         if (window.confirm('Are you sure you want to delete this lesson?')) {
             setCourseData((prevCourseData) => {
                 const updatedTopics = [...prevCourseData.topics];
-                updatedTopics[topicIndex].lessons.splice(lessonIndex, 1);
+updatedTopics[topicIndex].lessons.splice(lessonIndex, 1);
                 return { ...prevCourseData, topics: updatedTopics };
             });
         }
@@ -130,7 +132,7 @@ const Lesson = ({ lesson, lessonIndex, topicIndex, courseData, setCourseData, is
                             className="w-72 h-56 object-cover border border-gray-300 rounded-lg"
                         >
                             Your browser does not support the video tag.
-                        </video>
+</video>
                     ) : (
                         <div className="w-72 h-56 border border-gray-300 rounded-lg flex items-center justify-center bg-gray-100 text-gray-500">
                             No video available

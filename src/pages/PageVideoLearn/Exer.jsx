@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Exer.css';
 
-function Exer({ onComplete, lessonID, UserID }) {
+function Exer({ onComplete, lessonID, UserID, CourseComplete }) {
     const [exercises, setExercises] = useState([]);
     const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState('');
@@ -134,7 +134,6 @@ function Exer({ onComplete, lessonID, UserID }) {
         <div className="exer-container">
             {currentExercise ? (
                 <>
-                    <h3>Exercise ID {currentExercise.exercise_Id}</h3>
                     <p>Question: {currentExercise.question}</p>
                     <div>
                         <label
@@ -238,11 +237,14 @@ function Exer({ onComplete, lessonID, UserID }) {
                         ))}
                     </div>
                     <div>
-                        <h3>Your Point: {isAllExercisesCompleted ? totalScore : '0'}</h3>
                         {showPassed && <h3 className="passed">PASSED</h3>}
                     </div>
                     <div className="next-lesson-button">
-                        {isAllExercisesCompleted && <button onClick={handleNextLesson}>Chuyển video</button>}
+                        {isAllExercisesCompleted && (
+                            <button onClick={handleNextLesson}>
+                                {CourseComplete ? 'Hoàn thành khóa học' : 'Chuyển video'}
+                            </button>
+                        )}
                     </div>
                 </>
             ) : (

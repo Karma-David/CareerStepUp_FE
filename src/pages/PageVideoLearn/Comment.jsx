@@ -133,7 +133,7 @@ function Comment({ lessonID }) {
 
     return (
         <div className="comment-container">
-            <h2>Comments for lesson ID: {lessonID}</h2>
+          
             <div className="comment-form-container">
                 <form className="comment-form" onSubmit={(e) => handleCommentSubmit(e, null)}>
                     <input
