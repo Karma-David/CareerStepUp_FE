@@ -44,7 +44,7 @@ const WidthDraw = () => {
 
     useEffect(() => {
         if (userId) {
-            const CourseLecturerAPI = `https://localhost:7127/api/Courses/CourseOfALecturer?id=${userId}&isConfirmed=true`;
+            const CourseLecturerAPI = `https://localhost:7127/api/Courses/CourseInLecturerProfile?lecturer_id=${userId}&isConfirmed=true`;
             const fetchCourses = async () => {
                 try {
                     const response = await fetch(CourseLecturerAPI);

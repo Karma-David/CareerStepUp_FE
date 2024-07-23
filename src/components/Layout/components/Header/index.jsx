@@ -148,7 +148,7 @@ function Header() {
                             )}
                         >
                             <div style={{ paddingLeft: '102px' }} className={cx('avatar')}>
-                                {avatarUrl ? (
+                                {profile.avatar_Url ? (
                                     <img
                                         style={{
                                             height: '40px',
@@ -157,7 +157,7 @@ function Header() {
                                             objectFit: 'contain',
                                             border: '1px solid',
                                         }}
-                                        src={avatarUrl}
+                                        src={profile.avatar_Url}
                                         alt="User Avatar"
                                     />
                                 ) : (
