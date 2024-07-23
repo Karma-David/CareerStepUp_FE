@@ -20,12 +20,13 @@ const CourseDetailForm = () => {
 
     const [file, setFile] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const isDisabled = action === '4';
+    const isDisabled = action == '4' || courseData.status != 0;
 
     useEffect(() => {
         const loadCourseData = async () => {
             try {
-                const data = await fetchCourseData(course_id,action);
+                const data = await fetchCourseData(course_id, action);
+
 
                 const topics = data.topics.map((topic) => {
                     const lessons = topic.lessons.map((lesson) => ({
@@ -42,6 +43,7 @@ const CourseDetailForm = () => {
                     course_Img: data.course_Img,
                     lecturer_id: data.lecturer_id,
                     topics: topics,
+                    status: data.status,
                 });
             } catch (error) {
                 console.error('Error fetching course data:', error);
@@ -87,11 +89,6 @@ const CourseDetailForm = () => {
             ...courseData,
             topics: [...courseData.topics, { topic_name: '', lessons: [] }],
         });
-    };
-
-    const handleDeleteTopic = (index) => {
-        const updatedTopics = courseData.topics.filter((_, i) => i !== index);
-        setCourseData({ ...courseData, topics: updatedTopics });
     };
 
     const handleSave = () => {
@@ -279,6 +276,7 @@ const CourseDetailForm = () => {
                         topicIndex={topicIndex}
                         courseData={courseData}
                         setCourseData={setCourseData}
+                        isDisabled={isDisabled}
                     />
                 </div>
             ))}
@@ -295,6 +293,7 @@ const CourseDetailForm = () => {
                         stroke="currentColor"
                         className="w-20 h-20 cursor-pointer group-hover:opacity-80"
                         onClick={handleAddTopic}
+                        style={isDisabled ? { pointerEvents: 'none' } : {}}
                     >
                         <path
                             strokeLinecap="round"
@@ -331,13 +330,17 @@ const CourseDetailForm = () => {
                         </button>
                     </>
                 ) : (
-                    <button
-                        type="button"
-                        onClick={handleSave}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    >
-                        Save
-                    </button>
+                    <>
+                        <button
+                            type="button"
+                            onClick={handleSave}
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            disabled={isDisabled}
+                        >
+                            Save
+                        </button>
+                        {console.log(courseData)}
+                    </>
                 )}
             </div>
             <ConfirmModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onConfirm={handleConfirmSave} />

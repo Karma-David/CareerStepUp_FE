@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
 import Button from '@/components/Button';
 import './Register.css';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const RegisterAPI = 'https://localhost:7127/SignUp';
 
 const Register = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -44,6 +46,7 @@ const Register = () => {
                 console.log(response);
                 if (response.ok) {
                     alert('Check your email for verification');
+                    navigate('/Login');
                 } else {
                     alert('Registration failed');
                 }
