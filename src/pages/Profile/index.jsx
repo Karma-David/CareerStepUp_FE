@@ -93,21 +93,16 @@ function Profile() {
             <div className={cx('image-wrapper')}>
                 <img className={cx('avatar-image')} src={profile.avatar_Url} alt="User Avatar" />
                 <input className={cx('choose-image')} type="file" onChange={handlePhotoChange} />
-                <button
-                    
-                    className={cx('save-image')}
-                    type="button"
-                    onClick={uploadNewPhoto}
-                >
+                <button className={cx('save-image')} type="button" onClick={uploadNewPhoto}>
                     Save
                 </button>
             </div>
             <div className={cx('info-wrapper')}>
                 <div className={cx('information')}>
-                    <h3>Thông tin cá nhân</h3>
+                    <h3 style={{ marginBottom: '15px', fontSize: '20px' }}>Thông tin cá nhân</h3>
                     <GetAPI />
                 </div>
-                <div className={cx('class-join')}>
+                <div style={{ fontSize: '20px' }} className={cx('class-join')}>
                     <h3>Khóa học tham gia</h3>
                     <GetCourseUser />
                 </div>

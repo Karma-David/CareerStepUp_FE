@@ -4,7 +4,6 @@ export const fetchCourseData = async (courseId, action) => {
     if (courseId !== 0) {
         if (action == 2) {
             const response = await axios.get(`https://localhost:7127/api/Course2/GetCourseForm?courseId=${courseId}`);
-            console.log(response.data.value);
             return response.data.value;
         } else if (action == 4) {
             const response = await axios.get(

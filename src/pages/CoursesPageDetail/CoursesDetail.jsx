@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import './CoursesPageDetail.css';
 import Button from '@/components/Button';
 import { FaGlobe, FaInfinity, FaMinus, FaPlus } from 'react-icons/fa';
+import { MdOutlinePlayLesson } from "react-icons/md";
 
 function CoursesDetail() {
     const { id } = useParams();
@@ -176,7 +177,6 @@ function CoursesDetail() {
         }));
     };
     const handleLearnNow = async () => {
-
         console.log(isPremiumUser);
         if (isPremiumCourse) {
             if (!isPremiumUser) {
@@ -189,7 +189,6 @@ function CoursesDetail() {
                 } else {
                     return;
                 }
-
             }
         }
 
@@ -245,6 +244,7 @@ function CoursesDetail() {
         );
     };
 
+    
     if (loading) {
         return <h1>Loading...</h1>;
     }
@@ -306,7 +306,8 @@ function CoursesDetail() {
                                         <div style={{ marginTop: '10px', marginLeft: '30px' }}>
                                             {topic.lessons.map((lesson) => (
                                                 <div style={{ display: 'flex', padding: '10px 0px' }} key={lesson.id}>
-                                                    <div>
+                                                    <div style={{ display: 'flex' }}>
+                                                        <MdOutlinePlayLesson  style={{ color: 'orange', marginRight: '10px' }} />
                                                         <h4 style={{ userSelect: 'none' }}>{lesson.name}</h4>
                                                     </div>
                                                 </div>
@@ -385,7 +386,16 @@ function CoursesDetail() {
                         <p style={{ marginBottom: '0px' }}>{course.isPremium ? 'Premium' : 'Free'}</p>
                     </div>
                     <div className="button-start-learn">
-                        <Button onClick={handleLearnNowClick}>{isEnrolled ? 'Continue' : 'Learn now'}</Button>;
+                    {isAuthenticated ? (
+                            <Button onClick={handleLearnNowClick}>{isEnrolled ? 'Continue' : 'Learn now'}</Button>
+                        ) : (
+                            <>
+                                <Button to={'/Login'} onClick={handleStartLearn}>
+                                    Learn now
+                                </Button>
+                            </>
+                        )}
+                        
                     </div>
                     {/* <div className="Course-overview">
                         <ul>

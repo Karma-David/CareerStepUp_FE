@@ -26,7 +26,7 @@ import WithdrawalsList from '@/pages/AdminPage/Components/WidthDraw/WidthDraw';
 import WidthDrawDetail from '@/pages/AdminPage/Components/WidthDraw/WidthDrawDetail';
 import WidthDraw from '@/pages/Upload/WidthDraw';
 import CourseDetailForm from '@/pages/Upload/CourseDetailForm';
-import CourseList from '@/pages/Upload/CourseList'; // Import CourseDetailForm
+// import CourseList from '@/pages/Upload/CourseList'; // Import CourseDetailForm
 import ListChangingCourse from '@/pages/AdminPage/Components/Course/ListChangingCourse';
 
 export const publishRouter = [
