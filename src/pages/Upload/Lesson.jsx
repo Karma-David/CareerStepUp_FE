@@ -15,6 +15,8 @@ const Lesson = ({ lesson, lessonIndex, topicIndex, courseData, setCourseData, is
             if (!currentLesson.exercises) {
                 currentLesson.exercises = [];
             }
+            if (currentLesson.exercises.some((ex) => ex.question === '')) return prevCourseData; // Prevent adding if there's already an empty exercise
+
             currentLesson.exercises.push({
                 question: '',
                 answer_A: '',

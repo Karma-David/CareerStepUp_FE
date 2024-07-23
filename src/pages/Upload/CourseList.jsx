@@ -68,6 +68,7 @@ const CourseList = () => {
                 }
                 const data = await response.json();
                 setCourses(data.value);
+                console.log(data.value);
             } catch (error) {
                 console.error('Error fetching courses:', error);
             }
@@ -198,6 +199,21 @@ const CourseList = () => {
                                             {course.title}
                                         </h3>
                                     </div>
+                                    {course.status === 1 && (
+                                        <div className="status-updating bg-yellow-100 text-orange-800 p-2 rounded mt-2">
+                                            Waiting For Adding
+                                        </div>
+                                    )}
+                                    {course.status === 2 && (
+                                        <div className="status-updating bg-blue-100 text-blue-800 p-2 rounded mt-2">
+                                            Waiting For Update
+                                        </div>
+                                    )}
+                                    {course.status === 3 && (
+                                        <div className="status-deleting bg-red-100 text-red-800 p-2 rounded mt-2">
+                                            Waiting For Delete
+                                        </div>
+                                    )}
                                 </div>
                                 <div
                                     className={`course-additional-info p-4 rounded shadow-inner mt-2 -mt-4 pt-8`}

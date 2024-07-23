@@ -48,7 +48,7 @@ const Topic = ({ topic, topicIndex, courseData, setCourseData, isDisabled }) => 
                         stroke="currentColor"
                         className={`w-20 h-20 cursor-pointer group-hover:opacity-80 ${isDisabled ? 'hidden' : ''}`}
                         onClick={() => handleDeleteTopic(topicIndex)}
-                        style={{ pointerEvents: isDisabled ? 'none' : 'auto' }}
+                        style={isDisabled ? { pointerEvents: 'none' } : {}}
                     >
                         <path
                             strokeLinecap="round"
@@ -63,6 +63,7 @@ const Topic = ({ topic, topicIndex, courseData, setCourseData, isDisabled }) => 
                 name="topic_name"
                 id={`topic_name_${topicIndex}`}
                 value={topic.topic_name}
+                disabled={isDisabled}
                 onChange={(e) => {
                     const updatedTopics = [...courseData.topics];
                     updatedTopics[topicIndex].topic_name = e.target.value;
@@ -79,6 +80,7 @@ const Topic = ({ topic, topicIndex, courseData, setCourseData, isDisabled }) => 
                     topicIndex={topicIndex}
                     courseData={courseData}
                     setCourseData={setCourseData}
+                    isDisabled={isDisabled}
                 />
             ))}
             <div className="relative group inline-flex items-center mt-8">
@@ -96,6 +98,7 @@ const Topic = ({ topic, topicIndex, courseData, setCourseData, isDisabled }) => 
                     stroke="currentColor"
                     className="w-12 h-12 cursor-pointer group-hover:opacity-80"
                     onClick={handleAddLesson}
+                    style={isDisabled ? { pointerEvents: 'none' } : {}}
                 >
                     <path
                         strokeLinecap="round"

@@ -1,10 +1,17 @@
 import axios from 'axios';
 
-export const fetchCourseData = async (courseId) => {
+export const fetchCourseData = async (courseId, action) => {
     if (courseId !== 0) {
-        await axios.post(`https://localhost:7127/api/Course2/CloneDataOnCourseClone?courseId=${courseId}`);
-        const response = await axios.get(`https://localhost:7127/api/Course2/GetCourseForm?courseId=${courseId}`);
-        return response.data.value;
+        if (action == 2) {
+            const response = await axios.get(`https://localhost:7127/api/Course2/GetCourseForm?courseId=${courseId}`);
+            console.log(response.data.value);
+            return response.data.value;
+        } else if (action == 4) {
+            const response = await axios.get(
+                `https://localhost:7127/api/Course2/GetCourseFormForAdmin?courseId=${courseId}`,
+            );
+            return response.data.value;
+        }
     }
     return null;
 };

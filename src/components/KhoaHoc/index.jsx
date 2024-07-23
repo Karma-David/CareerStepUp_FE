@@ -15,16 +15,9 @@ const KhoaHoc = ({ search }) => {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const params = {
-                    search,
-                    // from: fromPrice !== null ? fromPrice : undefined,
-                    // to: toPrice !== null ? toPrice : undefined,
-                    // sortBy: sortBy || undefined,
-                    // pageIndex,
-                    pageSize,
-                };
-
-                const response = await axios.post('https://localhost:7127/api/Courses/SearchCourses', params);
+                const response = await axios.post(
+                    `https://localhost:7127/api/Courses/SearchCourses2.0?searching=${search}`,
+                );
                 setCourses(response.data.value.items);
                 console.log(response.data.value.items);
             } catch (error) {
