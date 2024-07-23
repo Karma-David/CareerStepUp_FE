@@ -126,7 +126,6 @@ const WidthDrawDetail = () => {
                             <tr>
                                 <th style={{ color: 'black' }}>ID</th>
                                 <th style={{ color: 'black' }}>Title</th>
-                                <th style={{ color: 'black' }}>Description</th>
                                 <th style={{ color: 'black' }}>Sub Withdrawn</th>
                             </tr>
                         </thead>
@@ -135,7 +134,6 @@ const WidthDrawDetail = () => {
                                 <tr key={course.course_id}>
                                     <td>{course.course_id}</td>
                                     <td>{course.title}</td>
-                                    <td>{course.description}</td>
                                     <td>{course.subWithdrawn}</td>
                                 </tr>
                             ))}
